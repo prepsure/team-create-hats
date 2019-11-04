@@ -5,11 +5,16 @@ local Guis = {}
 local studioWidgets = require(1638103268)
 
 local TeamCreate = plugin:CreateToolbar("Team Create Hats")
-local ToggleHat = TeamCreate:CreateButton("Change Hat","Enhance Your TC Experience","rbxassetid://692849427")
+local ToggleHat = TeamCreate:CreateButton("Change Hat", "Enhance Your TC Experience", "rbxassetid://692849427")
 local DocketInfo = DockWidgetPluginGuiInfo.new(Enum.InitialDockState.Float, false, false, 200, 150)
 
 local pluginGui = plugin:CreateDockWidgetPluginGui("Team Create Hats", DocketInfo)
 pluginGui.Title = "Team Create Hat"
+
+ToggleHat.Click:Connect(function()
+	pluginGui.Enabled = not pluginGui.Enabled
+	ToggleHat:SetActive(pluginGui.Enabled)
+end)
 
 local LabeledCheckboxClass = studioWidgets.LabeledCheckbox
 local LabeledTextInputClass = studioWidgets.LabeledTextInput
@@ -43,30 +48,29 @@ end
 
 SetGui({TextboxHatID, TextboxHeight, CheckboxTransparency, CheckboxEnabled})
 
-function Guis.bindToButton()
-
-end
-
-ToggleHat.Click:Connect(function()
-	pluginGui.Enabled = not pluginGui.Enabled
-	ToggleHat:SetActive(pluginGui.Enabled)
-end)
-
-local function KeepNumbers(HatID)
+local function FilterToWholeNumber(textbox, value)
 	TextboxHatID:SetValue(HatID:gsub('%D',''))
 end
 
-local function KeepNumbersH(Height)
-	local NumericString = Height:match("%d[%d.]*") or ""
-	if TextboxHeight:GetValue():sub(1,1) == "-" then
-		NumericString = "-"..NumericString
+local function FilterToNumber(textbox, Height)
+	local NumericString = value:match("%d[%d.]*") or ""
+	if value:sub(1,1) == "-" then
+		NumericString = "-" .. NumericString
 	end
 	TextboxHeight:SetValue(NumericString)
 end
 
-TextboxHatID:SetValueChangedFunction(KeepNumbers)
-TextboxHatID:GetFrame().Wrapper.TextBox.FocusLost:Connect(ChangeHat)
-TextboxHeight:SetValueChangedFunction(KeepNumbersH)
-TextboxHeight:GetFrame().Wrapper.TextBox.FocusLost:Connect(ChangeHeight)
+TextboxHatID:SetValueChangedFunction(function(value)
+    FilterToWholeNumber(TextboxHatID, value)
+end)
 
-CheckTransparency:SetValueChangedFunction(ChangeTransparency)
+TextboxHeight:SetValueChangedFunction(function(value)
+    FilterToNumber(TextboxHeight, value)
+end)
+
+TextboxHatID:GetFrame().Wrapper.TextBox.FocusLost:Connect(ChangeProperty.ChangeHat)
+TextboxHeight:GetFrame().Wrapper.TextBox.FocusLost:Connect(ChangePropety.ChangeHeight)
+CheckboxTransparency:SetValueChangedFunction(ChangeProperty.ChangeTransparency)
+CheckboxEnabled:SetValueChangedFunction(ChangeProperty.ChangeEnabled)
+
+return Guis
