@@ -1,5 +1,40 @@
 local ChangeProperty = {}
 
+local Guis = require(script.Parent.guis)
+local HatUpdate = require(script.Parent.hatupdate)
+
+function ChangeProperty.ChangeHat(hatId)
+    if hatId == "" then
+        return
+    end
+
+    local success, hat = pcall(function()
+        local hat = InsertService:LoadAsset(tonumber(hatId)):FindFirstChildOfClass("Accessory")
+        return hat
+    end)
+
+    if success then
+        if HatUpdate.HatExists() then
+            HatUpdate.RemoveHat()
+        end
+
+        HatUpdate.UpdateHat(hat)
+    end
+end
+
+function ChangeProperty.ChangeTransparency(trans)
+
+end
+
+function ChangeProperty.ChangeHeight(height)
+
+end
+
+function ChangeProperty.ChangeEnabled(state)
+
+end
+
+--[[
 local function ChangeHat()
 	--[
 	local HatID = TextboxHatID:GetValue()
@@ -45,5 +80,7 @@ local function ChangeTransparency(visible)
 	local transparency = visible and 0 or 1
 	plugin:SetSetting("Transparency",transparency)
 end
+
+--]]
 
 return ChangeProperty
