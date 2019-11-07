@@ -21,7 +21,7 @@ function ChangeProperty.ChangeHat(hatId)
     end
 end
 
-function ChangeProperty.ChangeTransparency(visible)
+function ChangeProperty.ChangeTransparent(visible)
     local transparency = visible and 0 or 1
     Settings.SetTransparency(transparency)
 end
