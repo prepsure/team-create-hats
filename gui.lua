@@ -1,6 +1,8 @@
 -- handles all guis
 local Guis = {}
 
+--[==[
+
 -- studio widgets plugin gui module
 local studioWidgets = require(1638103268)
 
@@ -72,5 +74,7 @@ TextboxHatID:GetFrame().Wrapper.TextBox.FocusLost:Connect(ChangeProperty.ChangeH
 TextboxHeight:GetFrame().Wrapper.TextBox.FocusLost:Connect(ChangePropety.ChangeHeight)
 CheckboxTransparency:SetValueChangedFunction(ChangeProperty.ChangeTransparency)
 CheckboxEnabled:SetValueChangedFunction(ChangeProperty.ChangeEnabled)
+
+--]==]
 
 return Guis
