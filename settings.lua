@@ -6,25 +6,23 @@ local height = plugin:GetSetting("Height")
 local transparency = plugin:GetSetting("Transparency")
 local enabled = plugin:GetSetting("Enabled")
 
-local function storeValue
-
 -- checks if any settings aren't nil, if all are nil (user has never used the plugin) it enables the plugin and sets default settings
 function Settings.CheckForFirstTimeUse()
     if not hatid then
-        plugin:SetSetting("HatID", 1028826)
+        Settings.SetHatId(1028826)
     end
 
     if not height then
-        plugin:SetSetting("Height", 5)
+        Settings.SetHeight(5)
     end
 
     if not transparency then
-        plugin:SetSetting("Transparency", 0)
+        Settings.SetTransparency(0)
     end
 
     -- enabled is a boolean value, so need to check if its initialized without "not"
     if enabled == nil then
-        plugin:SetSetting("Enabled", true)
+        Settings.SetEnabled(true)
     end
 end
 
@@ -44,20 +42,24 @@ function Settings.GetEnabled()
     return enabled
 end
 
-function Settings.SetHatId()
-
+function Settings.SetHatId(newHatid)
+    hatid = newHatid
+    plugin:SetSetting("HatID", newHatid)
 end
 
-function Settings.SetHeight()
-
+function Settings.SetHeight(newHeight)
+    height = newHeight
+    plugin:SetSetting("Height", newHeight)
 end
 
-function Settings.SetTransparency()
-
+function Settings.SetTransparency(newTransparency)
+    transparency = newTransparency
+    plugin:SetSetting("Transparency", newTransparency)
 end
 
-function Settings.SetEnabled()
-
+function Settings.SetEnabled(newEnabled)
+    enabled = newEnabled
+    plugin:SetSetting("Enabled", newEnabled)
 end
 
 
