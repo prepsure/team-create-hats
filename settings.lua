@@ -17,19 +17,19 @@ function Settings.CheckForFirstTimeUse()
 end
 
 function Settings.GetHatId()
-
+    return hatId
 end
 
 function Settings.GetHeight()
-
+    return height
 end
 
-function Settings.GetTransparent()
-
+function Settings.GetTransparency()
+    return transparency
 end
 
 function Settings.GetEnabled()
-
+    return enabled
 end
 
 function Settings.SetHatId()
@@ -40,7 +40,7 @@ function Settings.SetHeight()
 
 end
 
-function Settings.SetTransparent()
+function Settings.SetTransparency()
 
 end
 
