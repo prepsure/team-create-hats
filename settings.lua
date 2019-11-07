@@ -7,7 +7,7 @@ local transparency = plugin:GetSetting("Transparency")
 local enabled = plugin:GetSetting("Enabled")
 
 -- checks if any settings aren't nil, if all are nil (user has never used the plugin) it enables the plugin and sets default settings
-function Settings.CheckForFirstTimeUse()
+function Settings.CheckForFirstTimeUseAndSetUp()
     if not hatid then
         Settings.SetHatId(1028826)
     end
