@@ -62,6 +62,4 @@ function Settings.SetEnabled(newEnabled)
     plugin:SetSetting("Enabled", newEnabled)
 end
 
-
-
-return 0
+return Settings
