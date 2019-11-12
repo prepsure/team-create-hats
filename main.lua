@@ -8,3 +8,7 @@ local Settings = require(script.settings)
 Settings.CheckForFirstTimeUseAndSetUp() -- checks for new users and sets default settings
 
 local Guis = require(script.gui) -- sets up and runs guis
+
+local HatUpdate = require(script.hatupdate)
+
+HatUpdate.Connect()
