@@ -3,17 +3,17 @@ local Guis = {}
 
 -- these guis are part of studio
 Guis.Toolbar = plugin:CreateToolbar("Team Create Hats")
-Guis.ToggleWindow = TeamCreate:CreateButton("Change Hat", "change hat properties", "rbxassetid://692849427")
+Guis.ToggleWindow = Guis.Toolbar:CreateButton("Change Hat", "change hat properties", "rbxassetid://692849427")
 Guis.Docket = plugin:CreateDockWidgetPluginGui(
     "Team Create Hats", 
     DockWidgetPluginGuiInfo.new(Enum.InitialDockState.Float, false, false, 200, 150)
 )
-Docket.Title = "Team Create Hat Properties"
-ToggleWindow:SetActive(Guis.Docket.Enabled)
+Guis.Docket.Title = "Team Create Hat Properties"
+Guis.ToggleWindow:SetActive(Guis.Docket.Enabled)
 
 Guis.ToggleWindow.Click:Connect(function()
     Guis.Docket.Enabled = not Guis.Docket.Enabled
-    ToggleWindow:SetActive(Guis.Docket.Enabled)
+    Guis.ToggleWindow:SetActive(Guis.Docket.Enabled)
 end)
 
 -- these guis are within the docket window
@@ -25,7 +25,7 @@ local CollapsibleTitledSectionClass = studioWidgets.CollapsibleTitledSection
 local GuiUtil = studioWidgets.GuiUtilities
 
 local MainSection = CollapsibleTitledSectionClass.new("HatProperties", "Hat Properties", true, true)
-MainSection:GetSectionFrame().Parent = pluginGui
+MainSection:GetSectionFrame().Parent = Guis.Docket
 
 local Settings = require(script.Parent.settings)
 
@@ -39,7 +39,7 @@ local function SetGuisInSection(objs, section)
 	background.BackgroundColor3 = objs[1]:GetFrame().BackgroundColor3
 	background.Size = UDim2.new(1, 0, 1, 0)
 	background.ZIndex = -10
-	background.Parent = pluginGui
+	background.Parent = Guis.Docket
 	GuiUtil.syncGuiElementBackgroundColor(background)
 
 	for i, obj in pairs(objs)do
@@ -49,7 +49,7 @@ local function SetGuisInSection(objs, section)
 	end
 end
 
-SetGui({TextboxHatID, TextboxHeight, CheckboxTransparency, CheckboxEnabled}, MainSection)
+SetGuisInSection({Guis.TextboxHatID, Guis.TextboxHeight, Guis.CheckboxTransparency, Guis.CheckboxEnabled}, MainSection)
 
 -- removes everything that isn't a number from a string
 function Guis.FilterToWholeNumber(textbox, value)
@@ -66,17 +66,17 @@ function Guis.FilterToNumber(textbox, value)
 end
 
 Guis.TextboxHatID:SetValueChangedFunction(function(value)
-    Guis.FilterToWholeNumber(TextboxHatID, value)
+    Guis.FilterToWholeNumber(Guis.TextboxHatID, value)
 end)
 
 Guis.TextboxHeight:SetValueChangedFunction(function(value)
-    Guis.FilterToNumber(TextboxHeight, value)
+    Guis.FilterToNumber(Guis.TextboxHeight, value)
 end)
 
 local ChangeProperty = require(script.Parent.changeproperty)
 
 Guis.TextboxHatID:GetFrame().Wrapper.TextBox.FocusLost:Connect(ChangeProperty.ChangeHat)
-Guis.TextboxHeight:GetFrame().Wrapper.TextBox.FocusLost:Connect(ChangePropety.ChangeHeight)
+Guis.TextboxHeight:GetFrame().Wrapper.TextBox.FocusLost:Connect(ChangeProperty.ChangeHeight)
 Guis.CheckboxEnabled:SetValueChangedFunction(ChangeProperty.ChangeEnabled)
 Guis.CheckboxTransparency:SetValueChangedFunction(ChangeProperty.ChangeTransparent)
 

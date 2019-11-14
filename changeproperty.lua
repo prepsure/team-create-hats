@@ -6,6 +6,8 @@ local Gui = require(script.Parent.gui)
 local HatUpdate = require(script.Parent.hatupdate)
 local Settings = require(script.Parent.settings)
 
+local InsertService = game:GetService("InsertService")
+
 function ChangeProperty.ChangeHat(hatId)
     -- if success returns true and hat is non nil, the id corresponds to a hat. if it doesn't, set the id back to the previous hat
     local success, hat = pcall(function()
@@ -27,7 +29,7 @@ function ChangeProperty.ChangeTransparent(visible)
 end
 
 function ChangeProperty.ChangeHeight(height)
-	if tonumber(h) then
+	if tonumber(height) then
         Settings.SetHeight(height)
     else
         Gui.Height:SetValue(Settings.GetHeight())
