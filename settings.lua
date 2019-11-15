@@ -1,10 +1,10 @@
 -- manages settings and stores values of settings
 local Settings = {}
 
-local hatid = plugin:GetSetting("HatID")
-local height = plugin:GetSetting("Height")
-local transparency = plugin:GetSetting("Transparency")
-local enabled = plugin:GetSetting("Enabled")
+local hatid = _G.plugin_990908723:GetSetting("HatID")
+local height = _G.plugin_990908723:GetSetting("Height")
+local transparency = _G.plugin_990908723:GetSetting("Transparency")
+local enabled = _G.plugin_990908723:GetSetting("Enabled")
 
 -- checks if any settings aren't nil, if all are nil (user has never used the plugin) it enables the plugin and sets default settings
 function Settings.CheckForFirstTimeUseAndSetUp()
@@ -44,22 +44,22 @@ end
 
 function Settings.SetHatId(newHatid)
     hatid = newHatid
-    plugin:SetSetting("HatID", newHatid)
+    _G.plugin_990908723:SetSetting("HatID", newHatid)
 end
 
 function Settings.SetHeight(newHeight)
     height = newHeight
-    plugin:SetSetting("Height", newHeight)
+    _G.plugin_990908723:SetSetting("Height", newHeight)
 end
 
 function Settings.SetTransparency(newTransparency)
     transparency = newTransparency
-    plugin:SetSetting("Transparency", newTransparency)
+    _G.plugin_990908723:SetSetting("Transparency", newTransparency)
 end
 
 function Settings.SetEnabled(newEnabled)
     enabled = newEnabled
-    plugin:SetSetting("Enabled", newEnabled)
+    _G.plugin_990908723:SetSetting("Enabled", newEnabled)
 end
 
 return Settings

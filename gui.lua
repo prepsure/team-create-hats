@@ -2,9 +2,9 @@
 local Guis = {}
 
 -- these guis are part of studio
-Guis.Toolbar = plugin:CreateToolbar("Team Create Hats")
+Guis.Toolbar = _G.plugin_990908723:CreateToolbar("Team Create Hats")
 Guis.ToggleWindow = Guis.Toolbar:CreateButton("Change Hat", "change hat properties", "rbxassetid://692849427")
-Guis.Docket = plugin:CreateDockWidgetPluginGui(
+Guis.Docket = _G.plugin_990908723:CreateDockWidgetPluginGui(
     "Team Create Hats", 
     DockWidgetPluginGuiInfo.new(Enum.InitialDockState.Float, false, false, 200, 150)
 )
@@ -72,12 +72,5 @@ end)
 Guis.TextboxHeight:SetValueChangedFunction(function(value)
     Guis.FilterToNumber(Guis.TextboxHeight, value)
 end)
-
-local ChangeProperty = require(script.Parent.changeproperty)
-
-Guis.TextboxHatID:GetFrame().Wrapper.TextBox.FocusLost:Connect(ChangeProperty.ChangeHat)
-Guis.TextboxHeight:GetFrame().Wrapper.TextBox.FocusLost:Connect(ChangeProperty.ChangeHeight)
-Guis.CheckboxEnabled:SetValueChangedFunction(ChangeProperty.ChangeEnabled)
-Guis.CheckboxTransparency:SetValueChangedFunction(ChangeProperty.ChangeTransparent)
 
 return Guis
