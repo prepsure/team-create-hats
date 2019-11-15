@@ -3,7 +3,6 @@
 local ChangeProperty = {}
 
 local Gui = require(script.Parent.gui)
-local HatUpdate = require(script.Parent.hatupdate)
 local Settings = require(script.Parent.settings)
 
 local InsertService = game:GetService("InsertService")
@@ -17,7 +16,7 @@ function ChangeProperty.ChangeHat(hatId)
 
     if success and hat then
         Settings.SetHatId(hatId)
-        HatUpdate.UpdateHat(hat)
+        require(script.Parent.hatupdate).UpdateHat(hat)
     else
         Gui.HatId:SetValue(Settings.GetHatId())
     end

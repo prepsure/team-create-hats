@@ -9,7 +9,7 @@ HatUpdate.CurrentHat = nil
 HatUpdate.Folder = nil
 
 local function makeFolder()
-	folder = script["Player'sHats"]:Clone()
+	local folder = script["Player'sHats"]:Clone()
 	folder.Parent = workspace
 	folder.Name = Players.LocalPlayer.Name.."'s hats"
     folder.Archivable = false
@@ -19,10 +19,10 @@ end
 
 local function moveHat()
     if not HatUpdate.Folder then
-        makeFolder
+        makeFolder()
     end
     if not HatUpdate.CurrentHat then
-        HatUpdate.UpdateHat(--[[TODO]])
+        require(script.Parent.changeproperty).ChangeHat(Settings.GetHatId())
     end
     CurrentHat:FindFirstChildOfClass("Part").CFrame = workspace.CurrentCamera.CFrame + Vector3.new(0, Settings.GetHeight(), 0)
 end
@@ -35,7 +35,7 @@ function HatUpdate.UpdateHat(hat)
     CurrentHat = hat
     CurrentHat.Archivable = false
     CurrentHat.Handle.Locked = true
-    CurrentHat.Parent = HatUpdate.Folder or makeFolder() -- TODO: create this folder somewhere
+    CurrentHat.Parent = HatUpdate.Folder or makeFolder()
 
     local handle = hat:FindFirstChildOfClass("Part")
     handle.LocalTransparencyModifier = Settings.GetTransparency()
