@@ -8,8 +8,19 @@ HatUpdate._connection = nil
 HatUpdate.CurrentHat = nil
 HatUpdate.Folder = nil
 
+local defaultfolder = (function()
+	local folder = Instance.new("SunRaysEffect") -- i like the icon, it's easily recongnizable as something the person didn't put in the workspace
+	folder.Name = "PlayerHats"
+	
+	folder.Enabled = false
+	folder.Intensity = 0
+	folder.Spread = 0
+	
+	return folder
+end)()
+
 local function makeFolder()
-	local folder = script["Player'sHats"]:Clone()
+	local folder = defaultfolder:Clone()
 	folder.Parent = workspace
 	folder.Name = Players.LocalPlayer.Name.."'s hats"
     folder.Archivable = false
@@ -69,7 +80,7 @@ end
 
 function HatUpdate.Disconnect()
     HatUpdate._connection:Disconnect()
-	HatUpdate.CurrentHat:Destroy()
+	findHat():Destroy()
 	HatUpdate.CurrentHat = nil
 	HatUpdate.Folder:Destroy()
 	HatUpdate.Folder = nil
