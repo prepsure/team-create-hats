@@ -82,7 +82,7 @@ function HatUpdate.Disconnect()
     HatUpdate._connection:Disconnect()
 	findHat():Destroy()
 	HatUpdate.CurrentHat = nil
-	HatUpdate.Folder:Destroy()
+	findFolder():Destroy()
 	HatUpdate.Folder = nil
 end
 
