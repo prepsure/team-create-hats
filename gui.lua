@@ -19,8 +19,8 @@ end)
 -- these guis are within the docket window
 local studioWidgets = require(1638103268)
 
-local LabeledCheckboxClass = studioWidgets.LabeledCheckbox
-local LabeledTextInputClass = studioWidgets.LabeledTextInput
+local LabeledCheckbox = studioWidgets.LabeledCheckbox
+local LabeledTextInput = studioWidgets.LabeledTextInput
 local CollapsibleTitledSectionClass = studioWidgets.CollapsibleTitledSection
 local GuiUtil = studioWidgets.GuiUtilities
 
@@ -29,10 +29,10 @@ MainSection:GetSectionFrame().Parent = Guis.Docket
 
 local Settings = require(script.Parent.settings)
 
-Guis.TextboxHatID         = LabeledTextInputClass.new("HatID",       "AccessoryId",  tostring(Settings.GetHatId()))
-Guis.TextboxHeight        = LabeledTextInputClass.new("Height",      "Height",       tostring(Settings.GetHeight()))
-Guis.CheckboxTransparency = LabeledCheckboxClass.new ("Transparent", "VisibleLocal", (Settings.GetTransparency() == 0), true)
-Guis.CheckboxEnabled      = LabeledCheckboxClass.new ("Enabled",     "Enabled",      Settings.GetEnabled(),             true)
+Guis.TextboxHatID         = LabeledTextInput.new("HatID",       "AccessoryId",  tostring(Settings.GetHatId())          )
+Guis.TextboxHeight        = LabeledTextInput.new("Height",      "Height",       tostring(Settings.GetHeight())         )
+Guis.CheckboxTransparency = LabeledCheckbox.new ("Transparent", "VisibleLocal", (Settings.GetTransparency() == 0), true)
+Guis.CheckboxEnabled      = LabeledCheckbox.new ("Enabled",     "Enabled",      Settings.GetEnabled(),             true)
 
 local function SetGuisInSection(objs, section)
 	local background = Instance.new("Frame")
