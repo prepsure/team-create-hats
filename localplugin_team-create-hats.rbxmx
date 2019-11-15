@@ -1,13 +1,13 @@
 <roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
 	<External>null</External>
 	<External>nil</External>
-	<Item class="Folder" referent="RBX731679482A7944F48319F4E26C0D3B40">
+	<Item class="Folder" referent="RBX7CF884818C70458A9FA556D2AB3A84E2">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">tchatsv3</string>
 			<BinaryString name="Tags"></BinaryString>
 		</Properties>
-		<Item class="LocalScript" referent="RBXFBB38C4331704FC0BF952403F25D49F5">
+		<Item class="LocalScript" referent="RBX52DB8C758C4E4E8C86545648B5A40477">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<bool name="Disabled">false</bool>
@@ -16,11 +16,11 @@
 				<string name="ScriptGuid">{359F3A80-5305-4652-BABB-E7D446AC5792}</string>
 				<ProtectedString name="Source"><![CDATA[-- main script, starts all modules
 
-_G.plugin_990908723 = plugin -- apparently plugin doesn't work within a module script
-
 local Prechecks = require(script.prechecks)
 
-if not Prechecks.shouldRun() then script.Disabled = true end
+if not Prechecks.shouldRun() then return end
+
+_G.plugin_990908723 = plugin -- apparently plugin doesn't work within a module script
 
 local Settings = require(script.settings)
 Settings.CheckForFirstTimeUseAndSetUp() -- checks for new users and sets default settings
@@ -34,7 +34,7 @@ _G.plugin_990908723.Unloading:Connect(function()
 end)]]></ProtectedString>
 				<BinaryString name="Tags"></BinaryString>
 			</Properties>
-			<Item class="ModuleScript" referent="RBXEDB2905FC38345C4B28F9A8863E2592C">
+			<Item class="ModuleScript" referent="RBX9E538CA3355748D384687AC6363CCC19">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<Content name="LinkedSource"><null></null></Content>
@@ -119,7 +119,7 @@ return Guis]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 				</Properties>
 			</Item>
-			<Item class="ModuleScript" referent="RBX190E7D7B826446E0956D193285BB677F">
+			<Item class="ModuleScript" referent="RBX632B0759AF7D435E8C8235CA634AF733">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<Content name="LinkedSource"><null></null></Content>
@@ -133,15 +133,15 @@ local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 
 function Prechecks.shouldRun()
-    return not RunService:IsRunning() and -- determines if the game is running
-           Players.LocalPlayer -- determines if team create is active
+    return (RunService:IsEdit()) and -- determines if the game is running
+           (Players.LocalPlayer ~= nil) -- determines if team create is active
 end
 
 return Prechecks]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 				</Properties>
 			</Item>
-			<Item class="ModuleScript" referent="RBX8BEB3738EABB4F2EBEE851D4352CA0E4">
+			<Item class="ModuleScript" referent="RBX182BC03F43504B8CB07A66821A84B10F">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<Content name="LinkedSource"><null></null></Content>
@@ -215,7 +215,7 @@ return Settings]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 				</Properties>
 			</Item>
-			<Item class="ModuleScript" referent="RBXF314E197DE0246EC9849B193050DC90B">
+			<Item class="ModuleScript" referent="RBX4A48D12F314E4AFCA3E17B3DABB1A552">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<Content name="LinkedSource"><null></null></Content>
@@ -283,7 +283,7 @@ return ChangeProperty]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 				</Properties>
 			</Item>
-			<Item class="ModuleScript" referent="RBX837AC761DF7E4948A8E9E794FC876CAD">
+			<Item class="ModuleScript" referent="RBX71D518F93AD04339901C4FD6BCF8DC8A">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<Content name="LinkedSource"><null></null></Content>
@@ -312,9 +312,9 @@ end)()
 
 local function makeFolder()
 	local folder = defaultfolder:Clone()
+	folder.Archivable = false
 	folder.Parent = workspace
 	folder.Name = Players.LocalPlayer.Name.."'s hats"
-    folder.Archivable = false
     HatUpdate.Folder = folder
 	return folder
 end

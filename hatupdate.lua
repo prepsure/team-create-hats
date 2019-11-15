@@ -21,9 +21,9 @@ end)()
 
 local function makeFolder()
 	local folder = defaultfolder:Clone()
+	folder.Archivable = false
 	folder.Parent = workspace
 	folder.Name = Players.LocalPlayer.Name.."'s hats"
-    folder.Archivable = false
     HatUpdate.Folder = folder
 	return folder
 end
@@ -38,7 +38,7 @@ local function findFolder()
 end
 
 local function findHat()
-	if not HatUpdate.CurrentHat then
+	if (not HatUpdate.CurrentHat) or (not HatUpdate.CurrentHat:FindFirstChildOfClass("Part")) then
 		require(script.Parent.changeproperty).ChangeHat(Settings.GetHatId()) -- equivalent to a makeHat() function
 	elseif HatUpdate.CurrentHat ~= HatUpdate.Folder then
 		HatUpdate.CurrentHat.Parent = HatUpdate.Folder
@@ -52,6 +52,7 @@ end
 
 local function moveHat()
     findFolder()
+	HatUpdate.GetHatPart().LocalTransparencyModifier = Settings.GetTransparency()
     HatUpdate.GetHatPart().CFrame = workspace.CurrentCamera.CFrame + Vector3.new(0, Settings.GetHeight(), 0)
 end
 

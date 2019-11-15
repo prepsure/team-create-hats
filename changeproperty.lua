@@ -34,7 +34,6 @@ end
 function ChangeProperty.ChangeTransparent(visible)
     local transparency = visible and 0 or 1
     Settings.SetTransparency(transparency)
-	HatUpdate.GetHatPart().LocalTransparencyModifier = transparency
 end
 
 function ChangeProperty.ChangeEnabled(state)
