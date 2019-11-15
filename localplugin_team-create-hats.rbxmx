@@ -1,13 +1,13 @@
 <roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
 	<External>null</External>
 	<External>nil</External>
-	<Item class="Folder" referent="RBX9BBEED9FEC3248D48C9E298AE447B816">
+	<Item class="Folder" referent="RBX6BCC807D1ED94A1C9A8A700655F409A1">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">tchatsv3</string>
 			<BinaryString name="Tags"></BinaryString>
 		</Properties>
-		<Item class="LocalScript" referent="RBX3E32BAF2C8C54A19A7C712E80820D7EC">
+		<Item class="LocalScript" referent="RBX0A74DC39105A48CAAC476D11E1E06D04">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<bool name="Disabled">false</bool>
@@ -42,7 +42,7 @@ if Prechecks.shouldRun() then
 end]]></ProtectedString>
 				<BinaryString name="Tags"></BinaryString>
 			</Properties>
-			<Item class="ModuleScript" referent="RBXF6F73F22C5B44546B106181D509F47D9">
+			<Item class="ModuleScript" referent="RBX58F89FD90C4E40F08A183D238BB40AA5">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<Content name="LinkedSource"><null></null></Content>
@@ -127,7 +127,7 @@ return Guis]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 				</Properties>
 			</Item>
-			<Item class="ModuleScript" referent="RBX0A63567561B74EC2B9F6FAC236465202">
+			<Item class="ModuleScript" referent="RBX8445BE4C39354910A3667E7707B553FF">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<Content name="LinkedSource"><null></null></Content>
@@ -149,7 +149,7 @@ return Prechecks]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 				</Properties>
 			</Item>
-			<Item class="ModuleScript" referent="RBXEC0706B6079844989B025D6E8A967244">
+			<Item class="ModuleScript" referent="RBX30FB818F6CC44908B428D7BE56BA793B">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<Content name="LinkedSource"><null></null></Content>
@@ -223,7 +223,7 @@ return Settings]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 				</Properties>
 			</Item>
-			<Item class="ModuleScript" referent="RBX5D32C69544CF47EE85D82C418F844961">
+			<Item class="ModuleScript" referent="RBXAEF185D72FAB44549A5F6B459D7A3731">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<Content name="LinkedSource"><null></null></Content>
@@ -248,7 +248,9 @@ function ChangeProperty.ChangeHat(hatId)
 
     if success and hat then
         Settings.SetHatId(hatId)
-        HatUpdate.UpdateHat(hat)
+		if Settings.GetEnabled() then
+        	HatUpdate.UpdateHat(hat)
+		end
     else
         Gui.TextboxHatID:SetValue(Settings.GetHatId())
     end
@@ -290,7 +292,7 @@ return ChangeProperty]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 				</Properties>
 			</Item>
-			<Item class="ModuleScript" referent="RBX489878B4BA6F459D846320FBAE2B8907">
+			<Item class="ModuleScript" referent="RBX6E3BC1B4EDAA4FA4A3FB3E8BC38BE6D0">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<Content name="LinkedSource"><null></null></Content>
