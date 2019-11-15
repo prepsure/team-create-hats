@@ -17,7 +17,9 @@ function ChangeProperty.ChangeHat(hatId)
 
     if success and hat then
         Settings.SetHatId(hatId)
-        HatUpdate.UpdateHat(hat)
+		if Settings.GetEnabled() then
+        	HatUpdate.UpdateHat(hat)
+		end
     else
         Gui.TextboxHatID:SetValue(Settings.GetHatId())
     end
