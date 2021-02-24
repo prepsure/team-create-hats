@@ -1,0 +1,13 @@
+{
+  "name": "team-create-hats",
+  "tree": {
+    "$className": "DataModel",
+
+    "ServerStorage": {
+      "$className": "ServerStorage",
+      "tch-v4": {
+        "$path": "src"
+      }
+    }
+  }
+}
