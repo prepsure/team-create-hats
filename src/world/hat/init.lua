@@ -23,7 +23,7 @@ Hat.__index = Hat
                                        orientations should be applied to the accessory
         visibleLocally -    a boolean, whether the local transparency modifier should be toggled
 
-]]
+--]]
 
 function Hat.new(model, propTable)
     local self = setmetatable({}, Hat)
@@ -41,7 +41,7 @@ function Hat.new(model, propTable)
 end
 
 
---------- setters
+--------- setters ----------
 
 
 function Hat:SetOffset(offset)
@@ -56,6 +56,7 @@ end
 
 
 function Hat:SetTransformPriority(state)
+    assert(state == "rotate" or state == "translate", "transform priority set incorrectly")
     self.transformPriority = state
 end
 
