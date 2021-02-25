@@ -30,6 +30,8 @@ function Importer:LoadHat(id)
         return 406, "no mesh found"
     end
 
+    hat.Handle.Anchored = true
+    
     return 200, hat
 end
 
