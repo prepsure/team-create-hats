@@ -30,8 +30,12 @@ function PersistentInstance.new(inst, keepParent)
 
     self._instance.Archivable = false
     self._className = "PersistentInstance"
+    self._dead = false
 
     self._saveConnection = inst.AncestryChanged:Connect(function()
+        if self._dead then
+            return
+        end
         PersistentInstance._saveFromDeletion(self)
     end)
 
@@ -91,6 +95,8 @@ end
 
 
 function PersistentInstance:Destroy()
+    self._dead = true
+
     self._instance:Destroy()
     self._clone:Destroy()
     self._saveConnection:Disconnect()
