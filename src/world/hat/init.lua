@@ -1,5 +1,3 @@
-local Importer = require(script.importer)
-
 local RunService = game:GetService("RunService")
 
 
@@ -82,7 +80,7 @@ function Hat:SetCFrame(aroundCf)
     if not self.model._instance:FindFirstChild("Handle") then
         return
     end
-    
+
     if self.transformPriority == "rotate" then
         self.model.Handle.CFrame = aroundCf * CFrame.new(self.offset)
     else
