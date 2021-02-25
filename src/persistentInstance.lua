@@ -2,41 +2,48 @@ local RunService = game:GetService("RunService")
 
 
 local PersistentInstance = {}
-PersistentInstance.__index = PersistentInstance
 
 
 function PersistentInstance:__index(index)
-    if PersistentInstance[index] then
-		return PersistentInstance[index]
+    if rawget(self, index) then
+		return rawget(self, index)
+    elseif rawget(PersistentInstance, index) then
+        return rawget(PersistentInstance, index)
 	else
-		return self._instance[index]
+		return rawget(self, "_instance")[index]
 	end
 end
 
 
 function PersistentInstance:__newindex(index, value)
-	self._instance[index] = value
-end
-
-
-function PersistentInstance:__call()
-    return self._instance
+	rawget(self, "_instance")[index] = value
 end
 
 
 function PersistentInstance.new(inst, keepParent)
-    local self = setmetatable({}, PersistentInstance)
+    local self = {}
 
     self._instance = inst
 
     self._clone = inst:Clone()
     self._parent = keepParent
 
+    self._instance.Archivable = false
+    self._className = "PersistentInstance"
+
     self._saveConnection = inst.AncestryChanged:Connect(function()
-        self:_saveFromDeletion()
+        PersistentInstance._saveFromDeletion(self)
     end)
 
-    self._className = "PersistentInstance"
+    self._descendants = {}
+    for _, lowerInst in ipairs(inst:GetChildren()) do
+        table.insert(self._descendants, PersistentInstance.new(lowerInst, self))
+        print(lowerInst.Name)
+    end
+
+    self._clone:ClearAllChildren()
+
+    setmetatable(self, PersistentInstance)
 
     inst.Parent = self:_getParentInstance()
 
@@ -51,7 +58,7 @@ function PersistentInstance:_getParentInstance()
         return p._instance
     end
 
-    return self._parent
+    return p
 end
 
 
@@ -73,6 +80,7 @@ end
 function PersistentInstance:_reinstantiate()
     -- expects the instance is already destroyed, so it doesn't destroy it on its own
     self._instance = self._clone:Clone()
+    self._instance.Archivable = false
     self._instance.Parent = self:_getParentInstance()
 
     self._saveConnection:Disconnect()
@@ -86,6 +94,11 @@ function PersistentInstance:Destroy()
     self._instance:Destroy()
     self._clone:Destroy()
     self._saveConnection:Disconnect()
+
+    for _, inst in pairs(self._descendants) do
+        inst:Destroy()
+    end
+    self._descendants = nil
 
     self = nil
 end
