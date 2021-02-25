@@ -74,7 +74,7 @@ end
 
 function Hat:SetVisibleLocally(state)
     self.visibleLocally = state
-    self.model.LocalTransparencyModifier = state and 0 or 1
+    self.model.Handle.LocalTransparencyModifier = state and 0 or 1
 end
 
 
@@ -93,7 +93,7 @@ function Hat:SetCFrame(aroundCf)
     if self.transformPriority == "rotate" then
         self.model.Handle.CFrame = aroundCf * CFrame.new(self.offset)
     else
-        self.model.Handel.CFrame = (CFrame.new(aroundCf.p) + self.offset) * (aroundCf - aroundCf.p)
+        self.model.Handle.CFrame = (CFrame.new(aroundCf.p) + self.offset) * (aroundCf - aroundCf.p)
     end
 end
 
