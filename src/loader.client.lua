@@ -12,26 +12,25 @@ if not shouldRun then
 end
 
 
-
---
-
-local components = {
-    hatImporter = require(root.hat.importer),
-    hat = require(root.hat),
-}
+----------
 
 
+local HatImporter = require(root.hat.importer)
+local Hat = require(root.hat)
+local Storage = require(root.storage)
+local PersistentInstance = require(root.persistentInstance)
 
-
+local folder = PersistentInstance.new(Storage("SunRaysEffect", game:GetService("Players").LocalPlayer.Name), workspace)
 
 local myId = 553870650
-local statusCode, accessory = components.hatImporter:LoadHat(myId)
-components.hat.new(folder, accessory, {
+local statusCode, accessory = HatImporter:LoadHat(myId)
+
+local persistentAccessory = PersistentInstance.new(accessory, folder)
+
+local myHat = Hat.new(persistentAccessory, {
     id = myId,
     offset = Vector3.new(0,5,0),
     scale = accessory.Handle.Mesh.Scale,
     transformPriority = "Translate",
     visibleLocally = true,
 })
-
-accessory.Parent = workspace
