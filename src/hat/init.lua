@@ -17,7 +17,6 @@ Hat.__index = Hat
     @param: property table
         - a dictionary with the following properties:
 
-        id -                a number,  the asset id of the model
         offset -            a Vector3, the offset the accessory from the player's camera
         scale -             a Vector3, the scale of the accessory's mesh
         transformPriority - a string,  "rotate" or "translate" that describes in what order 
@@ -30,7 +29,6 @@ function Hat.new(model, propTable)
     local self = setmetatable({}, Hat)
 
     self.model = model
-    self.id = propTable.id
 
     self:SetOffset(propTable.offset)
     self:SetScale(propTable.scale)
@@ -44,16 +42,6 @@ end
 
 
 --------- setters
-
-
-function Hat:SetId(id)
-    if self.model then
-        self.model:Destroy()
-    end
-
-    self.model = Importer:LoadHat(id)
-    self.id = id
-end
 
 
 function Hat:SetOffset(offset)
