@@ -24,7 +24,7 @@ end
 
 ----------
 
-local HatImporter = require(root.hat.world.importer)
+local HatImporter = require(root.world.hat.importer)
 local Hat = require(root.world.hat)
 local Storage = require(root.world.storage)
 local PersistentInstance = require(root.world.persistentInstance)
@@ -41,6 +41,11 @@ local myHat = Hat.new(persistentAccessory, {
     id = myId,
     offset = Vector3.new(0,5,0),
     scale = accessory.Handle.Mesh.Scale,
-    transformPriority = "rotate",
+    transformPriority = "translate",
     visibleLocally = true,
 })
+
+wait(5)
+
+persistentFolder:Destroy()
+myHat:Destroy()
