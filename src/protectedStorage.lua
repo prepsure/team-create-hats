@@ -55,6 +55,7 @@ function ProtectedStorage:_saveFolderFromDeletion()
     -- if we get to here, the folder was destroyed and we need to clean up the object
 
     self:Destroy()
+    -- TODO reinstantiate folder
 end
 
 
@@ -71,8 +72,9 @@ function ProtectedStorage:_saveItemFromDeletion(item)
     end
 
     for _, hat in pairs(self.hats) do
-        if item == hat then
+        if item == hat.model then
             hat:Destroy()
+            -- TODO reinstantiate hat
         end
     end
 end
@@ -84,7 +86,7 @@ function ProtectedStorage:Destroy()
     self._putBackFolder:Disconnect()
     self._putBackFolder = nil
 
-    for i, hat in pairs(self.hats) do
+    for _, hat in pairs(self.hats) do
         hat:Destroy()
     end
     self.hats = nil
