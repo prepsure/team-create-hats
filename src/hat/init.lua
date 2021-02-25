@@ -78,6 +78,10 @@ end
 
 -- takes all the properties the hat currently has and positions it correctly
 function Hat:SetCFrame(aroundCf)
+    if not self.model._instance:FindFirstChild("Handle") then
+        return
+    end
+    
     if self.transformPriority == "rotate" then
         self.model.Handle.CFrame = aroundCf * CFrame.new(self.offset)
     else
