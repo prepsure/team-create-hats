@@ -2,21 +2,39 @@ local StudioDocket = {}
 
 local plugin = script:FindFirstAncestorWhichIsA("Plugin")
 
+
 StudioDocket.Toolbar = plugin:CreateToolbar("Team Create Hats")
 
-StudioDocket.TogglePropertyWindow = StudioDocket.Toolbar:CreateButton("Edit Hats", "change hat properties", "rbxassetid://692849427")
-StudioDocket.TogglePreviewWindow = StudioDocket.Toolbar:CreateButton("Preview", "preview hats", "rbxassetid://692849427")
 
-StudioDocket.Docket = plugin:CreateDockWidgetPluginGui(
-    "Team Create with Hats",
-    DockWidgetPluginGuiInfo.new(Enum.InitialDockState.Left, false, false, 200, 150)
-)
-StudioDocket.Docket.Title = "Hat Editor"
-StudioDocket.TogglePropertyWindow:SetActive(StudioDocket.Docket.Enabled)
+local function createDocket(button, name)
+    local docket = plugin:CreateDockWidgetPluginGui(
+        name, DockWidgetPluginGuiInfo.new(Enum.InitialDockState.Left, false, false, 200, 150)
+    )
 
-StudioDocket.TogglePropertyWindow.Click:Connect(function()
-    StudioDocket.Docket.Enabled = not StudioDocket.Docket.Enabled
-    StudioDocket.TogglePropertyWindow:SetActive(StudioDocket.Docket.Enabled)
-end)
+    docket.Title = name
+    button:SetActive(StudioDocket.HatEditorDocket.Enabled)
+
+    button.Click:Connect(function()
+        docket.Enabled = not docket.Enabled
+        button:SetActive(docket.Enabled)
+    end)
+
+    return docket
+end
+
+
+StudioDocket.Windows = {
+    ['Edit Hats'] = {
+        Button = StudioDocket.Toolbar:CreateButton("Edit Hats", "change hat properties", "rbxassetid://692849427"),
+    },
+    ['Preview Hats'] = {
+        Button = StudioDocket.Toolbar:CreateButton("Preview", "preview hats", "rbxassetid://692849427"),
+    }
+}
+
+for name, window in pairs(StudioDocket.Windows) do
+    window.Docket = createDocket(window.Button, name)
+end
+
 
 return StudioDocket
