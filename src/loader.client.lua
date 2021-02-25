@@ -2,7 +2,6 @@
 -- presssssure
 -- 2021-02-24
 
---
 
 local root = script.Parent
 local shouldRun = require(root.prechecks)
@@ -14,18 +13,29 @@ end
 
 ----------
 
+-- cleanup from last time
+local CollectionService = game:GetService("CollectionService")
+local yourHatTag = game:GetService("Players").LocalPlayer.Name .. "'s hats"
+
+for _, f in pairs(CollectionService:GetTagged(yourHatTag)) do
+    f:Destroy()
+end
+
+----------
 
 local HatImporter = require(root.hat.importer)
 local Hat = require(root.hat)
 local Storage = require(root.storage)
 local PersistentInstance = require(root.persistentInstance)
 
-local folder = PersistentInstance.new(Storage("SunRaysEffect", game:GetService("Players").LocalPlayer.Name), workspace)
+local folder = Storage("SunRaysEffect", game:GetService("Players").LocalPlayer.Name)
+CollectionService:AddTag(folder, yourHatTag)
+local persistentFolder = PersistentInstance.new(folder, workspace)
 
 local myId = 553870650
 local statusCode, accessory = HatImporter:LoadHat(myId)
 
-local persistentAccessory = PersistentInstance.new(accessory, folder)
+local persistentAccessory = PersistentInstance.new(accessory, persistentFolder)
 
 local myHat = Hat.new(persistentAccessory, {
     id = myId,
