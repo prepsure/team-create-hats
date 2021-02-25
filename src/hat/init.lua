@@ -26,7 +26,7 @@ Hat.__index = Hat
 
 ]]
 
-function Hat.new(model, propTable)
+function Hat.new(folder, model, propTable)
     local self = setmetatable({}, Hat)
 
     self.model = model
@@ -38,6 +38,8 @@ function Hat.new(model, propTable)
     self:SetVisibleLocally(propTable.visibleLocally)
 
     self._floatConnection = self:_bindFloating()
+
+    self.model.Parent = folder
 
     return self
 end
