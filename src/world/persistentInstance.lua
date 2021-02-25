@@ -42,7 +42,6 @@ function PersistentInstance.new(inst, keepParent)
     self._descendants = {}
     for _, lowerInst in ipairs(inst:GetChildren()) do
         table.insert(self._descendants, PersistentInstance.new(lowerInst, self))
-        print(lowerInst.Name)
     end
 
     self._clone:ClearAllChildren()
