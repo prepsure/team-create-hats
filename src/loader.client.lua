@@ -21,9 +21,12 @@ local components = {
 }
 
 
+
+
+
 local myId = 553870650
 local statusCode, accessory = components.hatImporter:LoadHat(myId)
-components.hat.new(accessory, {
+components.hat.new(folder, accessory, {
     id = myId,
     offset = Vector3.new(0,5,0),
     scale = accessory.Handle.Mesh.Scale,
