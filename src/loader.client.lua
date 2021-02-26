@@ -27,9 +27,6 @@ end
 ----------
 
 
-local RunService = game:GetService("RunService")
-
-
 local HatImporter = require(root.world.hat.importer)
 local Hat = require(root.world.hat)
 local Storage = require(root.world.storage)
@@ -37,6 +34,7 @@ local PersistentInstance = require(root.world.persistentInstance)
 
 local StudioDocket = require(root.gui.studioDocket)
 local PreviewWindow = require(root.gui.PreviewWindow)
+local EditorWindow = require(root.gui.EditorWindow)
 
 
 ----------
@@ -58,3 +56,5 @@ local myHats = {Hat.new(persistentAccessory, {
 
 PreviewWindow.mount(StudioDocket.Windows["Preview Hats"].Docket)
 PreviewWindow.Settings.Hats = myHats
+
+EditorWindow.mount(StudioDocket.Windows["Edit Hats"].Docket)
