@@ -29,8 +29,8 @@ end
 
 local HatImporter = require(root.world.hat.importer)
 local Hat = require(root.world.hat)
-local Storage = require(root.world.storage)
 local PersistentInstance = require(root.world.persistentInstance)
+local PersistentFolder = require(root.world.storage)
 
 local StudioDocket = require(root.gui.studioDocket)
 local PreviewWindow = require(root.gui.PreviewWindow)
@@ -39,20 +39,20 @@ local EditorWindow = require(root.gui.EditorWindow)
 
 ----------
 
-local folder = Storage("SunRaysEffect", game:GetService("Players").LocalPlayer.Name)
-CollectionService:AddTag(folder, yourHatTag)
-local persistentFolder = PersistentInstance.new(folder, workspace)
-
 local myId = 553870650
 local _, accessory = HatImporter:LoadHat(myId)
-local persistentAccessory = PersistentInstance.new(accessory, persistentFolder)
+local persistentAccessory = PersistentInstance.new(accessory, PersistentFolder)
 
-local myHats = {Hat.new(persistentAccessory, {
-    offset = Vector3.new(0,1,0),
-    scale = accessory.Handle.Mesh.Scale,
-    transformPriority = "rotate",
-    visibleLocally = false,
-})}
+local _, accessory2 = HatImporter:LoadHat(5064875017)
+
+local myHats = {
+    Hat.new(persistentAccessory, {
+        offset = Vector3.new(0,1,0),
+    }),
+    Hat.new(PersistentInstance.new(accessory2, PersistentFolder), {
+        scale = Vector3.new(1, 1, 1) * 1.1,
+    })
+}
 
 PreviewWindow.mount(StudioDocket.Windows["Preview Hats"].Docket)
 PreviewWindow.Settings.Hats = myHats
