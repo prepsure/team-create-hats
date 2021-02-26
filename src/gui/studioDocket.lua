@@ -12,7 +12,7 @@ local function createDocket(button, name)
     )
 
     docket.Title = name
-    button:SetActive(StudioDocket.HatEditorDocket.Enabled)
+    button:SetActive(docket.Enabled)
 
     button.Click:Connect(function()
         docket.Enabled = not docket.Enabled
