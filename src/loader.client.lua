@@ -36,7 +36,7 @@ local Storage = require(root.world.storage)
 local PersistentInstance = require(root.world.persistentInstance)
 
 local StudioDocket = require(root.gui.studioDocket)
-local PreviewWindow = require(root.gui.mountPreviewWindow)
+local PreviewWindow = require(root.gui.PreviewWindow)
 
 
 ----------
@@ -56,5 +56,5 @@ local myHats = {Hat.new(persistentAccessory, {
     visibleLocally = false,
 })}
 
-local previewer = PreviewWindow.mount(StudioDocket.Windows["Preview Hats"].Docket)
-previewer.Settings.Hats = myHats
+PreviewWindow.mount(StudioDocket.Windows["Preview Hats"].Docket)
+PreviewWindow.Settings.Hats = myHats
