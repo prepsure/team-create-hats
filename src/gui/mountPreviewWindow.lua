@@ -6,7 +6,7 @@ local Roact = require(root.roact)
 local Previewer = Roact.Component:extend("Previewer")
 
 local Settings = {
-    CameraCFrame = CFrame.new(Vector3.new(0,0,10), Vector3.new(0,0,0)) + Vector3.new(0,3,0),
+    CameraCFrame = CFrame.new(Vector3.new(0,0,5), Vector3.new(0,0,0)) + Vector3.new(0,1,0),
     BallColor = Color3.new(0.627450, 0.321568, 0.721568),
     BallTransparency = 0.5,
     Hats = {},
@@ -71,7 +71,7 @@ function Previewer:render()
                 CFrame = self.state.partCf,
                 Shape = Enum.PartType.Ball,
                 Size = Vector3.new(1.5, 1.5, 1.5),
-                
+
                 Color = Settings.BallColor,
                 Transparency = Settings.BallTransparency,
 
@@ -81,7 +81,7 @@ function Previewer:render()
             Cone = Roact.createElement("Part", {
                 CFrame = self.state.partCf * CFrame.new(0, 0, -1.4) * CFrame.Angles(-math.pi/2, 0, 0),
                 Size = Vector3.new(0.25, 0.5, 0.25),
-                
+
                 Color = Settings.BallColor,
                 Transparency = Settings.BallTransparency,
             },
@@ -95,7 +95,7 @@ function Previewer:render()
                 CFrame = self.state.partCf * CFrame.Angles(0, math.pi/2, 0),
                 Shape = Enum.PartType.Cylinder,
                 Size = Vector3.new(2.3, 0.1, 0.1),
-                
+
                 Color = Settings.BallColor,
                 Transparency = Settings.BallTransparency,
             }),
