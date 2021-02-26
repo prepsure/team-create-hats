@@ -26,6 +26,8 @@ Hat.__index = Hat
 function Hat.new(model, propTable)
     local self = setmetatable({}, Hat)
 
+    propTable = propTable or {}
+
     self.model = model
     self._implicitScale = model.Handle.Mesh.Scale
 
