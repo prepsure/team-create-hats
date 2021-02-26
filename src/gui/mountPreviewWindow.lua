@@ -1,5 +1,4 @@
 local RunService = game:GetService("RunService")
-local StudioService = game:GetService("StudioService")
 
 local root = script.Parent.Parent
 local Roact = require(root.roact)
@@ -107,7 +106,6 @@ end
 
 
 function Previewer:didMount()
-
     settings().Studio.ThemeChanged:Connect(function()
         self:setState(function(state)
             state.theme = settings().Studio.Theme
