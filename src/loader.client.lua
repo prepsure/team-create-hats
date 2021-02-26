@@ -36,7 +36,7 @@ local Storage = require(root.world.storage)
 local PersistentInstance = require(root.world.persistentInstance)
 
 local StudioDocket = require(root.gui.studioDocket)
-local mountPreviewWindow = require(root.gui.mountPreviewWindow)
+local PreviewWindow = require(root.gui.mountPreviewWindow)
 
 
 ----------
@@ -46,14 +46,15 @@ CollectionService:AddTag(folder, yourHatTag)
 local persistentFolder = PersistentInstance.new(folder, workspace)
 
 local myId = 553870650
-local statusCode, accessory = HatImporter:LoadHat(myId)
+local _, accessory = HatImporter:LoadHat(myId)
 local persistentAccessory = PersistentInstance.new(accessory, persistentFolder)
 
 local myHats = {Hat.new(persistentAccessory, {
-    offset = Vector3.new(0,5,0),
+    offset = Vector3.new(0,1,0),
     scale = accessory.Handle.Mesh.Scale,
-    transformPriority = "translate",
+    transformPriority = "rotate",
     visibleLocally = false,
 })}
 
-local previewer = mountPreviewWindow(StudioDocket.Windows["Preview Hats"].Docket, myHats)
+local previewer = PreviewWindow.mount(StudioDocket.Windows["Preview Hats"].Docket)
+previewer.Settings.Hats = myHats

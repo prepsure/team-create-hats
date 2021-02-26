@@ -5,7 +5,7 @@ local Roact = require(root.roact)
 
 local Previewer = Roact.Component:extend("Previewer")
 
-local Settings = {
+local PreviewSettings = {
     CameraCFrame = CFrame.new(Vector3.new(0,0,5), Vector3.new(0,0,0)) + Vector3.new(0,1,0),
     BallColor = Color3.new(0.627450, 0.321568, 0.721568),
     BallTransparency = 0.5,
@@ -28,7 +28,7 @@ function Previewer:render()
 
     local hatComponents = {}
 
-    for _, hat in pairs(Settings.Hats) do
+    for _, hat in pairs(PreviewSettings.Hats) do
         local handle = hat.model.Handle
         local mesh = handle.Mesh
 
@@ -65,15 +65,15 @@ function Previewer:render()
         {
             Camera = Roact.createElement("Camera", {
                 [Roact.Ref] = self.cameraRef,
-                CFrame = Settings.CameraCFrame,
+                CFrame = PreviewSettings.CameraCFrame,
             }),
             Ball = Roact.createElement("Part", {
                 CFrame = self.state.partCf,
                 Shape = Enum.PartType.Ball,
                 Size = Vector3.new(1.5, 1.5, 1.5),
 
-                Color = Settings.BallColor,
-                Transparency = Settings.BallTransparency,
+                Color = PreviewSettings.BallColor,
+                Transparency = PreviewSettings.BallTransparency,
 
                 TopSurface = Enum.SurfaceType.SmoothNoOutlines,
                 BottomSurface = Enum.SurfaceType.SmoothNoOutlines,
@@ -82,8 +82,8 @@ function Previewer:render()
                 CFrame = self.state.partCf * CFrame.new(0, 0, -1.4) * CFrame.Angles(-math.pi/2, 0, 0),
                 Size = Vector3.new(0.25, 0.5, 0.25),
 
-                Color = Settings.BallColor,
-                Transparency = Settings.BallTransparency,
+                Color = PreviewSettings.BallColor,
+                Transparency = PreviewSettings.BallTransparency,
             },
             {
                 Mesh = Roact.createElement("SpecialMesh", {
@@ -96,8 +96,8 @@ function Previewer:render()
                 Shape = Enum.PartType.Cylinder,
                 Size = Vector3.new(2.3, 0.1, 0.1),
 
-                Color = Settings.BallColor,
-                Transparency = Settings.BallTransparency,
+                Color = PreviewSettings.BallColor,
+                Transparency = PreviewSettings.BallTransparency,
             }),
             Hats = Roact.createElement("Folder", {}, hatComponents),
         })
@@ -123,10 +123,14 @@ function Previewer:didMount()
 end
 
 
-return function(previewDocket, hats)
-    Settings.Hats = hats
-    local handle = Roact.mount(Roact.createElement(Previewer), previewDocket, "Preview UI")
 
-    -- unmount?
-    return Previewer
-end
+
+
+return setmetatable({
+    Settings = PreviewSettings,
+
+    mount = function(previewDocket)
+        Roact.mount(Roact.createElement(Previewer), previewDocket, "Preview UI")
+    end,
+
+}, {__index = Previewer})
