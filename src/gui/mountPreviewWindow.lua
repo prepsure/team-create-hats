@@ -10,7 +10,7 @@ local Settings = {
     CameraCFrame = CFrame.new(Vector3.new(0,0,10), Vector3.new(0,0,0)) + Vector3.new(0,3,0),
     BallColor = Color3.new(0.627450, 0.321568, 0.721568),
     BallTransparency = 0.5,
-    Hats = {}
+    Hats = {},
 }
 
 
@@ -29,16 +29,12 @@ function Previewer:render()
 
     local hatComponents = {}
 
-    for _, hat in pairs(self.state.hats) do
+    for _, hat in pairs(Settings.Hats) do
         local handle = hat.model.Handle
         local mesh = handle.Mesh
 
-        local cf = self.state.partCf
-        if self.transformPriority == "rotate" then
-            cf *= CFrame.new(self.offset)
-        else
-            cf = (CFrame.new(cf.p) + self.offset) * (cf - cf.p)
-        end
+        local camCf = workspace.CurrentCamera.CFrame
+        local cf = (handle.CFrame - camCf.Position) + self.state.partCf.Position
 
         hatComponents[tostring(_)] = Roact.createElement("Part", {
             Size = handle.Size,
@@ -52,7 +48,6 @@ function Previewer:render()
             }),
         })
     end
-    --print(hatComponents)
 
 
     return Roact.createElement("Frame", {
@@ -130,9 +125,10 @@ function Previewer:didMount()
 end
 
 
-return function(previewDocket)
+return function(previewDocket, hats)
+    Settings.Hats = hats
     local handle = Roact.mount(Roact.createElement(Previewer), previewDocket, "Preview UI")
 
     -- unmount?
-    return Settings
+    return Previewer
 end
