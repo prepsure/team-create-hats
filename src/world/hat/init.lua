@@ -27,15 +27,26 @@ function Hat.new(model, propTable)
     local self = setmetatable({}, Hat)
 
     self.model = model
+    self._implicitScale = model.Handle.Mesh.Scale
 
-    self:SetOffset(propTable.offset)
-    self:SetScale(propTable.scale)
-    self:SetTransformPriority(propTable.transformPriority)
-    self:SetVisibleLocally(propTable.visibleLocally)
+    self:SetOffset(propTable.offset or Vector3.new(0, 0, 0))
+    self:SetScale(propTable.scale or Vector3.new(1, 1, 1))
+    self:SetTransformPriority(propTable.transformPriority or "rotate")
+    self:SetVisibleLocally(propTable.visibleLocally or false)
 
     self._floatConnection = self:_bindFloating()
 
     return self
+end
+
+
+function Hat:GetPropertyTable()
+    return {
+        offset = self.offset,
+        scale = self.scale,
+        transformPriority = self.transformPriority,
+        visibleLocally = self.visibleLocally,
+    }
 end
 
 
@@ -49,7 +60,7 @@ end
 
 function Hat:SetScale(scale)
     self.scale = scale
-    self.model.Handle:FindFirstChildOfClass("SpecialMesh").Scale = scale
+    self.model.Handle:FindFirstChildOfClass("SpecialMesh").Scale = self._implicitScale * scale
 end
 
 
