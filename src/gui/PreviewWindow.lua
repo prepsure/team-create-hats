@@ -123,9 +123,6 @@ function Previewer:didMount()
 end
 
 
-
-
-
 return setmetatable({
     Settings = PreviewSettings,
 
