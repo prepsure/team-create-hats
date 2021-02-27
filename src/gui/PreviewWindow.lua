@@ -30,7 +30,7 @@ function Previewer:render()
 
     for _, hat in pairs(PreviewSettings.Hats) do
         local handle = hat.model.Handle
-        local mesh = handle.Mesh
+        local mesh = handle:FindFirstChildOfClass("SpecialMesh")
 
         local camCf = workspace.CurrentCamera.CFrame
         local cf = (handle.CFrame - camCf.Position) + self.state.partCf.Position
