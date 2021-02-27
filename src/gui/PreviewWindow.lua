@@ -6,7 +6,7 @@ local Roact = require(root.roact)
 local Previewer = Roact.Component:extend("Previewer")
 
 local PreviewSettings = {
-    CameraCFrame = CFrame.new(Vector3.new(0,0,5), Vector3.new(0,0,0)) + Vector3.new(0,1,0),
+    CameraCFrame = CFrame.new(Vector3.new(5,0,0), Vector3.new(0,0,0)) + Vector3.new(0,1,0),
     BallColor = Color3.new(0.627450, 0.321568, 0.721568),
     BallTransparency = 0.5,
     Hats = {},
