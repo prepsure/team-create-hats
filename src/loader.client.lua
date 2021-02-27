@@ -26,11 +26,7 @@ end
 
 ----------
 
-
-local HatImporter = require(root.world.hat.importer)
-local Hat = require(root.world.hat)
-local PersistentInstance = require(root.world.persistentInstance)
-local PersistentFolder = require(root.world.storage)
+local HatController = require(root.world.hatController)
 
 local StudioDocket = require(root.gui.studioDocket)
 local PreviewWindow = require(root.gui.PreviewWindow)
@@ -39,22 +35,14 @@ local EditorWindow = require(root.gui.EditorWindow)
 
 ----------
 
-local myId = 553870650
-local _, accessory = HatImporter:LoadHat(myId)
-local persistentAccessory = PersistentInstance.new(accessory, PersistentFolder)
 
-local _, accessory2 = HatImporter:LoadHat(5064875017)
+HatController:Add(553870650)
+HatController:ChangeProperty(1, "offset", Vector3.new(0,1,0))
 
-local myHats = {
-    Hat.new(persistentAccessory, {
-        offset = Vector3.new(0,1,0),
-    }),
-    Hat.new(PersistentInstance.new(accessory2, PersistentFolder), {
-        scale = Vector3.new(1, 1, 1) * 1.1,
-    })
-}
+HatController:Add(5064875017)
+HatController:ChangeProperty(2, "scale", Vector3.new(1, 1, 1) * 1.1)
 
 PreviewWindow.mount(StudioDocket.Windows["Preview Hats"].Docket)
-PreviewWindow.Settings.Hats = myHats
+PreviewWindow.Settings.Hats = HatController.List
 
 EditorWindow.mount(StudioDocket.Windows["Edit Hats"].Docket)
