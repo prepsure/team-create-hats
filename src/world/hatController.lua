@@ -3,7 +3,7 @@ local root = script.Parent.Parent
 local Hat = require(root.world.hat)
 local Importer = require(root.world.hat.importer)
 local PersistentInstance = require(root.world.persistentInstance)
-local persistentFolder = require(root.world.storage)
+local PersistentFolder = require(root.world.storage)
 
 
 local HatController = {}
@@ -11,8 +11,8 @@ HatController.List = {}
 
 
 function HatController:Add(id, index, properties)
-    local model = Importer:LoadHat(id)
-    local persistentModel = PersistentInstance.new(model, persistentFolder) -- TODO: get persistent folder
+    local _, model = Importer:LoadHat(id)
+    local persistentModel = PersistentInstance.new(model, PersistentFolder) -- TODO: get persistent folder
     local hat = Hat.new(persistentModel, properties)
 
     index = index or (#HatController.List + 1)
