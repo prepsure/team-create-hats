@@ -3,7 +3,7 @@ local root = script.Parent.Parent
 local Hat = require(root.world.hat)
 local Importer = require(root.world.hat.importer)
 local PersistentInstance = require(root.world.persistentInstance)
-local PersistentFolder = require(root.world.storage)
+local PersistentFolder = require(root.world.persistentFolder)
 
 
 local HatController = {}
