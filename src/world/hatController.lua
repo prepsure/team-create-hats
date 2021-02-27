@@ -23,13 +23,19 @@ end
 
 
 function HatController:ChangeProperty(index, property, value)
+    local hat = self.List[index]
+
     if property == 'id' then -- for id changing, a new hat has to be imported, for other properties we can just modify the hat
-        local oldProperties = self.List[index]:GetPropertyTable()
+        local oldProperties = hat:GetPropertyTable()
+
+        self:Remove(index)
         self:Add(value, index, oldProperties)
+
         return
     end
 
-    HatController.List[index].property = value
+    local capitalizedProp = property:sub(1,1):upper() .. property:sub(2):lower()
+    hat["Set" .. capitalizedProp](hat, value)
 end
 
 
