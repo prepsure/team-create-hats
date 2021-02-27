@@ -34,8 +34,7 @@ function HatController:ChangeProperty(index, property, value)
         return
     end
 
-    local capitalizedProp = property:sub(1,1):upper() .. property:sub(2):lower()
-    hat["Set" .. capitalizedProp](hat, value)
+    hat["Set" .. property](hat, value)
 end
 
 
