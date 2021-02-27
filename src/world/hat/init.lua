@@ -67,7 +67,7 @@ end
 
 
 function Hat:SetTransformPriority(state)
-    assert(state == "rotate" or state == "translate", "transform priority set incorrectly")
+    assert(state == "rotate" or state == "translate" or state == "none", "transform priority set incorrectly")
     self.transformPriority = state
 end
 
@@ -96,8 +96,10 @@ function Hat:SetCFrame(aroundCf)
 
     if self.transformPriority == "rotate" then
         self.model.Handle.CFrame = aroundCf * CFrame.new(self.offset)
-    else
+    elseif self.transformPriority == "translate" then
         self.model.Handle.CFrame = (CFrame.new(aroundCf.p) + self.offset) * (aroundCf - aroundCf.p)
+    else -- transformPriority = "none"
+        self.model.Handle.CFrame = CFrame.new(aroundCf.p) + self.offset
     end
 end
 
