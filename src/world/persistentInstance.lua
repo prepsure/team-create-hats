@@ -33,10 +33,11 @@ function PersistentInstance.new(inst, keepParent)
     self._dead = false
 
     self._saveConnection = inst.AncestryChanged:Connect(function()
-        if self._dead then
-            return
-        end
         PersistentInstance._saveFromDeletion(self)
+    end)
+
+    self._replicateConnection = inst.Changed:Connect(function(prop)
+        PersistentInstance._replicateToClone(self, prop)
     end)
 
     self._descendants = {}
@@ -66,6 +67,10 @@ end
 
 
 function PersistentInstance:_saveFromDeletion()
+    if self._dead then
+        return
+    end
+
     RunService.Heartbeat:Wait()
     local success = pcall(function()
         self._instance.Parent = self:_getParentInstance()
@@ -80,15 +85,35 @@ function PersistentInstance:_saveFromDeletion()
 end
 
 
+function PersistentInstance:_replicateToClone(prop)
+    if prop == 'Parent' then return end
+
+    pcall(function() -- need to pcall because some properties cant be modified by scripts and its like eh whatever
+        self._clone[prop] = self._instance[prop]
+    end)
+end
+
+
 function PersistentInstance:_reinstantiate()
     -- expects the instance is already destroyed, so it doesn't destroy it on its own
     self._instance = self._clone:Clone()
+    
+    if self._clone:IsA("BasePart") then
+        self._instance.LocalTransparencyModifier = self._clone.LocalTransparencyModifier
+        -- :Clone() doesn't clone LocalTransparencyModifer for some reason?
+    end
+    
     self._instance.Archivable = false
     self._instance.Parent = self:_getParentInstance()
 
     self._saveConnection:Disconnect()
     self._saveConnection = self._instance.AncestryChanged:Connect(function()
         self:_saveFromDeletion()
+    end)
+
+    self._replicateConnection:Disconnect()
+    self._replicateConnection = self._instance.Changed:Connect(function(prop)
+        self:_replicateToClone(prop)
     end)
 end
 
@@ -99,6 +124,7 @@ function PersistentInstance:Destroy()
     self._instance:Destroy()
     self._clone:Destroy()
     self._saveConnection:Disconnect()
+    self._replicateConnection:Disconnect()
 
     for _, inst in pairs(self._descendants) do
         inst:Destroy()
