@@ -97,12 +97,12 @@ end
 function PersistentInstance:_reinstantiate()
     -- expects the instance is already destroyed, so it doesn't destroy it on its own
     self._instance = self._clone:Clone()
-    
+
     if self._clone:IsA("BasePart") then
         self._instance.LocalTransparencyModifier = self._clone.LocalTransparencyModifier
         -- :Clone() doesn't clone LocalTransparencyModifer for some reason?
     end
-    
+
     self._instance.Archivable = false
     self._instance.Parent = self:_getParentInstance()
 
