@@ -14,4 +14,16 @@ function makeFolder(coolClassIcon)
     return folder
 end
 
-return PersistentInstance.new(makeFolder("SunRaysEffect"), workspace)
+
+local PersistentFolder = PersistentInstance.new(makeFolder("SunRaysEffect"), workspace)
+
+local plugin = script:FindFirstAncestorWhichIsA("Plugin")
+local unloadingCxn = nil
+
+unloadingCxn = plugin.Unloading:Connect(function()
+    PersistentFolder:Destroy()
+    unloadingCxn:Disconnect()
+end)
+
+
+return PersistentFolder
