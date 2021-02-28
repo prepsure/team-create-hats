@@ -18,6 +18,7 @@ function ButtonInput:init()
     self.props.YPosition = self.props.YPosition or UDim.new(0, 0)
     self.props.YSize = self.props.YSize or UDim.new(0, 30)
     self.props.Text = self.props.Text or ""
+    self.props.Color = self.props.Color or Color3.new()
 
     self.props.callback = self.props.callback or function() end
 end
@@ -32,7 +33,7 @@ function ButtonInput:render()
             Position = UDim2.new(0.5, 0, self.props.YPosition.Scale, self.props.YPosition.Offset),
             Text = self.props.Text,
             TextScaled = true,
-            BackgroundColor3 = implicitProps.clickedColor,
+            BackgroundColor3 = self.props.Color,
 
             [Roact.Event.Activated] = function()
                 self.props.callback()
