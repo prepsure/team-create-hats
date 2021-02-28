@@ -19,6 +19,11 @@ local function createDocket(button, name)
         button:SetActive(docket.Enabled)
     end)
 
+    docket:BindToClose(function()
+        button:SetActive(false)
+        docket.Enabled = false
+    end)
+
     return docket
 end
 
