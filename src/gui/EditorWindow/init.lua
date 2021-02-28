@@ -1,6 +1,9 @@
 local root = script.Parent.Parent
 local Roact = require(root.roact)
 
+local HatController = require(root.world.hatController)
+local PersistentFolder = require(root.world.persistentFolder)
+
 
 local CheckboxInput = require(script.CheckboxInput)
 
@@ -20,7 +23,6 @@ end
 
 
 function Editor:render()
-    print('rendering!')
 
     return Roact.createElement("Frame", {
         Size = UDim2.new(1,0,1,0),
@@ -34,13 +36,21 @@ function Editor:render()
             Position = UDim2.new(0, 0, 0, 10),
             LabelText = "Enabled",
             Theme = self.state.theme,
+
             Checked = true,
+            callback = function(state)
+                PersistentFolder:Reparent(state and workspace or false)
+            end
         }),
         VisibleLocally = Roact.createElement(CheckboxInput, {
             Position = UDim2.new(0, 0, 0, 50),
             LabelText = "Visible to Self",
             Theme = self.state.theme,
+
             Checked = false,
+            callback = function(state)
+                HatController:ChangePropertyOnAll("VisibleLocally", state)
+            end
         }),
     })
 end
