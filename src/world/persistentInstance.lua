@@ -58,6 +58,10 @@ end
 function PersistentInstance:_getParentInstance()
     local p = self._parent
 
+    if p == false then -- if p is set to false that means it doesn't have a parent (can't set to nil for reasons)
+        return nil
+    end
+
     if type(p) == "table" and p._className == "PersistentInstance" then
         return p._instance
     end
@@ -115,6 +119,12 @@ function PersistentInstance:_reinstantiate()
     self._replicateConnection = self._instance.Changed:Connect(function(prop)
         self:_replicateToClone(prop)
     end)
+end
+
+
+function PersistentInstance:Reparent(p)
+    rawset(self, "_parent", p)
+    self._instance.Parent = self:_getParentInstance()
 end
 
 
