@@ -6,6 +6,7 @@ local PersistentFolder = require(root.world.persistentFolder)
 
 
 local CheckboxInput = require(script.CheckboxInput)
+local ButtonInput = require(script.ButtonInput)
 
 
 local Editor = Roact.Component:extend("Editor")
@@ -34,7 +35,7 @@ function Editor:render()
     {
         Enabled = Roact.createElement(CheckboxInput, {
             Position = UDim2.new(0, 0, 0, 10),
-            Size = UDim2.new(1, 0, 30, 0),
+            Size = UDim2.new(1, 0, 0, 30),
             LabelText = "Enabled",
             Theme = self.state.theme,
 
@@ -45,7 +46,7 @@ function Editor:render()
         }),
         VisibleLocally = Roact.createElement(CheckboxInput, {
             Position = UDim2.new(0, 0, 0, 50),
-            Size = UDim2.new(1, 0, 30, 0),
+            Size = UDim2.new(1, 0, 0, 30),
             LabelText = "Visible to Self",
             Theme = self.state.theme,
 
@@ -54,6 +55,11 @@ function Editor:render()
                 HatController:ChangePropertyOnAll("VisibleLocally", state)
             end
         }),
+        ImportHats = Roact.createElement(ButtonInput, {
+            Text = "Import Hats from Character",
+            YPosition = UDim.new(0, 90),
+            YSize = UDim.new(0, 30),
+        })
     })
 end
 
