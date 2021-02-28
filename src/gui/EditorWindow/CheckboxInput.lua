@@ -5,7 +5,6 @@ local Roact = require(root.roact)
 local CheckboxInput = Roact.Component:extend("CheckboxInput")
 
 local implicitProps = {
-    height = 30,
     textWidth = 100,
 
     checkboxCornerRadius = 2,
@@ -14,7 +13,6 @@ local implicitProps = {
 
     clickedColor = Color3.fromRGB(74, 157, 253),
     unclickedColor = Color3.fromRGB(137, 137, 137),
-
 }
 
 
@@ -26,6 +24,7 @@ end
 
 function CheckboxInput:init()
     self.props.Position = self.props.Position or UDim2.new(0, 0, 0, 0)
+    self.props.Size = self.props.Size or UDim2.new(0, 50, 0, 50)
     self.props.LabelText = self.props.LabelText or ""
     self.props.Checked = self.props.Checked or false
     self.props.callback = self.props.callback or function() end
@@ -39,7 +38,7 @@ function CheckboxInput:render()
     return Roact.createFragment({
         Roact.createElement("Frame", {
 
-            Size = UDim2.new(1, -implicitProps.leftPadding, 0, implicitProps.height),
+            Size = self.props.Size + UDim2.new(0, -implicitProps.leftPadding, 0, 0),
             BackgroundTransparency = 1,
 
             Position = self.props.Position + UDim2.new(0, implicitProps.leftPadding, 0, 0),
@@ -62,7 +61,7 @@ function CheckboxInput:render()
             Box = Roact.createElement("TextButton", {
 
                 AnchorPoint = Vector2.new(0, 0.5),
-                Size = UDim2.new(0, implicitProps.height * 3/5, 0, implicitProps.height * 3/5),
+                Size = UDim2.new(0, self.props.Size.Y.Offset * 3/5, 0, self.props.Size.Y.Offset * 3/5),
                 Position = UDim2.new(0, implicitProps.textWidth + implicitProps.leftPadding, 0.5, 0),
                 Text = "",
                 BackgroundColor3 = self.checkColor,
