@@ -7,6 +7,8 @@ local PersistentFolder = require(root.world.persistentFolder)
 
 local CheckboxInput = require(script.CheckboxInput)
 local ButtonInput = require(script.ButtonInput)
+local NumberInput = require(script.NumberInput)
+local LabeledNumberInput = require(script.LabeledNumberInput)
 
 
 local Editor = Roact.Component:extend("Editor")
@@ -44,6 +46,7 @@ function Editor:render()
                 PersistentFolder:Reparent(state and workspace or false)
             end
         }),
+
         VisibleLocally = Roact.createElement(CheckboxInput, {
             Position = UDim2.new(0, 0, 0, 50),
             Size = UDim2.new(1, 0, 0, 30),
@@ -55,6 +58,7 @@ function Editor:render()
                 HatController:ChangePropertyOnAll("VisibleLocally", state)
             end
         }),
+
         ImportHats = Roact.createElement(ButtonInput, {
             Text = "Import Hats from Character",
             Color = Color3.fromRGB(74, 157, 253),
@@ -64,6 +68,15 @@ function Editor:render()
             callback = function()
                 HatController:ImportFromCharacter() --TODO add a confirmation popup window
             end
+        }),
+
+        AccessoryId = Roact.createElement(LabeledNumberInput, {
+            Position = UDim2.new(0, 10, 0, 130),
+            Size = UDim2.new(0, 250, 0, 30),
+
+            LabelText = "Accessory Id",
+            Theme = self.state.theme,
+            NumType = "whole",
         }),
 
         RemoveHat = Roact.createElement(ButtonInput, {
@@ -76,6 +89,7 @@ function Editor:render()
 
             end
         }),
+
     })
 end
 
