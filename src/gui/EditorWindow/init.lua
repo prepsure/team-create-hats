@@ -9,6 +9,7 @@ local CheckboxInput = require(script.CheckboxInput)
 local ButtonInput = require(script.ButtonInput)
 local NumberInput = require(script.NumberInput)
 local LabeledNumberInput = require(script.LabeledNumberInput)
+local Vector3Input = require(script.Vector3Input)
 
 
 local Editor = Roact.Component:extend("Editor")
@@ -71,18 +72,38 @@ function Editor:render()
         }),
 
         AccessoryId = Roact.createElement(LabeledNumberInput, {
-            Position = UDim2.new(0, 10, 0, 130),
-            Size = UDim2.new(0, 250, 0, 30),
+            Position = UDim2.new(0, 20, 0, 170),
+            Size = UDim2.new(1, -40, 0, 30),
 
             LabelText = "Accessory Id",
             Theme = self.state.theme,
             NumType = "whole",
         }),
 
+        Offset = Roact.createElement(Vector3Input, {
+            Position = UDim2.new(0, 20, 0, 210),
+            Size = UDim2.new(1, -40, 0, 30),
+
+            DefaultValue = Vector3.new(0, 0, 0),
+
+            LabelText = "Offset",
+            Theme = self.state.theme,
+        }),
+
+        Scale = Roact.createElement(Vector3Input, {
+            Position = UDim2.new(0, 20, 0, 250),
+            Size = UDim2.new(1, -40, 0, 30),
+
+            DefaultValue = Vector3.new(0, 0, 0),
+
+            LabelText = "Scale",
+            Theme = self.state.theme,
+        }),
+
         RemoveHat = Roact.createElement(ButtonInput, {
             Text = "Remove Hat",
             Color = Color3.fromRGB(245, 106, 106),
-            YPosition = UDim.new(0, 300),
+            YPosition = UDim.new(0, 330),
             YSize = UDim.new(0, 30),
 
             callback = function()
