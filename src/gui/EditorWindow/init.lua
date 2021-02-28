@@ -1,6 +1,10 @@
 local root = script.Parent.Parent
 local Roact = require(root.roact)
 
+
+local CheckboxInput = require(script.CheckboxInput)
+
+
 local Editor = Roact.Component:extend("Editor")
 
 local EditorSettings = {
@@ -16,12 +20,22 @@ end
 
 
 function Editor:render()
+    print('rendering!')
+
     return Roact.createElement("Frame", {
         Size = UDim2.new(1,0,1,0),
         BackgroundColor3 = self.state.theme:GetColor(
             Enum.StudioStyleGuideColor.MainBackground,
             Enum.StudioStyleGuideModifier.Default
         ),
+    },
+    {
+        Enabled = Roact.createElement(CheckboxInput, {
+            Position = UDim2.new(0, 0, 0, 10),
+            LabelText = "Enabled",
+            Theme = self.state.theme,
+            Checked = true,
+        }),
     })
 end
 
