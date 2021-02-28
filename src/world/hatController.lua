@@ -44,6 +44,13 @@ function HatController:ChangeProperty(index, property, value)
 end
 
 
+function HatController:ChangePropertyOnAll(property, value)
+    for i = 1, #HatController.List do
+        self:ChangeProperty(i, property, value)
+    end
+end
+
+
 function HatController:Remove(index)
     local hat = table.remove(HatController.List, index)
     hat:Destroy()
