@@ -6,6 +6,8 @@ local CheckboxInput = Roact.Component:extend("CheckboxInput")
 
 local implicitProps = {
     height = 30,
+    textWidth = 100,
+
     checkboxCornerRadius = 2,
     leftPadding = 20,
     topPadding = 10,
@@ -45,7 +47,7 @@ function CheckboxInput:render()
         }, {
             Label = Roact.createElement("TextLabel", {
 
-                Size = UDim2.new(0.4, 0, 1, 0),
+                Size = UDim2.new(0, implicitProps.textWidth, 1, 0),
                 BackgroundTransparency = 1,
                 TextColor3 = self.props.Theme:GetColor(
                     Enum.StudioStyleGuideColor.MainText,
@@ -61,13 +63,14 @@ function CheckboxInput:render()
 
                 AnchorPoint = Vector2.new(0, 0.5),
                 Size = UDim2.new(0, implicitProps.height * 3/5, 0, implicitProps.height * 3/5),
-                Position = UDim2.new(0.4, 0, 0.5, 0),
+                Position = UDim2.new(0, implicitProps.textWidth + implicitProps.leftPadding, 0.5, 0),
                 Text = "",
                 BackgroundColor3 = self.checkColor,
 
                 [Roact.Event.Activated] = function()
                     self.props.Checked = not self.props.Checked
                     self.updateCheckColor(boolToCheckColor(self.props.Checked))
+                    self.props.callback(self.props.Checked)
                 end
 
             }, {
