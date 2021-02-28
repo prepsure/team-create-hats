@@ -59,6 +59,10 @@ function Editor:render()
             Text = "Import Hats from Character",
             YPosition = UDim.new(0, 90),
             YSize = UDim.new(0, 30),
+
+            callback = function()
+                HatController:ImportFromCharacter()
+            end
         })
     })
 end
