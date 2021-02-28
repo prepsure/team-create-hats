@@ -36,6 +36,12 @@ function Editor:render()
             Theme = self.state.theme,
             Checked = true,
         }),
+        VisibleLocally = Roact.createElement(CheckboxInput, {
+            Position = UDim2.new(0, 0, 0, 50),
+            LabelText = "Visible to Self",
+            Theme = self.state.theme,
+            Checked = false,
+        }),
     })
 end
 
