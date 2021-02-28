@@ -57,6 +57,7 @@ function NumberInput:init()
 
     self.props.callback = self.props.callback or function() end
     self.input, self.updateInput = Roact.createBinding("")
+    self.updateInput(self.props.DefaultValue)
 end
 
 
