@@ -41,6 +41,7 @@ function LabeledNumberInput:render()
                     Enum.StudioStyleGuideModifier.Default
                 ),
                 TextScaled = true,
+                TextXAlignment = Enum.TextXAlignment.Left,
 
             }, {
                 TSize = Roact.createElement("UITextSizeConstraint", {
