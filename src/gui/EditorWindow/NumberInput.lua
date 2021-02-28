@@ -2,7 +2,7 @@ local root = script.Parent.Parent.Parent
 local Roact = require(root.roact)
 
 
-local NumberInput = Roact.Component:extend("ButtonInput")
+local NumberInput = Roact.Component:extend("NumberInput")
 
 
 -- removes everything that isn't a number from a string
