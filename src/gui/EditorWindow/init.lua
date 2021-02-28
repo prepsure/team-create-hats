@@ -57,13 +57,25 @@ function Editor:render()
         }),
         ImportHats = Roact.createElement(ButtonInput, {
             Text = "Import Hats from Character",
+            Color = Color3.fromRGB(74, 157, 253),
             YPosition = UDim.new(0, 90),
             YSize = UDim.new(0, 30),
 
             callback = function()
-                HatController:ImportFromCharacter()
+                HatController:ImportFromCharacter() --TODO add a confirmation popup window
             end
-        })
+        }),
+
+        RemoveHat = Roact.createElement(ButtonInput, {
+            Text = "Remove Hat",
+            Color = Color3.fromRGB(245, 106, 106),
+            YPosition = UDim.new(0, 300),
+            YSize = UDim.new(0, 30),
+
+            callback = function()
+
+            end
+        }),
     })
 end
 
