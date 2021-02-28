@@ -50,9 +50,10 @@ end
 function NumberInput:init()
     self.props.Position = self.props.Position or UDim.new(0, 0)
     self.props.Size = self.props.Size or UDim.new(0, 30)
+
     self.props.NumType = self.props.NumType or "all"
-    self.props.TextColor = self.props.TextColor or Color3.new()
     self.props.DefaultValue = self.props.DefaultValue or "0"
+    assert(self.props.Theme ~= nil, "No theme found for numberinput")
 
     self.props.callback = self.props.callback or function() end
     self.input, self.updateInput = Roact.createBinding("")
@@ -67,10 +68,24 @@ function NumberInput:render()
             AnchorPoint = Vector2.new(0, 0),
             Size = self.props.Size,
             Position = self.props.Position,
+
             Text = self.input,
             TextScaled = true,
-            TextColor3 = self.props.TextColor,
-            BackgroundTransparency = 1,
+            ClearTextOnFocus = false,
+
+            TextColor3 = self.props.Theme:GetColor(
+                Enum.StudioStyleGuideColor.SubText,
+                Enum.StudioStyleGuideModifier.Default
+            ),
+            BackgroundColor3 = self.props.Theme:GetColor(
+                Enum.StudioStyleGuideColor.InputFieldBackground,
+                Enum.StudioStyleGuideModifier.Default
+            ),
+            BorderColor3 = self.props.Theme:GetColor(
+                Enum.StudioStyleGuideColor.SubText,
+                Enum.StudioStyleGuideModifier.Default
+            ),
+
 
             [Roact.Change.Text] = function(rbx)
                 if self.props.NumType == 'whole' then
@@ -93,16 +108,12 @@ function NumberInput:render()
 
         },
         {
+            Corner = Roact.createElement("UICorner", {
+                CornerRadius = UDim.new(0, 3),
+            }),
             TSize = Roact.createElement("UITextSizeConstraint", {
                 MaxTextSize = 12,
             }),
-            Underline = Roact.createElement("Frame", {
-                AnchorPoint = Vector2.new(0.5, 0),
-                BorderSizePixel = 0,
-                Size = UDim2.new(0.9, 0, 0, 1),
-                BackgroundColor3 = self.props.TextColor,
-                Position = UDim2.new(0.5, 0, 1, 0),
-            })
         })
     })
 
