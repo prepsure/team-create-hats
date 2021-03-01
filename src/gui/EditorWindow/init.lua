@@ -79,7 +79,7 @@ function Editor:render()
             Position = UDim2.new(0, 20, 0, 170),
             Size = UDim2.new(1, -40, 0, 30),
 
-            DefaultValue = 0,
+            DefaultValue = HatController.List[currentHat].id,
 
             LabelText = "Accessory Id",
             Theme = self.state.theme,
@@ -94,7 +94,7 @@ function Editor:render()
             Position = UDim2.new(0, 20, 0, 210),
             Size = UDim2.new(1, -40, 0, 30),
 
-            DefaultValue = Vector3.new(0, 0, 0),
+            DefaultValue = HatController.List[currentHat].offset,
 
             LabelText = "Offset",
             Theme = self.state.theme,
@@ -108,7 +108,7 @@ function Editor:render()
             Position = UDim2.new(0, 20, 0, 250),
             Size = UDim2.new(1, -40, 0, 30),
 
-            DefaultValue = Vector3.new(1, 1, 1),
+            DefaultValue = HatController.List[currentHat].scale,
 
             LabelText = "Scale",
             Theme = self.state.theme,

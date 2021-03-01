@@ -10,9 +10,9 @@ local HatController = {}
 HatController.List = {}
 
 
-function HatController:_insert(model, index, properties)
-    local persistentModel = PersistentInstance.new(model, PersistentFolder) -- TODO: get persistent folder
-    local hat = Hat.new(persistentModel, properties)
+function HatController:_insert(id, model, index, properties)
+    local persistentModel = PersistentInstance.new(model, PersistentFolder)
+    local hat = Hat.new(id, persistentModel, properties)
 
     index = index or (#HatController.List + 1)
     table.insert(HatController.List, index, hat)
@@ -24,7 +24,7 @@ end
 function HatController:Add(id, index, properties)
     local _, model = Importer:LoadHat(id)
 
-    return self:_insert(model, index, properties)
+    return self:_insert(id, model, index, properties)
 end
 
 
@@ -70,7 +70,7 @@ function HatController:ImportFromCharacter()
     self:RemoveAll()
 
     for _, hat in pairs(hats) do
-        self:_insert(hat)
+        self:_insert("?", hat)
     end
 end
 

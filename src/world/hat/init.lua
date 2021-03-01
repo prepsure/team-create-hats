@@ -23,13 +23,15 @@ Hat.__index = Hat
 
 --]]
 
-function Hat.new(model, propTable)
+function Hat.new(id, model, propTable)
     local self = setmetatable({}, Hat)
 
     propTable = propTable or {}
 
     self.model = model
     self._implicitScale = model.Handle:FindFirstChildOfClass("SpecialMesh").Scale
+
+    self.id = id -- just to store, cannot change
 
     self:SetOffset(propTable.offset or Vector3.new(0, 0, 0))
     self:SetScale(propTable.scale or Vector3.new(1, 1, 1))
