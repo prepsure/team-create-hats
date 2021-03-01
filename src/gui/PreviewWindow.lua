@@ -30,9 +30,7 @@ end
 
 
 function Previewer:render()
-
     local hatComponents = {}
-    --print(Editor:GetCurrentHatIndex(), "1")
 
     for _, hat in pairs(HatController.List) do
         local handle = hat.model.Handle

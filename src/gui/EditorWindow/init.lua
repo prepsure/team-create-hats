@@ -7,22 +7,12 @@ local PersistentFolder = require(root.world.persistentFolder)
 
 local CheckboxInput = require(script.CheckboxInput)
 local ButtonInput = require(script.ButtonInput)
-local NumberInput = require(script.NumberInput)
 local LabeledNumberInput = require(script.LabeledNumberInput)
 local Vector3Input = require(script.Vector3Input)
 local HorizontalChoiceList = require(script.HorizontalChoiceList)
 
 
 local Editor = Roact.Component:extend("Editor")
-
-
-function Editor:GetCurrentHatIndex()
-    if self.state then
-        return self.state.currentIndex
-    end
-
-    return nil
-end
 
 
 function Editor:init()
