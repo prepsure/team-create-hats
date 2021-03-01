@@ -16,6 +16,15 @@ local HorizontalChoiceList = require(script.HorizontalChoiceList)
 local Editor = Roact.Component:extend("Editor")
 
 
+function Editor:GetCurrentHatIndex()
+    if self.state then
+        return self.state.currentIndex
+    end
+
+    return nil
+end
+
+
 function Editor:init()
     self:setState({
         theme = settings().Studio.Theme,
@@ -157,23 +166,33 @@ end
 
 
 function Editor:didMount()
-    settings().Studio.ThemeChanged:Connect(function()
+    Editor._themeCxn = settings().Studio.ThemeChanged:Connect(function()
         self:setState(function(state)
             state.theme = settings().Studio.Theme
             return state
         end)
     end)
 
-    HatController:BindToUpdate(function()
+    Editor._listCxn = HatController:BindToUpdate(function()
         self:setState(self.state)
     end)
+end
+
+
+function Editor:willUnmount()
+    Editor._themeCxn:Disconnect()
+    Editor._listCxn:Disconnect()
 end
 
 
 return setmetatable({
 
     mount = function(docket)
-        Roact.mount(Roact.createElement(Editor), docket, "Editor UI")
+        local handle = Roact.mount(Roact.createElement(Editor), docket, "Editor UI")
+
+        script:FindFirstAncestorWhichIsA("Plugin").Unloading:Connect(function()
+            Roact.unmount(handle)
+        end)
     end,
 
 }, {__index = Editor})

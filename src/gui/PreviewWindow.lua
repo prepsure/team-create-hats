@@ -3,6 +3,11 @@ local RunService = game:GetService("RunService")
 local root = script.Parent.Parent
 local Roact = require(root.roact)
 
+
+local HatController = require(root.world.hatController)
+local Editor = require(root.gui.EditorWindow)
+
+
 local Previewer = Roact.Component:extend("Previewer")
 
 local PreviewSettings = {
@@ -27,8 +32,9 @@ end
 function Previewer:render()
 
     local hatComponents = {}
+    --print(Editor:GetCurrentHatIndex(), "1")
 
-    for _, hat in pairs(PreviewSettings.Hats) do
+    for _, hat in pairs(HatController.List) do
         local handle = hat.model.Handle
         local mesh = handle:FindFirstChildOfClass("SpecialMesh")
 
@@ -106,14 +112,14 @@ end
 
 
 function Previewer:didMount()
-    settings().Studio.ThemeChanged:Connect(function()
+    Previewer._themeCxn = settings().Studio.ThemeChanged:Connect(function()
         self:setState(function(state)
             state.theme = settings().Studio.Theme
             return state
         end)
     end)
 
-    RunService.Heartbeat:Connect(function()
+    Previewer._runCxn = RunService.Heartbeat:Connect(function()
         self:setState(function(state)
             local camCf = workspace.CurrentCamera.CFrame
             state.partCf = (camCf - camCf.Position)
@@ -123,11 +129,21 @@ function Previewer:didMount()
 end
 
 
+function Previewer:willUnmount()
+    Previewer._themeCxn:Disconnect()
+    Previewer._runCxn:Disconnect()
+end
+
+
 return setmetatable({
     Settings = PreviewSettings,
 
     mount = function(previewDocket)
-        Roact.mount(Roact.createElement(Previewer), previewDocket, "Preview UI")
+        local handle = Roact.mount(Roact.createElement(Previewer), previewDocket, "Preview UI")
+
+        script:FindFirstAncestorWhichIsA("Plugin").Unloading:Connect(function()
+            Roact.unmount(handle)
+        end)
     end,
 
 }, {__index = Previewer})

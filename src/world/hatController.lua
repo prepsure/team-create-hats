@@ -5,10 +5,11 @@ local Importer = require(root.world.hat.importer)
 local PersistentInstance = require(root.world.persistentInstance)
 local PersistentFolder = require(root.world.persistentFolder)
 
+local update = Instance.new("BindableEvent")
+
 
 local HatController = {}
 HatController.List = {}
-HatController._bindings = {}
 
 
 HatController.MaxHats = 10
@@ -96,14 +97,12 @@ end
 
 
 function HatController:_update()
-    for _, func in pairs(self._bindings) do
-        func()
-    end
+    update:Fire()
 end
 
 
 function HatController:BindToUpdate(func)
-    table.insert(self._bindings, func)
+    return update.Event:Connect(func)
 end
 
 
