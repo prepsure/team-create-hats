@@ -7,13 +7,18 @@ local NumberInput = require(script.Parent.NumberInput)
 local Vector3Input = Roact.Component:extend("Vector3Input")
 
 
+function Vector3Input:updateValue()
+    self.props.callback(self.props.DefaultValue)
+end
+
+
 function Vector3Input:init()
     self.props.LabelText = self.props.LabelText or ""
 
     self.props.Position = self.props.Position or UDim.new(0, 0)
     self.props.Size = self.props.Size or UDim.new(0, 30)
 
-    self.props.DefaultValue = self.props.DefaultValue or "0"
+    self.props.DefaultValue = self.props.DefaultValue or Vector3.new(0, 0, 0)
     assert(self.props.Theme ~= nil, "No theme found for numberinput")
 
     self.props.callback = self.props.callback or function() end
@@ -48,7 +53,7 @@ function Vector3Input:render()
                 }),
             }),
 
-            Input1 = Roact.createElement(NumberInput, {
+            X = Roact.createElement(NumberInput, {
                 Position = UDim2.new(0.3, 0, 0, 0),
                 Size = UDim2.new(0.2, 0, 1, 0),
 
@@ -56,7 +61,10 @@ function Vector3Input:render()
                 Theme = self.props.Theme,
                 DefaultValue = self.props.DefaultValue.X,
 
-                callback = self.props.callback,
+                callback = function(num)
+                    self.props.DefaultValue = Vector3.new(num, 0, 0) + (self.props.DefaultValue * Vector3.new(0, 1, 1))
+                    self:updateValue()
+                end,
             }),
 
             Comma1 = Roact.createElement("TextLabel", {
@@ -78,7 +86,7 @@ function Vector3Input:render()
                 }),
             }),
 
-            Input2 = Roact.createElement(NumberInput, {
+            Y = Roact.createElement(NumberInput, {
                 Position = UDim2.new(0.55, 0, 0, 0),
                 Size = UDim2.new(0.2, 0, 1, 0),
 
@@ -86,7 +94,10 @@ function Vector3Input:render()
                 Theme = self.props.Theme,
                 DefaultValue = self.props.DefaultValue.Y,
 
-                callback = self.props.callback,
+                callback = function(num)
+                    self.props.DefaultValue = Vector3.new(0, num, 0) + (self.props.DefaultValue * Vector3.new(1, 0, 1))
+                    self:updateValue()
+                end,
             }),
 
             Comma2 = Roact.createElement("TextLabel", {
@@ -108,7 +119,7 @@ function Vector3Input:render()
                 }),
             }),
 
-            Input3 = Roact.createElement(NumberInput, {
+            Z = Roact.createElement(NumberInput, {
                 Position = UDim2.new(0.8, 0, 0, 0),
                 Size = UDim2.new(0.2, 0, 1, 0),
 
@@ -116,7 +127,10 @@ function Vector3Input:render()
                 Theme = self.props.Theme,
                 DefaultValue = self.props.DefaultValue.Z,
 
-                callback = self.props.callback,
+                callback = function(num)
+                    self.props.DefaultValue = Vector3.new(0, 0, num) + (self.props.DefaultValue * Vector3.new(1, 1, 0))
+                    self:updateValue()
+                end,
             }),
 
         })

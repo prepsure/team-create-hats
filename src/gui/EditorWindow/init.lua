@@ -14,6 +14,10 @@ local Vector3Input = require(script.Vector3Input)
 
 local Editor = Roact.Component:extend("Editor")
 
+
+local currentHat = 1
+
+
 local EditorSettings = {
     Hats = {}
 }
@@ -75,9 +79,15 @@ function Editor:render()
             Position = UDim2.new(0, 20, 0, 170),
             Size = UDim2.new(1, -40, 0, 30),
 
+            DefaultValue = 0,
+
             LabelText = "Accessory Id",
             Theme = self.state.theme,
             NumType = "whole",
+
+            callback = function(id)
+                HatController:ChangeProperty(currentHat, "id", id)
+            end
         }),
 
         Offset = Roact.createElement(Vector3Input, {
@@ -88,16 +98,24 @@ function Editor:render()
 
             LabelText = "Offset",
             Theme = self.state.theme,
+
+            callback = function(offset)
+                HatController:ChangeProperty(currentHat, "Offset", offset)
+            end
         }),
 
         Scale = Roact.createElement(Vector3Input, {
             Position = UDim2.new(0, 20, 0, 250),
             Size = UDim2.new(1, -40, 0, 30),
 
-            DefaultValue = Vector3.new(0, 0, 0),
+            DefaultValue = Vector3.new(1, 1, 1),
 
             LabelText = "Scale",
             Theme = self.state.theme,
+
+            callback = function(scale)
+                HatController:ChangeProperty(currentHat, "Scale", scale)
+            end
         }),
 
         RemoveHat = Roact.createElement(ButtonInput, {
