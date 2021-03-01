@@ -74,7 +74,24 @@ function Editor:render()
         Choices = Roact.createElement(HorizontalChoiceList, {
             Position = UDim2.new(0, 0, 0, 130),
             Size = UDim2.new(1, 0, 0, 30),
-            options = 5,
+            options = #HatController.List,
+            MaxAllowed = HatController.MaxHats,
+            Selected = self.state.currentIndex,
+            callback = function(numOrPlus)
+                local index = 1
+
+                if numOrPlus == "+" then
+                    HatController:Add(1028826)
+                    index = #HatController.List
+                else
+                    index = tonumber(numOrPlus)
+                end
+
+                self:setState(function(state)
+                    state.currentIndex = index
+                    return state
+                end)
+            end,
         }),
 
         AccessoryId = Roact.createElement(LabeledNumberInput, {
@@ -128,6 +145,10 @@ function Editor:render()
 
             callback = function()
                 HatController:Remove(self.state.currentIndex)
+                self:setState(function(state)
+                    state.currentIndex = 1
+                    return state
+                end)
             end
         }),
 

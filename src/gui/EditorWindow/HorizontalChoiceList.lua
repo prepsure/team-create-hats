@@ -8,8 +8,15 @@ local ButtonInput = require(script.Parent.ButtonInput)
 local HorizontalChoiceList = Roact.Component:extend("HorizontalChoiceList")
 
 
+local activeColor = Color3.fromRGB(74, 157, 253)
+local inactiveColor = Color3.fromRGB(137, 137, 137)
+
+
 function HorizontalChoiceList:init()
     self.props.options = self.props.options or 0 -- number of choices in the list
+    self.props.Selected = self.props.Selected or 1
+    self.props.MaxAllowed = self.props.MaxAllowed or self.props.options
+
     self.props.Position = self.props.Position or UDim2.new(0,0,0)
     self.props.Size = self.props.Size or UDim2.new(0, 50, 0, 50)
 
@@ -23,6 +30,9 @@ function HorizontalChoiceList:render()
 
     for i = 1, options do
 
+        local color = (i == self.props.Selected) and activeColor or inactiveColor
+        local allowedToAdd = (self.props.options < self.props.MaxAllowed)
+
         if i ~= options then
 
             table.insert(choices,
@@ -30,7 +40,11 @@ function HorizontalChoiceList:render()
                     Text = i,
                     Position = UDim2.new(1/options * (i-1), 5, 0, 0),
                     Size = UDim2.new(1/options, -10, 1, 0),
-                    Color = Color3.fromRGB(74, 157, 253),
+                    Color = color,
+
+                    callback = function()
+                        self.props.callback(i)
+                    end
                 })
             )
 
@@ -42,8 +56,16 @@ function HorizontalChoiceList:render()
                     Position = UDim2.new(1/options * (i-1), 5, 0, 0),
                     Size = UDim2.new(1, 0, 1, 0),
                     SizeConstraint = Enum.SizeConstraint.RelativeYY,
-                    Color = Color3.fromRGB(74, 157, 253),
+                    Color = allowedToAdd and activeColor or inactiveColor,
                     CornerRadius = UDim.new(1, 0),
+
+                    callback = function()
+                        if not allowedToAdd then
+                            return
+                        end
+
+                        self.props.callback("+")
+                    end
                 })
             )
 
