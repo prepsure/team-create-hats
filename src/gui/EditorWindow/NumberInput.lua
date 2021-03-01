@@ -5,6 +5,12 @@ local Roact = require(root.roact)
 local NumberInput = Roact.Component:extend("NumberInput")
 
 
+-- rounds a number to a certain number of decimal places
+local function round(num, numDecimalPlaces)
+    return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
+end
+
+
 -- removes everything that isn't a number from a string
 local function filterToWholeNumber(str)
 	return str:gsub('%D','')
@@ -17,6 +23,7 @@ local function filterToNumber(str)
 	if str:sub(1,1) == "-" then
 		numericString = "-" .. numericString
 	end
+
 	return numericString
 end
 
@@ -42,6 +49,8 @@ local function filterForFinalNumber(str)
         numericString ..= "0"
     end
 
+    numericString = round(numericString, 5)
+
 	return numericString
 end
 
@@ -62,7 +71,7 @@ end
 
 
 function NumberInput:render()
-    self.updateInput(self.props.DefaultValue)
+    self.updateInput(filterForFinalNumber(tostring(self.props.DefaultValue)))
 
     return Roact.createFragment({
         Input = Roact.createElement("TextBox", {
