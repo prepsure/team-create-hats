@@ -8,6 +8,7 @@ local PersistentFolder = require(root.world.persistentFolder)
 
 local HatController = {}
 HatController.List = {}
+HatController._bindings = {}
 
 
 function HatController:_insert(id, model, index, properties)
@@ -16,6 +17,8 @@ function HatController:_insert(id, model, index, properties)
 
     index = index or (#HatController.List + 1)
     table.insert(HatController.List, index, hat)
+
+    self:_update()
 
     return hat
 end
@@ -36,11 +39,11 @@ function HatController:ChangeProperty(index, property, value)
 
         self:Remove(index)
         self:Add(value, index, oldProperties)
-
-        return
+    else
+        hat["Set" .. property](hat, value)
     end
 
-    hat["Set" .. property](hat, value)
+    self:_update()
 end
 
 
@@ -54,6 +57,8 @@ end
 function HatController:Remove(index)
     local hat = table.remove(HatController.List, index)
     hat:Destroy()
+
+    self:_update()
 end
 
 
@@ -72,6 +77,19 @@ function HatController:ImportFromCharacter()
     for _, hat in pairs(hats) do
         self:_insert("?", hat)
     end
+end
+
+
+function HatController:_update()
+    print('updating!')
+    for _, func in pairs(self._bindings) do
+        func()
+    end
+end
+
+
+function HatController:BindToUpdate(func)
+    table.insert(self._bindings, func)
 end
 
 

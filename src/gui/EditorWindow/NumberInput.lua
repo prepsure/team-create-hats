@@ -62,6 +62,7 @@ end
 
 
 function NumberInput:render()
+    self.updateInput(self.props.DefaultValue)
 
     return Roact.createFragment({
         Input = Roact.createElement("TextBox", {

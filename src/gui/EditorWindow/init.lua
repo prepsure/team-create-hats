@@ -15,17 +15,10 @@ local Vector3Input = require(script.Vector3Input)
 local Editor = Roact.Component:extend("Editor")
 
 
-local currentHat = 1
-
-
-local EditorSettings = {
-    Hats = {}
-}
-
-
 function Editor:init()
     self:setState({
         theme = settings().Studio.Theme,
+        currentIndex = 1,
     })
 end
 
@@ -79,14 +72,14 @@ function Editor:render()
             Position = UDim2.new(0, 20, 0, 170),
             Size = UDim2.new(1, -40, 0, 30),
 
-            DefaultValue = HatController.List[currentHat].id,
+            DefaultValue = HatController.List[self.state.currentIndex].id,
 
             LabelText = "Accessory Id",
             Theme = self.state.theme,
             NumType = "whole",
 
             callback = function(id)
-                HatController:ChangeProperty(currentHat, "id", id)
+                HatController:ChangeProperty(self.state.currentIndex, "id", id)
             end
         }),
 
@@ -94,13 +87,13 @@ function Editor:render()
             Position = UDim2.new(0, 20, 0, 210),
             Size = UDim2.new(1, -40, 0, 30),
 
-            DefaultValue = HatController.List[currentHat].offset,
+            DefaultValue = HatController.List[self.state.currentIndex].offset,
 
             LabelText = "Offset",
             Theme = self.state.theme,
 
             callback = function(offset)
-                HatController:ChangeProperty(currentHat, "Offset", offset)
+                HatController:ChangeProperty(self.state.currentIndex, "Offset", offset)
             end
         }),
 
@@ -108,13 +101,13 @@ function Editor:render()
             Position = UDim2.new(0, 20, 0, 250),
             Size = UDim2.new(1, -40, 0, 30),
 
-            DefaultValue = HatController.List[currentHat].scale,
+            DefaultValue = HatController.List[self.state.currentIndex].scale,
 
             LabelText = "Scale",
             Theme = self.state.theme,
 
             callback = function(scale)
-                HatController:ChangeProperty(currentHat, "Scale", scale)
+                HatController:ChangeProperty(self.state.currentIndex, "Scale", scale)
             end
         }),
 
@@ -125,7 +118,7 @@ function Editor:render()
             YSize = UDim.new(0, 30),
 
             callback = function()
-
+                HatController:Remove(self.state.currentIndex)
             end
         }),
 
@@ -140,11 +133,16 @@ function Editor:didMount()
             return state
         end)
     end)
+
+    HatController:BindToUpdate(function()
+        self:setState(function(state)
+            return state
+        end)
+    end)
 end
 
 
 return setmetatable({
-    Settings = EditorSettings,
 
     mount = function(docket)
         Roact.mount(Roact.createElement(Editor), docket, "Editor UI")
