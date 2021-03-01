@@ -10,6 +10,7 @@ local ButtonInput = require(script.ButtonInput)
 local NumberInput = require(script.NumberInput)
 local LabeledNumberInput = require(script.LabeledNumberInput)
 local Vector3Input = require(script.Vector3Input)
+local HorizontalChoiceList = require(script.HorizontalChoiceList)
 
 
 local Editor = Roact.Component:extend("Editor")
@@ -62,12 +63,18 @@ function Editor:render()
         ImportHats = Roact.createElement(ButtonInput, {
             Text = "Import Hats from Character",
             Color = Color3.fromRGB(74, 157, 253),
-            YPosition = UDim.new(0, 90),
-            YSize = UDim.new(0, 30),
+            Position = UDim2.new(0, 20, 0, 90),
+            Size = UDim2.new(1, -40, 0, 30),
 
             callback = function()
                 HatController:ImportFromCharacter() --TODO add a confirmation popup window
             end
+        }),
+
+        Choices = Roact.createElement(HorizontalChoiceList, {
+            Position = UDim2.new(0, 0, 0, 130),
+            Size = UDim2.new(1, 0, 0, 30),
+            options = 5,
         }),
 
         AccessoryId = Roact.createElement(LabeledNumberInput, {
@@ -116,8 +123,8 @@ function Editor:render()
         RemoveHat = Roact.createElement(ButtonInput, {
             Text = "Remove Hat",
             Color = Color3.fromRGB(245, 106, 106),
-            YPosition = UDim.new(0, 330),
-            YSize = UDim.new(0, 30),
+            Position = UDim2.new(0, 20, 0, 330),
+            Size = UDim2.new(1, -40, 0, 30),
 
             callback = function()
                 HatController:Remove(self.state.currentIndex)
