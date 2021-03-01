@@ -32,6 +32,11 @@ end
 
 
 function HatController:ChangeProperty(index, property, value)
+    if #HatController.List == 0 then
+        return
+    end
+
+
     local hat = self.List[index]
 
     if property == 'id' then -- for id changing, a new hat has to be imported, for other properties we can just modify the hat
@@ -55,6 +60,11 @@ end
 
 
 function HatController:Remove(index)
+    if #HatController.List == 0 then
+        return
+    end
+
+
     local hat = table.remove(HatController.List, index)
     hat:Destroy()
 
@@ -75,13 +85,12 @@ function HatController:ImportFromCharacter()
     self:RemoveAll()
 
     for _, hat in pairs(hats) do
-        self:_insert("?", hat)
+        self:_insert("0", hat)
     end
 end
 
 
 function HatController:_update()
-    print('updating!')
     for _, func in pairs(self._bindings) do
         func()
     end

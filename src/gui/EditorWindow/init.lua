@@ -25,6 +25,8 @@ end
 
 function Editor:render()
 
+    local enableProps = not not HatController.List[self.state.currentIndex]
+
     return Roact.createElement("Frame", {
         Size = UDim2.new(1,0,1,0),
         BackgroundColor3 = self.state.theme:GetColor(
@@ -72,7 +74,7 @@ function Editor:render()
             Position = UDim2.new(0, 20, 0, 170),
             Size = UDim2.new(1, -40, 0, 30),
 
-            DefaultValue = HatController.List[self.state.currentIndex].id,
+            DefaultValue = enableProps and HatController.List[self.state.currentIndex].id or 0,
 
             LabelText = "Accessory Id",
             Theme = self.state.theme,
@@ -87,7 +89,7 @@ function Editor:render()
             Position = UDim2.new(0, 20, 0, 210),
             Size = UDim2.new(1, -40, 0, 30),
 
-            DefaultValue = HatController.List[self.state.currentIndex].offset,
+            DefaultValue = enableProps and HatController.List[self.state.currentIndex].offset or Vector3.new(0,0,0),
 
             LabelText = "Offset",
             Theme = self.state.theme,
@@ -101,7 +103,7 @@ function Editor:render()
             Position = UDim2.new(0, 20, 0, 250),
             Size = UDim2.new(1, -40, 0, 30),
 
-            DefaultValue = HatController.List[self.state.currentIndex].scale,
+            DefaultValue = enableProps and HatController.List[self.state.currentIndex].scale or Vector3.new(1,1,1),
 
             LabelText = "Scale",
             Theme = self.state.theme,
@@ -135,9 +137,7 @@ function Editor:didMount()
     end)
 
     HatController:BindToUpdate(function()
-        self:setState(function(state)
-            return state
-        end)
+        self:setState(self.state)
     end)
 end
 
