@@ -11,7 +11,12 @@ HatController.List = {}
 HatController._bindings = {}
 
 
+HatController.MaxHats = 10
+
+
 function HatController:_insert(id, model, index, properties)
+    assert(#HatController.List < HatController.MaxHats, "cannot go above max hats")
+
     local persistentModel = PersistentInstance.new(model, PersistentFolder)
     local hat = Hat.new(id, persistentModel, properties)
 
