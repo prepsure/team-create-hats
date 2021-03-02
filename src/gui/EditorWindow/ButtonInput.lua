@@ -4,15 +4,6 @@ local Roact = require(root.roact)
 
 local ButtonInput = Roact.Component:extend("ButtonInput")
 
-local implicitProps = {
-    cornerRadius = 3,
-    leftPadding = 20,
-    topPadding = 10,
-
-    clickedColor = Color3.fromRGB(74, 157, 253),
-    unclickedColor = Color3.fromRGB(137, 137, 137),
-}
-
 
 function ButtonInput:init()
     self.props.Position = self.props.Position or UDim.new(0, 0)
