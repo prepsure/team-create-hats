@@ -21,11 +21,11 @@ end
 
 
 -- dir must be X, Y, or Z
-function Vector3Input:makeField(dir)
+function Vector3Input:makeField(dir, pos)
     local vectorBase = getVectorBaseFromDirection(dir)
 
     return Roact.createElement(NumberInput, {
-        Position = UDim2.new(0.3, 0, 0, 0),
+        Position = pos,
         Size = UDim2.new(0.2, 0, 1, 0),
 
         NumType = "all",
@@ -40,10 +40,10 @@ function Vector3Input:makeField(dir)
 end
 
 
-function Vector3Input:makeComma()
+function Vector3Input:makeComma(pos)
     return Roact.createElement("TextLabel", {
 
-        Position = UDim2.new(0.775, 0, 0, 0),
+        Position = pos,
         Size = UDim2.new(0.05, 0, 1, 0),
         Text = ",",
         BackgroundTransparency = 1,
@@ -52,7 +52,7 @@ function Vector3Input:makeComma()
             Enum.StudioStyleGuideModifier.Default
         ),
         TextScaled = true,
-        TextXAlignment = Enum.TextXAlignment.Left,
+        TextXAlignment = Enum.TextXAlignment.Center,
 
     }, {
         TSize = Roact.createElement("UITextSizeConstraint", {
@@ -103,11 +103,11 @@ function Vector3Input:render()
                 }),
             }),
 
-            X = Vector3Input:makeField("X"),
-            Comma1 = Vector3Input:makeComma(),
-            Y = Vector3Input:makeField("Y"),
-            Comma2 = Vector3Input:makeComma(),
-            Z = Vector3Input:makeField("Z")
+            X = self:makeField("X", UDim2.new(0.3, 0, 0, 0)),
+            Comma1 = self:makeComma(UDim2.new(0.5, 0, 0, 0)),
+            Y = self:makeField("Y", UDim2.new(0.55, 0, 0, 0)),
+            Comma2 = self:makeComma(UDim2.new(0.75, 0, 0, 0)),
+            Z = self:makeField("Z", UDim2.new(0.8, 0, 0, 0))
 
         })
     })
