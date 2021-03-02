@@ -14,6 +14,8 @@ local HorizontalChoiceList = require(script.HorizontalChoiceList)
 
 local Editor = Roact.Component:extend("Editor")
 
+local defaultHat = 1028826
+
 
 function Editor:init()
     self:setState({
@@ -79,12 +81,13 @@ function Editor:render()
 
             callback = function()
                 HatController:ImportFromCharacter() --TODO add a confirmation popup window
+                HatController:ChangePropertyOnAll("VisibleLocally", self.state.visibleLocally)
             end
         }),
 
         Choices = Roact.createElement(HorizontalChoiceList, {
-            Position = UDim2.new(0, 0, 0, 130),
-            Size = UDim2.new(1, 0, 0, 30),
+            Position = UDim2.new(0, 20, 0, 130),
+            Size = UDim2.new(1, -40, 0, 30),
             options = #HatController.List,
             MaxAllowed = HatController.MaxHats,
             Selected = self.state.currentIndex,
@@ -92,7 +95,7 @@ function Editor:render()
                 local index = 1
 
                 if numOrPlus == "+" then
-                    HatController:Add(1028826)
+                    HatController:Add(defaultHat, nil, {visibleLocally = self.state.visibleLocally})
                     index = #HatController.List
                 else
                     index = tonumber(numOrPlus)
@@ -157,7 +160,7 @@ function Editor:render()
             callback = function()
                 HatController:Remove(self.state.currentIndex)
                 self:setState(function(state)
-                    state.currentIndex = 1
+                    state.currentIndex = state.currentIndex -1
                     return state
                 end)
             end
