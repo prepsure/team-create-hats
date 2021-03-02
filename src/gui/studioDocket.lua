@@ -30,10 +30,18 @@ end
 
 StudioDocket.Windows = {
     ['Edit Hats'] = {
-        Button = StudioDocket.Toolbar:CreateButton("Edit Hats", "change hat properties", "rbxassetid://692849427"),
+        Button = StudioDocket.Toolbar:CreateButton(
+            "Edit Hats",
+            "change your hat properties",
+            "rbxassetid://692849427"
+        ),
     },
     ['Preview Hats'] = {
-        Button = StudioDocket.Toolbar:CreateButton("Preview", "preview hats", "rbxassetid://692849427"),
+        Button = StudioDocket.Toolbar:CreateButton(
+            "Preview Hats",
+            "see what hats look like on your team create ball",
+            "rbxassetid://6461624957"
+        ),
     }
 }
 
