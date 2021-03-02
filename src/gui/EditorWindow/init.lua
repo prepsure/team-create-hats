@@ -15,7 +15,6 @@ local RadioButtonInput = require(script.RadioButtonInput)
 
 local Editor = Roact.Component:extend("Editor")
 
-local defaultHat = 1028826
 local transformPriorityOptions = {"rotate", "translate"}
 
 
@@ -98,7 +97,7 @@ function Editor:render()
                 local index = 1
 
                 if numOrPlus == "+" then
-                    HatController:Add(defaultHat, nil, {visibleLocally = self.state.visibleLocally})
+                    HatController:Add(nil, nil, {visibleLocally = self.state.visibleLocally})
                     index = #HatController.List
                 else
                     index = tonumber(numOrPlus)

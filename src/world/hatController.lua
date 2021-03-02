@@ -13,6 +13,7 @@ HatController.List = {}
 
 
 HatController.MaxHats = 10
+local defaultHat = 1028826
 
 
 function HatController:_insert(id, model, index, properties)
@@ -31,6 +32,8 @@ end
 
 
 function HatController:Add(id, index, properties)
+    id = id or defaultHat
+
     local _, model = Importer:LoadHat(id)
 
     return self:_insert(id, model, index, properties)

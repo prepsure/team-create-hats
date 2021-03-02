@@ -10,6 +10,7 @@ local HorizontalChoiceList = Roact.Component:extend("HorizontalChoiceList")
 
 local activeColor = Color3.fromRGB(74, 157, 253)
 local inactiveColor = Color3.fromRGB(137, 137, 137)
+local plusActiveColor = Color3.fromRGB(82, 241, 167)
 
 
 function HorizontalChoiceList:init()
@@ -56,7 +57,7 @@ function HorizontalChoiceList:render()
                     Position = UDim2.new(1/options * (i-1), 5, 0, 0),
                     Size = UDim2.new(1, 0, 1, 0),
                     SizeConstraint = Enum.SizeConstraint.RelativeYY,
-                    Color = allowedToAdd and activeColor or inactiveColor,
+                    Color = allowedToAdd and plusActiveColor or inactiveColor,
                     CornerRadius = UDim.new(1, 0),
 
                     callback = function()
