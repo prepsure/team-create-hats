@@ -19,6 +19,8 @@ function Editor:init()
     self:setState({
         theme = settings().Studio.Theme,
         currentIndex = 1,
+        enabled = true,
+        visibleLocally = false,
     })
 end
 
@@ -35,15 +37,20 @@ function Editor:render()
         ),
     },
     {
-        Enabled = Roact.createElement(CheckboxInput, {
+        Enabled = Roact.createElement(CheckboxInput, { -- TODO: updates reset these checkboxes?
             Position = UDim2.new(0, 0, 0, 10),
             Size = UDim2.new(1, 0, 0, 30),
             LabelText = "Enabled",
             Theme = self.state.theme,
 
-            Checked = true,
-            callback = function(state)
-                PersistentFolder:Reparent(state and workspace or false)
+            Checked = self.state.enabled,
+            callback = function()
+                self:setState(function(state)
+                    state.enabled = not state.enabled
+                    return state
+                end)
+
+                PersistentFolder:Reparent(self.state.enabled and workspace or false)
             end
         }),
 
@@ -53,9 +60,14 @@ function Editor:render()
             LabelText = "Visible to Self",
             Theme = self.state.theme,
 
-            Checked = false,
-            callback = function(state)
-                HatController:ChangePropertyOnAll("VisibleLocally", state)
+            Checked = self.state.visibleLocally,
+            callback = function()
+                self:setState(function(state)
+                    state.visibleLocally = not state.visibleLocally
+                    return state
+                end)
+
+                HatController:ChangePropertyOnAll("VisibleLocally", self.state.visibleLocally)
             end
         }),
 

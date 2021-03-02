@@ -21,7 +21,6 @@ local function boolToCheckColor(b)
 end
 
 
-
 function CheckboxInput:init()
     self.props.Position = self.props.Position or UDim2.new(0, 0, 0, 0)
     self.props.Size = self.props.Size or UDim2.new(0, 50, 0, 50)
@@ -30,9 +29,9 @@ function CheckboxInput:init()
     self.props.callback = self.props.callback or function() end
     assert(self.props.Theme ~= nil, "No theme found for checkbox")
 
-
     self.checkColor, self.updateCheckColor = Roact.createBinding(boolToCheckColor(self.props.Checked))
 end
+
 
 function CheckboxInput:render()
     return Roact.createFragment({
@@ -64,12 +63,10 @@ function CheckboxInput:render()
                 Size = UDim2.new(0, self.props.Size.Y.Offset * 3/5, 0, self.props.Size.Y.Offset * 3/5),
                 Position = UDim2.new(0, implicitProps.textWidth + implicitProps.leftPadding, 0.5, 0),
                 Text = "",
-                BackgroundColor3 = self.checkColor,
+                BackgroundColor3 = boolToCheckColor(self.props.Checked),
 
                 [Roact.Event.Activated] = function()
-                    self.props.Checked = not self.props.Checked
-                    self.updateCheckColor(boolToCheckColor(self.props.Checked))
-                    self.props.callback(self.props.Checked)
+                    self.props.callback()
                 end
 
             }, {
