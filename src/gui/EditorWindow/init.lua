@@ -10,11 +10,13 @@ local ButtonInput = require(script.ButtonInput)
 local LabeledNumberInput = require(script.LabeledNumberInput)
 local Vector3Input = require(script.Vector3Input)
 local HorizontalChoiceList = require(script.HorizontalChoiceList)
+local RadioButtonInput = require(script.RadioButtonInput)
 
 
 local Editor = Roact.Component:extend("Editor")
 
 local defaultHat = 1028826
+local transformPriorityOptions = {"rotate", "translate"}
 
 
 function Editor:init()
@@ -29,7 +31,8 @@ end
 
 function Editor:render()
 
-    local enableProps = not not HatController.List[self.state.currentIndex]
+    local currentHat = HatController.List[self.state.currentIndex]
+    local enableProps = not not currentHat
 
     return Roact.createElement("Frame", {
         Size = UDim2.new(1,0,1,0),
@@ -112,7 +115,7 @@ function Editor:render()
             Position = UDim2.new(0, 20, 0, 170),
             Size = UDim2.new(1, -40, 0, 30),
 
-            DefaultValue = enableProps and HatController.List[self.state.currentIndex].id or 0,
+            DefaultValue = enableProps and currentHat.id or 0,
 
             LabelText = "Accessory Id",
             Theme = self.state.theme,
@@ -127,7 +130,7 @@ function Editor:render()
             Position = UDim2.new(0, 20, 0, 210),
             Size = UDim2.new(1, -40, 0, 30),
 
-            DefaultValue = enableProps and HatController.List[self.state.currentIndex].offset or Vector3.new(0,0,0),
+            DefaultValue = enableProps and currentHat.offset or Vector3.new(0,0,0),
 
             LabelText = "Offset",
             Theme = self.state.theme,
@@ -141,7 +144,7 @@ function Editor:render()
             Position = UDim2.new(0, 20, 0, 250),
             Size = UDim2.new(1, -40, 0, 30),
 
-            DefaultValue = enableProps and HatController.List[self.state.currentIndex].scale or Vector3.new(1,1,1),
+            DefaultValue = enableProps and currentHat.scale or Vector3.new(1,1,1),
 
             LabelText = "Scale",
             Theme = self.state.theme,
@@ -151,10 +154,26 @@ function Editor:render()
             end
         }),
 
+        TransformPriority = Roact.createElement(RadioButtonInput, {
+            LabelText = "Transform Priority",
+            Theme = self.state.theme,
+
+            Position = UDim2.new(0, 20, 0, 290),
+            Size = UDim2.new(1, -40, 0, 60),
+
+            options = transformPriorityOptions,
+            selected = enableProps and table.find(transformPriorityOptions, currentHat.transformPriority),
+
+            callback = function(pos)
+                HatController:ChangeProperty(self.state.currentIndex, "TransformPriority", transformPriorityOptions[pos])
+            end,
+
+        }),
+
         RemoveHat = Roact.createElement(ButtonInput, {
             Text = "Remove Hat",
             Color = Color3.fromRGB(245, 106, 106),
-            Position = UDim2.new(0, 20, 0, 330),
+            Position = UDim2.new(0, 20, 0, 360),
             Size = UDim2.new(1, -40, 0, 30),
 
             callback = function()

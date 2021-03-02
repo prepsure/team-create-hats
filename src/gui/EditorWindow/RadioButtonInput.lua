@@ -1,0 +1,115 @@
+local root = script.Parent.Parent.Parent
+local Roact = require(root.roact)
+
+
+local RadioButtonInput = Roact.Component:extend("LabeledNumberInput")
+
+
+local activeColor = Color3.fromRGB(74, 157, 253)
+local inactiveColor = Color3.fromRGB(137, 137, 137)
+
+
+function RadioButtonInput:makeButton(pos)
+    local total = #self.props.options
+    local text = self.props.options[pos]
+
+    return Roact.createElement("Frame", {
+        Position = UDim2.new(0, 0, (pos-1)/total),
+        Size = UDim2.new(1, 0, 1/total, 0),
+        BackgroundTransparency = 1,
+    }, {
+        Text = Roact.createElement("TextLabel", {
+            Position = UDim2.new(0, 0, 0, 0),
+            Size = UDim2.new(0.3, 0, 1, 0),
+            BackgroundTransparency = 1,
+            Text = text,
+            TextColor3 = self.props.Theme:GetColor(
+                Enum.StudioStyleGuideColor.MainText,
+                Enum.StudioStyleGuideModifier.Default
+            ),
+            TextXAlignment = Enum.TextXAlignment.Right,
+        }),
+        Button = Roact.createElement("TextButton", {
+            AnchorPoint = Vector2.new(0, 0.5),
+            Position = UDim2.new(0.35, 0, 0.5, 0),
+            Size = UDim2.new(0.5, 0, 0.5, 0),
+            Text = "",
+            SizeConstraint = Enum.SizeConstraint.RelativeYY,
+            BackgroundColor3 = (pos == self.props.selected) and activeColor or inactiveColor,
+
+            [Roact.Event.Activated] = function()
+                self.props.callback(pos)
+            end
+        }, {
+            Corner = Roact.createElement("UICorner", {
+                CornerRadius = UDim.new(1, 0),
+            }),
+        })
+    })
+end
+
+
+function RadioButtonInput:init()
+    self.props.LabelText = self.props.LabelText or ""
+
+    self.props.Position = self.props.Position or UDim.new(0, 0)
+    self.props.Size = self.props.Size or UDim.new(0, 30)
+
+    self.props.options = self.props.options or {}
+    self.props.selected = self.props.selected or 1
+    assert(self.props.Theme ~= nil, "No theme found for numberinput")
+
+    self.props.callback = self.props.callback or function() end
+end
+
+
+function RadioButtonInput:render()
+
+    local generatedRadioButtons = {}
+
+    for i = 1, #self.props.options do
+        table.insert(generatedRadioButtons, self:makeButton(i))
+    end
+
+
+    return Roact.createFragment({
+        Frame = Roact.createElement("Frame", {
+
+            Position = self.props.Position,
+            Size = self.props.Size,
+            BackgroundTransparency = 1,
+
+        }, {
+
+            Label = Roact.createElement("TextLabel", {
+
+                Size = UDim2.new(0.4, 0, 0, self.props.Size.Y.Offset/#self.props.options),
+                Text = self.props.LabelText,
+                BackgroundTransparency = 1,
+                TextColor3 = self.props.Theme:GetColor(
+                    Enum.StudioStyleGuideColor.MainText,
+                    Enum.StudioStyleGuideModifier.Default
+                ),
+                TextScaled = true,
+                TextXAlignment = Enum.TextXAlignment.Left,
+
+            }, {
+                TSize = Roact.createElement("UITextSizeConstraint", {
+                    MaxTextSize = 12,
+                }),
+            }),
+
+            RadioButtons = Roact.createElement("Frame", {
+
+                Position = UDim2.new(0.4, 0, 0, 0),
+                Size = UDim2.new(0.6, 0, 1, 0),
+                BackgroundTransparency = 1,
+
+            }, generatedRadioButtons),
+
+        })
+    })
+end
+
+
+return RadioButtonInput
