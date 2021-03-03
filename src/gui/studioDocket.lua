@@ -12,6 +12,7 @@ local function createDocket(button, name)
     )
 
     docket.Title = name
+    docket.Name = "Team Create Hats: " .. name
     button:SetActive(docket.Enabled)
 
     button.Click:Connect(function()
@@ -31,7 +32,7 @@ end
 StudioDocket.Windows = {
     ['Edit Hats'] = {
         Button = StudioDocket.Toolbar:CreateButton(
-            "Edit Hats",
+            "Configure Hats",
             "change your hat properties",
             "rbxassetid://692849427"
         ),

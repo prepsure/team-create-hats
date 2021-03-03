@@ -17,6 +17,19 @@ local getColors = require(root.gui.getColors)
 local Editor = Roact.Component:extend("Editor")
 local PreviewWindow = require(script.Parent.PreviewWindow)
 
+local Loading = Instance.new("BindableEvent")
+local getSetting = Instance.new("BindableFunction")
+
+
+function Editor:getSetting()
+    return getSetting:Invoke('enabled')
+end
+
+
+function Editor:Load(enabled, visibleLocally)
+    Loading:Fire(enabled, visibleLocally)
+end
+
 
 function Editor:init()
     self:setState({
@@ -218,12 +231,26 @@ function Editor:didMount()
     Editor._listCxn = HatController:BindToUpdate(function()
         self:setState(self.state)
     end)
+
+    Editor._loadCxn = Loading.Event:Connect(function(enabled, visibleLocally)
+        self:setState(function(state)
+            state.enabled = enabled
+            state.visibleLocally = visibleLocally
+            return state
+        end)
+    end)
+
+    getSetting.OnInvoke = function(setting)
+        return self.state[setting]
+    end
 end
 
 
 function Editor:willUnmount()
     Editor._themeCxn:Disconnect()
     Editor._listCxn:Disconnect()
+    Editor._loadCxn:Disconnect()
+    getSetting:Destroy()
 end
 
 
