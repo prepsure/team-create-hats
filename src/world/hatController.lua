@@ -89,12 +89,12 @@ end
 
 
 function HatController:ImportFromCharacter()
-    local hats = Importer:LoadHatsFromCharacter()
+    local idTable = Importer:LoadHatsFromCharacter()
 
     self:RemoveAll()
 
-    for _, hat in pairs(hats) do
-        self:_insert("0", hat)
+    for _, id in pairs(idTable) do
+        self:Add(id)
     end
 end
 

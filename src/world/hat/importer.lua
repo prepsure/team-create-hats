@@ -38,19 +38,16 @@ end
 
 
 function Importer:LoadHatsFromCharacter()
-    local charAppearance = Players:GetCharacterAppearanceAsync(Players.LocalPlayer.UserId)
-    local characterHats = {}
+    local charAppearance = Players:GetCharacterAppearanceInfoAsync(Players.LocalPlayer.UserId)
+    local ids = {}
 
-    for _, item in pairs(charAppearance:GetChildren()) do
-        if item:IsA("Accessory") then
-            table.insert(characterHats, item)
-            item.Parent = nil
-            item.Handle.Anchored = true
+    for _, asset in pairs(charAppearance.assets) do
+        if asset.assetType.name == "Hat" or asset.assetType.name:find("Accessory") then
+            table.insert(ids, asset.id)
         end
     end
-    charAppearance:Destroy()
 
-    return characterHats
+    return ids
 end
 
 
