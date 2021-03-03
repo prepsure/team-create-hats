@@ -32,7 +32,7 @@ local EditorWindow = require(root.gui.EditorWindow)
 local Settings = require(root.settings)
 
 
-EditorWindow.mount(StudioDocket.Windows["Edit Hats"].Docket)
+EditorWindow.mount(StudioDocket.Windows["Configure Hats"].Docket)
 PreviewWindow.mount(StudioDocket.Windows["Preview Hats"].Docket)
 
 

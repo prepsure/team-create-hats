@@ -30,7 +30,7 @@ end
 
 
 StudioDocket.Windows = {
-    ['Edit Hats'] = {
+    ['Configure Hats'] = {
         Button = StudioDocket.Toolbar:CreateButton(
             "Configure Hats",
             "change your hat properties",
