@@ -149,7 +149,11 @@ function Previewer:render()
         Viewport = Roact.createElement("ViewportFrame", {
             Size = UDim2.new(1,0,1,0),
             BackgroundTransparency = 1,
-            CurrentCamera = self.cameraRef
+            CurrentCamera = self.cameraRef,
+            BackgroundColor3 =self.state.theme:GetColor(
+                Enum.StudioStyleGuideColor.MainBackground,
+                Enum.StudioStyleGuideModifier.Default
+            ),
         },
         {
             Camera = Roact.createElement("Camera", {
