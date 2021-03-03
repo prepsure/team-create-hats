@@ -163,10 +163,10 @@ function Editor:render()
             Size = UDim2.new(1, -40, 0, 60),
 
             options = transformPriorityOptions,
-            selected = enableProps and table.find(transformPriorityOptions, currentHat.transformPriority),
+            selected = enableProps and currentHat.transformPriority,
 
             callback = function(pos)
-                HatController:ChangeProperty(self.state.currentIndex, "TransformPriority", transformPriorityOptions[pos])
+                HatController:ChangeProperty(self.state.currentIndex, "TransformPriority", pos)
             end,
 
         }),

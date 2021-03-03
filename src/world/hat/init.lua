@@ -17,8 +17,8 @@ Hat.__index = Hat
 
         offset -            a Vector3, the offset the accessory from the player's camera
         scale -             a Vector3, the scale of the accessory's mesh
-        transformPriority - a string,  "rotate" or "translate" that describes in what order 
-                                       orientations should be applied to the accessory
+        transformPriority - a number,  signifying "rotate" or "translate" that describes in what
+                                       order orientations should be applied to the accessory
         visibleLocally -    a boolean, whether the local transparency modifier should be toggled
 
 --]]
@@ -35,7 +35,7 @@ function Hat.new(id, model, propTable)
 
     self:SetOffset(propTable.offset or Vector3.new(0, 0, 0))
     self:SetScale(propTable.scale or Vector3.new(1, 1, 1))
-    self:SetTransformPriority(propTable.transformPriority or "rotate")
+    self:SetTransformPriority(propTable.transformPriority or 1)
     self:SetVisibleLocally(propTable.visibleLocally or false)
 
     self._floatConnection = self:_bindFloating()
@@ -69,7 +69,7 @@ end
 
 
 function Hat:SetTransformPriority(state)
-    assert(state == "rotate" or state == "translate" or state == "none", "transform priority set incorrectly")
+    assert(state == 1 or state == 2 or state == 3, "transform priority set incorrectly")
     self.transformPriority = state
 end
 
@@ -96,9 +96,9 @@ function Hat:SetCFrame(aroundCf)
         return
     end
 
-    if self.transformPriority == "rotate" then
+    if self.transformPriority == 1 then
         self.model.Handle.CFrame = aroundCf * CFrame.new(self.offset)
-    elseif self.transformPriority == "translate" then
+    elseif self.transformPriority == 2 then
         self.model.Handle.CFrame = (CFrame.new(aroundCf.p) + self.offset) * (aroundCf - aroundCf.p)
     else -- transformPriority = "none"
         self.model.Handle.CFrame = CFrame.new(aroundCf.p) + self.offset
