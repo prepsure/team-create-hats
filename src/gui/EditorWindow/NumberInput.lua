@@ -83,17 +83,18 @@ function NumberInput:render()
             Text = self.input,
             TextScaled = true,
             ClearTextOnFocus = false,
+            BorderSizePixel = 1,
 
             TextColor3 = self.props.Theme:GetColor(
-                Enum.StudioStyleGuideColor.SubText,
+                Enum.StudioStyleGuideColor.MainText,
                 Enum.StudioStyleGuideModifier.Default
             ),
             BackgroundColor3 = self.props.Theme:GetColor(
-                Enum.StudioStyleGuideColor.InputFieldBackground,
+                Enum.StudioStyleGuideColor.Light,
                 Enum.StudioStyleGuideModifier.Default
             ),
             BorderColor3 = self.props.Theme:GetColor(
-                Enum.StudioStyleGuideColor.SubText,
+                Enum.StudioStyleGuideColor.Mid,
                 Enum.StudioStyleGuideModifier.Default
             ),
 

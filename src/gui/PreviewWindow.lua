@@ -10,7 +10,7 @@ local CheckboxInput = require(root.gui.EditorWindow.CheckboxInput)
 local Previewer = Roact.Component:extend("Previewer")
 
 local PreviewSettings = {
-    CameraCFrame = CFrame.new(Vector3.new(5,0,0), Vector3.new(0,0,0)) + Vector3.new(0,1,0),
+    CameraCFrame = CFrame.new(Vector3.new(0,0,-5), Vector3.new(0,0,0)) + Vector3.new(0,1,0),
     BallColor = Color3.new(0.627450, 0.321568, 0.721568),
     BallTransparency = 0.5,
     CurrentIndex = 0,
@@ -69,7 +69,7 @@ function Previewer:render()
             Size = UDim2.new(1, 0, 0, 30),
             Theme = self.state.theme,
             Checked = PreviewSettings.DoHighlight,
-            LabelText = "Color Selection",
+            LabelText = "Highlight Selection",
             callback = function()
                 PreviewSettings.DoHighlight = not PreviewSettings.DoHighlight
             end
@@ -117,16 +117,6 @@ function Previewer:render()
                 Transparency = PreviewSettings.BallTransparency,
             }),
             Hats = Roact.createElement("Folder", {}, hatComponents),
-            --[[
-            Highlighted = Roact.createElement("ViewportFrame", {
-                Size = UDim2.new(1,0,1,0),
-                BackgroundTransparency = 1,
-                CurrentCamera = self.cameraRef,
-                ZIndex = 10,
-            }, {
-                Hat = (PreviewSettings.CurrentIndex ~= 0) and hatComponents[tostring(PreviewSettings.CurrentIndex)] or nil
-            }),
-            ]]
         })
     })
 end

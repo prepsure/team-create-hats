@@ -5,7 +5,7 @@ local Roact = require(root.roact)
 local CheckboxInput = Roact.Component:extend("CheckboxInput")
 
 local implicitProps = {
-    textWidth = 100,
+    textWidth = 120,
 
     checkboxCornerRadius = 2,
     leftPadding = 20,

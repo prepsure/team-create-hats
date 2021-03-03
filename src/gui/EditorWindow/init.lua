@@ -87,8 +87,19 @@ function Editor:render()
             end
         }),
 
+        Divider = Roact.createElement("Frame", {
+            AnchorPoint = Vector2.new(0, 0.5),
+            BorderSizePixel = 0,
+            BackgroundColor3 = self.state.theme:GetColor(
+                Enum.StudioStyleGuideColor.Light,
+                Enum.StudioStyleGuideModifier.Default
+            ),
+            Size = UDim2.new(1, -10, 0, 3),
+            Position = UDim2.new(0, 5, 0, 135),
+        }),
+
         Choices = Roact.createElement(HorizontalChoiceList, {
-            Position = UDim2.new(0, 20, 0, 130),
+            Position = UDim2.new(0, 20, 0, 150),
             Size = UDim2.new(1, -40, 0, 30),
             options = #HatController.List,
             MaxAllowed = HatController.MaxHats,
@@ -111,7 +122,7 @@ function Editor:render()
         }),
 
         AccessoryId = Roact.createElement(LabeledNumberInput, {
-            Position = UDim2.new(0, 20, 0, 170),
+            Position = UDim2.new(0, 20, 0, 190),
             Size = UDim2.new(1, -40, 0, 30),
 
             DefaultValue = enableProps and currentHat.id or 0,
@@ -126,7 +137,7 @@ function Editor:render()
         }),
 
         Offset = Roact.createElement(Vector3Input, {
-            Position = UDim2.new(0, 20, 0, 210),
+            Position = UDim2.new(0, 20, 0, 230),
             Size = UDim2.new(1, -40, 0, 30),
 
             DefaultValue = enableProps and currentHat.offset or Vector3.new(0,0,0),
@@ -140,7 +151,7 @@ function Editor:render()
         }),
 
         Scale = Roact.createElement(Vector3Input, {
-            Position = UDim2.new(0, 20, 0, 250),
+            Position = UDim2.new(0, 20, 0, 270),
             Size = UDim2.new(1, -40, 0, 30),
 
             DefaultValue = enableProps and currentHat.scale or Vector3.new(1,1,1),
@@ -157,10 +168,10 @@ function Editor:render()
             LabelText = "Rotation",
             Theme = self.state.theme,
 
-            Position = UDim2.new(0, 20, 0, 290),
+            Position = UDim2.new(0, 20, 0, 310),
             Size = UDim2.new(1, -40, 0, 60),
 
-            options = {"locked to camera", "unlocked"},
+            options = {"relative to camera", "global"},
             selected = enableProps and currentHat.transformPriority,
 
             callback = function(pos)
@@ -172,7 +183,7 @@ function Editor:render()
         RemoveHat = Roact.createElement(ButtonInput, {
             Text = "Remove Hat",
             Color = Color3.fromRGB(245, 106, 106),
-            Position = UDim2.new(0, 20, 0, 360),
+            Position = UDim2.new(0, 20, 0, 380),
             Size = UDim2.new(1, -40, 0, 30),
 
             callback = function()
