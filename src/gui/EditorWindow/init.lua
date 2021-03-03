@@ -14,6 +14,7 @@ local RadioButtonInput = require(script.RadioButtonInput)
 
 
 local Editor = Roact.Component:extend("Editor")
+local PreviewWindow = require(script.Parent.PreviewWindow)
 
 local transformPriorityOptions = {"rotate", "translate"}
 
@@ -32,6 +33,7 @@ function Editor:render()
 
     local currentHat = HatController.List[self.state.currentIndex]
     local enableProps = not not currentHat
+    PreviewWindow.Settings.CurrentIndex = self.state.currentIndex
 
     return Roact.createElement("Frame", {
         Size = UDim2.new(1,0,1,0),
@@ -178,7 +180,9 @@ function Editor:render()
             callback = function()
                 HatController:Remove(self.state.currentIndex)
                 self:setState(function(state)
-                    state.currentIndex = state.currentIndex -1
+                    if not HatController.List[self.state.currentIndex] then
+                        state.currentIndex -= 1
+                    end
                     return state
                 end)
             end

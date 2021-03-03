@@ -51,11 +51,15 @@ function CheckboxInput:render()
                     Enum.StudioStyleGuideColor.MainText,
                     Enum.StudioStyleGuideModifier.Default
                 ),
-                TextSize = 12,
+                TextScaled = 12,
                 TextXAlignment = Enum.TextXAlignment.Left,
 
                 Text = self.props.LabelText,
 
+            }, {
+                TSize = Roact.createElement("UITextSizeConstraint", {
+                    MaxTextSize = 12,
+                }),
             }),
             Box = Roact.createElement("TextButton", {
 

@@ -5,8 +5,7 @@ local Roact = require(root.roact)
 
 
 local HatController = require(root.world.hatController)
-local Editor = require(root.gui.EditorWindow)
-
+local CheckboxInput = require(root.gui.EditorWindow.CheckboxInput)
 
 local Previewer = Roact.Component:extend("Previewer")
 
@@ -14,7 +13,8 @@ local PreviewSettings = {
     CameraCFrame = CFrame.new(Vector3.new(5,0,0), Vector3.new(0,0,0)) + Vector3.new(0,1,0),
     BallColor = Color3.new(0.627450, 0.321568, 0.721568),
     BallTransparency = 0.5,
-    Hats = {},
+    CurrentIndex = 0,
+    DoHighlight = true,
 }
 
 
@@ -32,21 +32,24 @@ end
 function Previewer:render()
     local hatComponents = {}
 
-    for _, hat in pairs(HatController.List) do
+    for i, hat in pairs(HatController.List) do
         local handle = hat.model.Handle
         local mesh = handle:FindFirstChildOfClass("SpecialMesh")
 
         local camCf = workspace.CurrentCamera.CFrame
         local cf = (handle.CFrame - camCf.Position) + self.state.partCf.Position
 
-        hatComponents[tostring(_)] = Roact.createElement("Part", {
+        local shouldHighlight = ((PreviewSettings.CurrentIndex == i) and  PreviewSettings.DoHighlight)
+
+        hatComponents[tostring(i)] = Roact.createElement("Part", {
             Size = handle.Size,
-            CFrame = cf
+            CFrame = cf,
+            Color = Color3.fromRGB(85, 255, 0)
         },
         {
             Mesh = Roact.createElement("SpecialMesh", {
                 MeshId = mesh.MeshId,
-                TextureId = mesh.TextureId,
+                TextureId = (not shouldHighlight) and mesh.TextureId or nil,
                 Scale = mesh.Scale,
             }),
         })
@@ -61,6 +64,16 @@ function Previewer:render()
         ),
     },
     {
+        DoHighlight = Roact.createElement(CheckboxInput, {
+            Position = UDim2.new(0, -15, 0, 0),
+            Size = UDim2.new(1, 0, 0, 30),
+            Theme = self.state.theme,
+            Checked = PreviewSettings.DoHighlight,
+            LabelText = "Color Selection",
+            callback = function()
+                PreviewSettings.DoHighlight = not PreviewSettings.DoHighlight
+            end
+        }),
         Viewport = Roact.createElement("ViewportFrame", {
             Size = UDim2.new(1,0,1,0),
             BackgroundTransparency = 1,
@@ -104,6 +117,16 @@ function Previewer:render()
                 Transparency = PreviewSettings.BallTransparency,
             }),
             Hats = Roact.createElement("Folder", {}, hatComponents),
+            --[[
+            Highlighted = Roact.createElement("ViewportFrame", {
+                Size = UDim2.new(1,0,1,0),
+                BackgroundTransparency = 1,
+                CurrentCamera = self.cameraRef,
+                ZIndex = 10,
+            }, {
+                Hat = (PreviewSettings.CurrentIndex ~= 0) and hatComponents[tostring(PreviewSettings.CurrentIndex)] or nil
+            }),
+            ]]
         })
     })
 end
