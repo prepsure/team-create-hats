@@ -19,19 +19,19 @@ function RadioButtonInput:makeButton(pos)
         BackgroundTransparency = 1,
     }, {
         Text = Roact.createElement("TextLabel", {
-            Position = UDim2.new(0, 0, 0, 0),
-            Size = UDim2.new(0.3, 0, 1, 0),
+            Position = UDim2.new(0.15, 0, 0, 0),
+            Size = UDim2.new(0.6, 0, 1, 0),
             BackgroundTransparency = 1,
             Text = text,
             TextColor3 = self.props.Theme:GetColor(
                 Enum.StudioStyleGuideColor.MainText,
                 Enum.StudioStyleGuideModifier.Default
             ),
-            TextXAlignment = Enum.TextXAlignment.Right,
+            TextXAlignment = Enum.TextXAlignment.Left,
         }),
         Button = Roact.createElement("TextButton", {
             AnchorPoint = Vector2.new(0, 0.5),
-            Position = UDim2.new(0.35, 0, 0.5, 0),
+            Position = UDim2.new(0, 0, 0.5, 0),
             Size = UDim2.new(0.5, 0, 0.5, 0),
             Text = "",
             SizeConstraint = Enum.SizeConstraint.RelativeYY,
