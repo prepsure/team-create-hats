@@ -11,6 +11,7 @@ local LabeledNumberInput = require(script.LabeledNumberInput)
 local Vector3Input = require(script.Vector3Input)
 local HorizontalChoiceList = require(script.HorizontalChoiceList)
 local RadioButtonInput = require(script.RadioButtonInput)
+local getColors = require(root.gui.getColors)
 
 
 local Editor = Roact.Component:extend("Editor")
@@ -77,7 +78,7 @@ function Editor:render()
 
         ImportHats = Roact.createElement(ButtonInput, {
             Text = "Import Hats from Character",
-            Color = Color3.fromRGB(74, 157, 253),
+            Color = getColors(self.state.theme, "Blue"),
             Position = UDim2.new(0, 20, 0, 90),
             Size = UDim2.new(1, -40, 0, 30),
 
@@ -104,6 +105,7 @@ function Editor:render()
             options = #HatController.List,
             MaxAllowed = HatController.MaxHats,
             Selected = self.state.currentIndex,
+            Theme = self.state.theme,
             callback = function(numOrPlus)
                 local index = 1
 
@@ -182,7 +184,7 @@ function Editor:render()
 
         RemoveHat = Roact.createElement(ButtonInput, {
             Text = "Remove Hat",
-            Color = Color3.fromRGB(245, 106, 106),
+            Color = getColors(self.state.theme, "Red"),
             Position = UDim2.new(0, 20, 0, 380),
             Size = UDim2.new(1, -40, 0, 30),
 

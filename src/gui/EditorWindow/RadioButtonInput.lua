@@ -1,12 +1,9 @@
 local root = script.Parent.Parent.Parent
 local Roact = require(root.roact)
 
+local getColor = require(root.gui.getColors)
 
 local RadioButtonInput = Roact.Component:extend("LabeledNumberInput")
-
-
-local activeColor = Color3.fromRGB(74, 157, 253)
-local inactiveColor = Color3.fromRGB(137, 137, 137)
 
 
 function RadioButtonInput:makeButton(pos)
@@ -35,7 +32,9 @@ function RadioButtonInput:makeButton(pos)
             Size = UDim2.new(0.5, 0, 0.5, 0),
             Text = "",
             SizeConstraint = Enum.SizeConstraint.RelativeYY,
-            BackgroundColor3 = (pos == self.props.selected) and activeColor or inactiveColor,
+            BackgroundColor3 = (pos == self.props.selected) and
+                getColor(self.props.Theme, "Blue") or
+                getColor(self.props.Theme, "Gray"),
 
             [Roact.Event.Activated] = function()
                 self.props.callback(pos)
@@ -92,7 +91,7 @@ function RadioButtonInput:render()
 
             Label = Roact.createElement("TextLabel", {
 
-                Size = UDim2.new(0.4, 0, 0, self.props.Size.Y.Offset/#self.props.options),
+                Size = UDim2.new(0.3, 0, 0, self.props.Size.Y.Offset/#self.props.options),
                 Text = self.props.LabelText,
                 BackgroundTransparency = 1,
                 TextColor3 = self.props.Theme:GetColor(
@@ -110,8 +109,8 @@ function RadioButtonInput:render()
 
             RadioButtons = Roact.createElement("Frame", {
 
-                Position = UDim2.new(0.4, 0, 0, 0),
-                Size = UDim2.new(0.6, 0, 1, 0),
+                Position = UDim2.new(0.3, 0, 0, 0),
+                Size = UDim2.new(0.7, 0, 1, 0),
                 BackgroundTransparency = 1,
 
             }, generatedRadioButtons),

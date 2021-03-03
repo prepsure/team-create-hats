@@ -1,16 +1,11 @@
 local root = script.Parent.Parent.Parent
 local Roact = require(root.roact)
 
-
 local ButtonInput = require(script.Parent.ButtonInput)
+local getColor = require(root.gui.getColors)
 
 
 local HorizontalChoiceList = Roact.Component:extend("HorizontalChoiceList")
-
-
-local activeColor = Color3.fromRGB(74, 157, 253)
-local inactiveColor = Color3.fromRGB(137, 137, 137)
-local plusActiveColor = Color3.fromRGB(82, 241, 167)
 
 
 function HorizontalChoiceList:init()
@@ -20,6 +15,7 @@ function HorizontalChoiceList:init()
 
     self.props.Position = self.props.Position or UDim2.new(0,0,0)
     self.props.Size = self.props.Size or UDim2.new(0, 50, 0, 50)
+    assert(self.props.Theme ~= nil, "No theme found for choice list")
 
     self.props.callback = self.props.callback or function() end
 end
@@ -31,7 +27,7 @@ function HorizontalChoiceList:render()
 
     for i = 1, options do
 
-        local color = (i == self.props.Selected) and activeColor or inactiveColor
+        local color = (i == self.props.Selected) and getColor(self.props.Theme, "Blue") or getColor(self.props.Theme, "Gray")
         local allowedToAdd = (self.props.options < self.props.MaxAllowed)
 
         if i ~= options then
@@ -57,7 +53,7 @@ function HorizontalChoiceList:render()
                     Position = UDim2.new(1/options * (i-1), 5, 0, 0),
                     Size = UDim2.new(1, 0, 1, 0),
                     SizeConstraint = Enum.SizeConstraint.RelativeYY,
-                    Color = allowedToAdd and plusActiveColor or inactiveColor,
+                    Color = allowedToAdd and getColor(self.props.Theme, "Green") or getColor(self.props.Theme, "Gray"),
                     CornerRadius = UDim.new(1, 0),
 
                     callback = function()

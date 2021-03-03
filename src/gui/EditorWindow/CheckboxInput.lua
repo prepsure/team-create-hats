@@ -1,6 +1,8 @@
 local root = script.Parent.Parent.Parent
 local Roact = require(root.roact)
 
+local getColor = require(root.gui.getColors)
+
 
 local CheckboxInput = Roact.Component:extend("CheckboxInput")
 
@@ -10,14 +12,11 @@ local implicitProps = {
     checkboxCornerRadius = 2,
     leftPadding = 20,
     topPadding = 10,
-
-    clickedColor = Color3.fromRGB(74, 157, 253),
-    unclickedColor = Color3.fromRGB(137, 137, 137),
 }
 
 
-local function boolToCheckColor(b)
-    return b and implicitProps.clickedColor or implicitProps.unclickedColor
+function CheckboxInput:boolToCheckColor(b)
+    return b and getColor(self.props.Theme, "Blue") or getColor(self.props.Theme, "Gray")
 end
 
 
@@ -30,7 +29,7 @@ function CheckboxInput:init()
     self.props.callback = self.props.callback or function() end
     assert(self.props.Theme ~= nil, "No theme found for checkbox")
 
-    self.checkColor, self.updateCheckColor = Roact.createBinding(boolToCheckColor(self.props.Checked))
+    self.checkColor, self.updateCheckColor = Roact.createBinding(self:boolToCheckColor(self.props.Checked))
 end
 
 
@@ -71,7 +70,7 @@ function CheckboxInput:render()
                 Position = UDim2.new(0, implicitProps.textWidth + implicitProps.leftPadding, 0.5, 0),
                 Text = "",
                 ZIndex = self.props.ZIndex,
-                BackgroundColor3 = boolToCheckColor(self.props.Checked),
+                BackgroundColor3 = self:boolToCheckColor(self.props.Checked),
 
                 [Roact.Event.Activated] = function()
                     self.props.callback()
