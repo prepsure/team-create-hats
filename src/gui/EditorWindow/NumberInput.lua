@@ -109,6 +109,15 @@ function NumberInput:render()
                 end
             end,
 
+            [Roact.Event.MouseEnter] = function()
+                local pluginMouse = script:FindFirstAncestorWhichIsA("Plugin"):GetMouse()
+                pluginMouse.Icon = "rbxasset://SystemCursors/IBeam"
+            end,
+            [Roact.Event.MouseLeave] = function()
+                local pluginMouse = script:FindFirstAncestorWhichIsA("Plugin"):GetMouse()
+                pluginMouse.Icon = "rbxasset://SystemCursors/Arrow"
+            end,
+
             [Roact.Event.FocusLost] = function(rbx)
                 local newVal = filterForFinalNumber(rbx.Text)
 

@@ -3,9 +3,15 @@ local RunService = game:GetService("RunService")
 local root = script.Parent.Parent
 local Roact = require(root.roact)
 
+local pluginMouse = script:FindFirstAncestorWhichIsA("Plugin"):GetMouse()
 
 local HatController = require(root.world.hatController)
 local CheckboxInput = require(root.gui.EditorWindow.CheckboxInput)
+
+local maxCamPos = Vector3.new(3.5, 3.5, 20)
+local movementCxn = nil
+local zoomCxn = nil
+
 
 local Previewer = Roact.Component:extend("Previewer")
 
@@ -70,10 +76,76 @@ function Previewer:render()
             Theme = self.state.theme,
             Checked = PreviewSettings.DoHighlight,
             LabelText = "Highlight Selection",
+            ZIndex = 5,
             callback = function()
                 PreviewSettings.DoHighlight = not PreviewSettings.DoHighlight
             end
         }),
+
+        ActiveButton = Roact.createElement("TextButton", {
+            Size = UDim2.new(1,0,1,0),
+            BackgroundTransparency = 1,
+            ZIndex = 5,
+            Text = "",
+
+            [Roact.Event.MouseButton1Down] = function(rbx)
+                pluginMouse.Icon = "rbxasset://SystemCursors/ClosedHand"
+
+                movementCxn = rbx.InputChanged:Connect(function(input)
+                    if input.UserInputType == Enum.UserInputType.MouseMovement then
+                        local delta = input.Delta/100
+                        local safeInput = Vector3.new(0,0,0)
+
+                        if math.abs(PreviewSettings.CameraCFrame.X + delta.X) < maxCamPos.X then
+                            safeInput += Vector3.new(delta.X, 0, 0)
+                        end
+                        if math.abs(PreviewSettings.CameraCFrame.Y + delta.Y) < maxCamPos.Y then
+                            safeInput += Vector3.new(0, delta.Y, 0)
+                        end
+
+                        PreviewSettings.CameraCFrame += safeInput
+                    end
+                end)
+            end,
+            [Roact.Event.MouseButton1Up] = function()
+                pluginMouse.Icon = "rbxasset://SystemCursors/OpenHand"
+
+                if movementCxn then
+                    movementCxn:Disconnect()
+                    movementCxn = nil
+                end
+            end,
+            [Roact.Event.MouseEnter] = function(rbx)
+                pluginMouse.Icon = "rbxasset://SystemCursors/OpenHand"
+
+                zoomCxn = rbx.InputChanged:Connect(function(input)
+                    if input.UserInputType == Enum.UserInputType.MouseWheel then
+                        local delta = input.Position.Z
+                        local safeInput = 0
+
+                        if math.abs(PreviewSettings.CameraCFrame.Z + delta) < maxCamPos.Z then
+                            safeInput = delta
+                        end
+
+                        PreviewSettings.CameraCFrame += Vector3.new(0, 0, safeInput)
+                    end
+                end)
+            end,
+            [Roact.Event.MouseLeave] = function()
+                pluginMouse.Icon = "rbxasset://SystemCursors/Arrow"
+
+                if movementCxn then
+                    movementCxn:Disconnect()
+                    movementCxn = nil
+                end
+
+                if zoomCxn then
+                    zoomCxn:Disconnect()
+                    zoomCxn = nil
+                end
+            end,
+        }),
+
         Viewport = Roact.createElement("ViewportFrame", {
             Size = UDim2.new(1,0,1,0),
             BackgroundTransparency = 1,

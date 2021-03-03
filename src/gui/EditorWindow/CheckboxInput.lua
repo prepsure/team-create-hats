@@ -26,6 +26,7 @@ function CheckboxInput:init()
     self.props.Size = self.props.Size or UDim2.new(0, 50, 0, 50)
     self.props.LabelText = self.props.LabelText or ""
     self.props.Checked = self.props.Checked or false
+    self.props.ZIndex = self.props.ZIndex or 1
     self.props.callback = self.props.callback or function() end
     assert(self.props.Theme ~= nil, "No theme found for checkbox")
 
@@ -39,6 +40,7 @@ function CheckboxInput:render()
 
             Size = self.props.Size + UDim2.new(0, -implicitProps.leftPadding, 0, 0),
             BackgroundTransparency = 1,
+            ZIndex = self.props.ZIndex,
 
             Position = self.props.Position + UDim2.new(0, implicitProps.leftPadding, 0, 0),
 
@@ -53,6 +55,7 @@ function CheckboxInput:render()
                 ),
                 TextScaled = 12,
                 TextXAlignment = Enum.TextXAlignment.Left,
+                ZIndex = self.props.ZIndex,
 
                 Text = self.props.LabelText,
 
@@ -67,11 +70,21 @@ function CheckboxInput:render()
                 Size = UDim2.new(0, self.props.Size.Y.Offset * 3/5, 0, self.props.Size.Y.Offset * 3/5),
                 Position = UDim2.new(0, implicitProps.textWidth + implicitProps.leftPadding, 0.5, 0),
                 Text = "",
+                ZIndex = self.props.ZIndex,
                 BackgroundColor3 = boolToCheckColor(self.props.Checked),
 
                 [Roact.Event.Activated] = function()
                     self.props.callback()
-                end
+                end,
+
+                [Roact.Event.MouseEnter] = function()
+                    local pluginMouse = script:FindFirstAncestorWhichIsA("Plugin"):GetMouse()
+                    pluginMouse.Icon = "rbxasset://SystemCursors/PointingHand"
+                end,
+                [Roact.Event.MouseLeave] = function()
+                    local pluginMouse = script:FindFirstAncestorWhichIsA("Plugin"):GetMouse()
+                    pluginMouse.Icon = "rbxasset://SystemCursors/Arrow"
+                end,
 
             }, {
                 Corner = Roact.createElement("UICorner", {

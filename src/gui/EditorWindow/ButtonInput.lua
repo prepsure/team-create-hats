@@ -30,7 +30,16 @@ function ButtonInput:render()
 
             [Roact.Event.Activated] = function()
                 self.props.callback()
-            end
+            end,
+
+            [Roact.Event.MouseEnter] = function()
+                local pluginMouse = script:FindFirstAncestorWhichIsA("Plugin"):GetMouse()
+                pluginMouse.Icon = "rbxasset://SystemCursors/PointingHand"
+            end,
+            [Roact.Event.MouseLeave] = function()
+                local pluginMouse = script:FindFirstAncestorWhichIsA("Plugin"):GetMouse()
+                pluginMouse.Icon = "rbxasset://SystemCursors/Arrow"
+            end,
 
         }, {
             Corner = Roact.createElement("UICorner", {

@@ -39,7 +39,16 @@ function RadioButtonInput:makeButton(pos)
 
             [Roact.Event.Activated] = function()
                 self.props.callback(pos)
-            end
+            end,
+
+            [Roact.Event.MouseEnter] = function()
+                local pluginMouse = script:FindFirstAncestorWhichIsA("Plugin"):GetMouse()
+                pluginMouse.Icon = "rbxasset://SystemCursors/PointingHand"
+            end,
+            [Roact.Event.MouseLeave] = function()
+                local pluginMouse = script:FindFirstAncestorWhichIsA("Plugin"):GetMouse()
+                pluginMouse.Icon = "rbxasset://SystemCursors/Arrow"
+            end,
         }, {
             Corner = Roact.createElement("UICorner", {
                 CornerRadius = UDim.new(1, 0),
