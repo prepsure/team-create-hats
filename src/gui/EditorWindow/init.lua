@@ -16,8 +16,6 @@ local RadioButtonInput = require(script.RadioButtonInput)
 local Editor = Roact.Component:extend("Editor")
 local PreviewWindow = require(script.Parent.PreviewWindow)
 
-local transformPriorityOptions = {"rotate", "translate"}
-
 
 function Editor:init()
     self:setState({
@@ -156,13 +154,13 @@ function Editor:render()
         }),
 
         TransformPriority = Roact.createElement(RadioButtonInput, {
-            LabelText = "Transform Priority",
+            LabelText = "Rotation",
             Theme = self.state.theme,
 
             Position = UDim2.new(0, 20, 0, 290),
             Size = UDim2.new(1, -40, 0, 60),
 
-            options = transformPriorityOptions,
+            options = {"locked to camera", "unlocked"},
             selected = enableProps and currentHat.transformPriority,
 
             callback = function(pos)
