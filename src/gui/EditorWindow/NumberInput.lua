@@ -49,7 +49,9 @@ local function filterForFinalNumber(str)
         numericString ..= "0"
     end
 
-    numericString = round(numericString, 5)
+    if numericString ~= "" then
+        numericString = round(numericString, 5)
+    end
 
 	return numericString
 end

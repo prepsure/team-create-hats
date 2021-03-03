@@ -34,9 +34,14 @@ end
 function HatController:Add(id, index, properties)
     id = id or defaultHat
 
-    local _, model = Importer:LoadHat(id)
+    local code, response = Importer:LoadHat(id)
 
-    return self:_insert(id, model, index, properties)
+    if code == 200 then
+        -- response will be a model if code is 200
+        return self:_insert(id, response, index, properties)
+    end
+
+    print("team create with hats | error " .. code .. ": " .. response)
 end
 
 
@@ -51,8 +56,16 @@ function HatController:ChangeProperty(index, property, value)
     if property == 'id' then -- for id changing, a new hat has to be imported, for other properties we can just modify the hat
         local oldProperties = hat:GetPropertyTable()
 
-        self:Remove(index)
-        self:Add(value, index, oldProperties)
+        local code, response = Importer:LoadHat(value)
+
+        if code == 200 then
+            -- response will be a model if code is 200
+            self:Remove(index)
+            self:_insert(value, response, index, oldProperties)
+            return
+        end
+
+        print("team create with hats | error " .. code .. ": " .. response)
     else
         hat["Set" .. property](hat, value)
     end

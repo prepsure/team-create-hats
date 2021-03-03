@@ -171,7 +171,7 @@ function Editor:render()
             Position = UDim2.new(0, 20, 0, 310),
             Size = UDim2.new(1, -40, 0, 60),
 
-            options = {"relative to camera", "global"},
+            options = {"relative to camera", "copy camera"},
             selected = enableProps and currentHat.transformPriority,
 
             callback = function(pos)
@@ -187,6 +187,10 @@ function Editor:render()
             Size = UDim2.new(1, -40, 0, 30),
 
             callback = function()
+                if #HatController.List == 0 then
+                    return
+                end
+
                 HatController:Remove(self.state.currentIndex)
                 self:setState(function(state)
                     if not HatController.List[self.state.currentIndex] then
