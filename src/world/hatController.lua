@@ -25,8 +25,6 @@ function HatController:_insert(id, model, index, properties)
     index = index or (#HatController.List + 1)
     table.insert(HatController.List, index, hat)
 
-    self:_update()
-
     return hat
 end
 
@@ -69,8 +67,6 @@ function HatController:ChangeProperty(index, property, value)
     else
         hat["Set" .. property](hat, value)
     end
-
-    self:_update()
 end
 
 
@@ -89,8 +85,6 @@ function HatController:Remove(index)
 
     local hat = table.remove(HatController.List, index)
     hat:Destroy()
-
-    self:_update()
 end
 
 

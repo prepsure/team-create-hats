@@ -18,12 +18,6 @@ local Editor = Roact.Component:extend("Editor")
 local PreviewWindow = require(script.Parent.PreviewWindow)
 
 local Loading = Instance.new("BindableEvent")
-local getSetting = Instance.new("BindableFunction")
-
-
-function Editor:getSetting()
-    return getSetting:Invoke('enabled')
-end
 
 
 function Editor:Load(enabled, visibleLocally)
@@ -98,6 +92,7 @@ function Editor:render()
             callback = function()
                 HatController:ImportFromCharacter() --TODO add a confirmation popup window
                 HatController:ChangePropertyOnAll("VisibleLocally", self.state.visibleLocally)
+                self:setState(self.state)
             end
         }),
 
@@ -148,6 +143,7 @@ function Editor:render()
 
             callback = function(id)
                 HatController:ChangeProperty(self.state.currentIndex, "id", id)
+                self:setState(self.state)
             end
         }),
 
@@ -162,6 +158,7 @@ function Editor:render()
 
             callback = function(offset)
                 HatController:ChangeProperty(self.state.currentIndex, "Offset", offset)
+                self:setState(self.state)
             end
         }),
 
@@ -176,6 +173,7 @@ function Editor:render()
 
             callback = function(scale)
                 HatController:ChangeProperty(self.state.currentIndex, "Scale", scale)
+                self:setState(self.state)
             end
         }),
 
@@ -191,6 +189,7 @@ function Editor:render()
 
             callback = function(pos)
                 HatController:ChangeProperty(self.state.currentIndex, "TransformPriority", pos)
+                self:setState(self.state)
             end,
 
         }),
@@ -206,7 +205,7 @@ function Editor:render()
                     return
                 end
 
-                HatController:Remove(self.state.currentIndex)
+            HatController:Remove(self.state.currentIndex)
                 self:setState(function(state)
                     if not HatController.List[self.state.currentIndex] then
                         state.currentIndex -= 1
@@ -220,16 +219,17 @@ function Editor:render()
 end
 
 
+function Editor:didUpdate()
+    require(root.settings):Save(self.state.enabled, self.state.visibleLocally)
+end
+
+
 function Editor:didMount()
     Editor._themeCxn = settings().Studio.ThemeChanged:Connect(function()
         self:setState(function(state)
             state.theme = settings().Studio.Theme
             return state
         end)
-    end)
-
-    Editor._listCxn = HatController:BindToUpdate(function()
-        self:setState(self.state)
     end)
 
     Editor._loadCxn = Loading.Event:Connect(function(enabled, visibleLocally)
@@ -239,18 +239,12 @@ function Editor:didMount()
             return state
         end)
     end)
-
-    getSetting.OnInvoke = function(setting)
-        return self.state[setting]
-    end
 end
 
 
 function Editor:willUnmount()
     Editor._themeCxn:Disconnect()
-    Editor._listCxn:Disconnect()
     Editor._loadCxn:Disconnect()
-    getSetting:Destroy()
 end
 
 

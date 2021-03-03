@@ -3,6 +3,7 @@ local root = script.Parent
 local HatController = require(root.world.hatController)
 local Previewer = require(root.gui.PreviewWindow)
 local Editor = require(root.gui.EditorWindow)
+local PersistentFolder = require(root.world.persistentFolder)
 
 local plugin = script:FindFirstAncestorWhichIsA("Plugin")
 
@@ -81,9 +82,9 @@ local function convertHatTableForSettings()
 end
 
 
-function Settings:Save()
-    plugin:SetSetting("Enabled", Editor:getSetting('enabled'))
-    plugin:SetSetting("VisibleLocally", Editor:getSetting('visibleLocally'))
+function Settings:Save(enabled, visible)
+    plugin:SetSetting("Enabled", enabled)
+    plugin:SetSetting("VisibleLocally", visible)
     plugin:SetSetting("DoHighlight", Previewer.Settings.DoHighlight)
     plugin:SetSetting("HatTable", convertHatTableForSettings())
 end
@@ -98,9 +99,6 @@ function Settings:Load()
     }
     Settings:FillInSettingsWithDefault(current)
 
-    -- load Enabled and VisibleLocally
-    Editor:Load(current.Enabled, current.VisibleLocally)
-
     -- load DoHighlight
     Previewer.Settings.DoHighlight = current.DoHighlight
 
@@ -111,6 +109,11 @@ function Settings:Load()
 
         HatController:Add(hat.id, nil, hat.props)
     end
+
+    -- load Enabled and VisibleLocally (do last in order to update editor state)
+    PersistentFolder:Reparent(current.Enabled and workspace or false)
+    HatController:ChangePropertyOnAll("VisibleLocally", current.VisibleLocally)
+    Editor:Load(current.Enabled, current.VisibleLocally)
 end
 
 
