@@ -36,7 +36,7 @@ function Editor:init()
         currentIndex = 1,
         enabled = true,
         visibleLocally = false,
-        ImportPopUpShown = false,
+        importPopUpShown = false,
     })
 end
 
@@ -97,7 +97,7 @@ function Editor:render()
 
             callback = function()
                 self:setState(function(state)
-                    state.ImportPopUpShown = true
+                    state.importPopUpShown = true
                     return state
                 end)
             end
@@ -109,7 +109,7 @@ function Editor:render()
             Theme = self.state.theme,
             Text = "Importing from your character will erase all of your current hats.\n\n Continue importing?",
             OkText = "Yes",
-            OnScreen = self.state.ImportPopUpShown,
+            OnScreen = self.state.importPopUpShown,
 
             callback = function(oked)
                 if oked then
@@ -118,7 +118,7 @@ function Editor:render()
                 end
 
                 self:setState(function(state)
-                    state.ImportPopUpShown = false
+                    state.importPopUpShown = false
                     return state
                 end)
             end,
