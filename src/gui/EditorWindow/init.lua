@@ -11,7 +11,12 @@ local LabeledNumberInput = require(script.LabeledNumberInput)
 local Vector3Input = require(script.Vector3Input)
 local HorizontalChoiceList = require(script.HorizontalChoiceList)
 local RadioButtonInput = require(script.RadioButtonInput)
+local PopUp = require(script.PopUp)
 local getColors = require(root.gui.getColors)
+
+Roact.setGlobalConfig({
+    elementTracing = true,
+})
 
 
 local Editor = Roact.Component:extend("Editor")
@@ -90,10 +95,34 @@ function Editor:render()
             Size = UDim2.new(1, -40, 0, 30),
 
             callback = function()
+                self:setState(function(state)
+                    state.ImportPopUpShown = true
+                    return state
+                end)
+            end
+        }),
+
+        ImportPopUp = Roact.createElement(PopUp, {
+            Position = UDim2.new(0.5, 0, 0.5, 0),
+            Size = UDim2.new(0.75, 0, 0.4, 0),
+            Theme = self.state.theme,
+            Text = "Importing from your character will erase all of your current hats.\n\n Continue importing?",
+            OkText = "Yes",
+            OnScreen = self.state.ImportPopUpShown,
+
+            callback = function(oked)
+                self:setState(function(state)
+                    state.ImportPopUpShown = false
+                    return state
+                end)
+
+                if not oked then
+                    return
+                end
+
                 HatController:ImportFromCharacter() --TODO add a confirmation popup window
                 HatController:ChangePropertyOnAll("VisibleLocally", self.state.visibleLocally)
-                self:setState(self.state)
-            end
+            end,
         }),
 
         Divider = Roact.createElement("Frame", {

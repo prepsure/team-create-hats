@@ -32,6 +32,7 @@ function Importer:LoadHat(id)
     end
 
     hat.Handle.Anchored = true
+    hat.Handle.CastShadow = false
 
     return 200, hat
 end
