@@ -36,6 +36,7 @@ function Editor:init()
         currentIndex = 1,
         enabled = true,
         visibleLocally = false,
+        ImportPopUpShown = false,
     })
 end
 
@@ -111,17 +112,15 @@ function Editor:render()
             OnScreen = self.state.ImportPopUpShown,
 
             callback = function(oked)
+                if oked then
+                    HatController:ImportFromCharacter() --TODO add a confirmation popup window
+                    HatController:ChangePropertyOnAll("VisibleLocally", self.state.visibleLocally)
+                end
+
                 self:setState(function(state)
                     state.ImportPopUpShown = false
                     return state
                 end)
-
-                if not oked then
-                    return
-                end
-
-                HatController:ImportFromCharacter() --TODO add a confirmation popup window
-                HatController:ChangePropertyOnAll("VisibleLocally", self.state.visibleLocally)
             end,
         }),
 
