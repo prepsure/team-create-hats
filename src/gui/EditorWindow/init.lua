@@ -137,6 +137,8 @@ function Editor:render()
                     HatController:ImportFromCharacter() --TODO add a confirmation popup window
                     HatController:ChangePropertyOnAll("VisibleLocally", self.state.visibleLocally)
                 end
+
+                self:setState(self.state)
             end,
         }),
 
