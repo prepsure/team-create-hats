@@ -1,6 +1,6 @@
 <h1 align="center">Team Create with Hats</h1>
 
-![:>](https://user-images.githubusercontent.com/33643911/110060374-cfeaae80-7d33-11eb-9ccd-77576372333f.png)
+![:>](https://user-images.githubusercontent.com/33643911/110061630-e8f45f00-7d35-11eb-8045-5ce381861c96.png)
 
 <p align="center">Team Create with Hats is a character customization plugin for collaborative editing in Roblox Studio.</p>
 
