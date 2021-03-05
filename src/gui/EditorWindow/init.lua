@@ -60,6 +60,7 @@ function Editor:render()
             Size = UDim2.new(1, 0, 0, 30),
             LabelText = "Enabled",
             Theme = self.state.theme,
+            ChangeMouse = not self.state.importPopUpShown,
 
             Checked = self.state.enabled,
             callback = function()
@@ -77,6 +78,7 @@ function Editor:render()
             Size = UDim2.new(1, 0, 0, 30),
             LabelText = "Visible to Self",
             Theme = self.state.theme,
+            ChangeMouse = not self.state.importPopUpShown,
 
             Checked = self.state.visibleLocally,
             callback = function()
