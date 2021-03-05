@@ -12,11 +12,15 @@ local Vector3Input = require(script.Vector3Input)
 local HorizontalChoiceList = require(script.HorizontalChoiceList)
 local RadioButtonInput = require(script.RadioButtonInput)
 local PopUp = require(script.PopUp)
-local getColors = require(root.gui.getColors)
 
+local getColors = require(root.gui.getColors)
+local changeMouse = require(root.gui.changeMouse)
+
+--[[
 Roact.setGlobalConfig({
     elementTracing = true,
 })
+]]
 
 
 local Editor = Roact.Component:extend("Editor")
@@ -103,6 +107,8 @@ function Editor:render()
                     state.importPopUpShown = true
                     return state
                 end)
+
+                changeMouse("Arrow", true)
             end
         }),
 

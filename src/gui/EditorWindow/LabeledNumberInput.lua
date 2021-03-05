@@ -60,7 +60,7 @@ function LabeledNumberInput:render()
                 NumType = self.props.NumType,
                 Theme = self.props.Theme,
                 DefaultValue = self.props.DefaultValue,
-                ChangeMouse = self.props.CanChangeValue,
+                ChangeMouse = self.props.ChangeMouse,
 
                 callback = self.props.callback,
             }),
