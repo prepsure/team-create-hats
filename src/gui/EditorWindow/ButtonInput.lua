@@ -1,27 +1,25 @@
 local root = script.Parent.Parent.Parent
 local Roact = require(root.roact)
 
-
-local ButtonInput = Roact.Component:extend("ButtonInput")
 local changeMouse = require(root.gui.changeMouse)
 
 
-function ButtonInput:init()
-    self.defaultProps = {
-        AnchorPoint = Vector2.new(0,0),
-        CornerRadius = UDim.new(0, 3),
-        Position = UDim2.new(0, 0, 0, 0),
-        Size = UDim2.new(0, 30, 0, 30),
-        SizeConstraint = Enum.SizeConstraint.RelativeXY,
-        Text = "",
-        ZIndex = 1,
+local ButtonInput = Roact.Component:extend("ButtonInput")
 
-        Color = Color3.new(),
-        ChangeMouse = true,
+ButtonInput.defaultProps = {
+    AnchorPoint = Vector2.new(0,0),
+    CornerRadius = UDim.new(0, 3),
+    Position = UDim2.new(0, 0, 0, 0),
+    Size = UDim2.new(0, 30, 0, 30),
+    SizeConstraint = Enum.SizeConstraint.RelativeXY,
+    Text = "",
+    ZIndex = 1,
 
-        callback = function() end,
-    }
-end
+    Color = Color3.new(),
+    ChangeMouse = true,
+
+    callback = function() end,
+}
 
 
 function ButtonInput:render()

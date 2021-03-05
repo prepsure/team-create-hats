@@ -6,6 +6,18 @@ local NumberInput = require(script.Parent.NumberInput)
 
 local Vector3Input = Roact.Component:extend("Vector3Input")
 
+Vector3Input.defaultProps = {
+    LabelText = "",
+    ChangeMouse = true,
+
+    Position = UDim.new(0, 0),
+    Size = UDim.new(0, 30),
+
+    DefaultValue = Vector3.new(0, 0, 0),
+
+    callback = function() end,
+}
+
 
 local function getVectorBaseFromDirection(dir)
     dir = dir:lower()
@@ -60,23 +72,6 @@ function Vector3Input:makeComma(pos)
             MaxTextSize = 12,
         }),
     })
-end
-
-
-function Vector3Input:init()
-    self.defaultProps = {
-        LabelText = "",
-        ChangeMouse = true,
-
-        Position = UDim.new(0, 0),
-        Size = UDim.new(0, 30),
-
-        DefaultValue = Vector3.new(0, 0, 0),
-
-        callback = function() end,
-    }
-
-    assert(self.props.Theme ~= nil, "No theme found for vector3 input")
 end
 
 

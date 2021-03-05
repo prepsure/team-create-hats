@@ -6,6 +6,19 @@ local changeMouse = require(root.gui.changeMouse)
 
 local RadioButtonInput = Roact.Component:extend("LabeledNumberInput")
 
+RadioButtonInput.defaultProps = {
+    LabelText = "",
+    ChangeMouse = true,
+
+    Position = UDim.new(0, 0),
+    Size = UDim.new(0, 30),
+
+    options = {},
+    selected = 1,
+
+    callback = function() end,
+}
+
 
 function RadioButtonInput:makeButton(pos)
     local total = #self.props.options
@@ -55,24 +68,6 @@ function RadioButtonInput:makeButton(pos)
             }),
         })
     })
-end
-
-
-function RadioButtonInput:init()
-    self.defaultProps = {
-        LabelText = "",
-        ChangeMouse = true,
-
-        Position = UDim.new(0, 0),
-        Size = UDim.new(0, 30),
-
-        options = {},
-        selected = 1,
-
-        callback = function() end,
-    }
-
-    assert(self.props.Theme ~= nil, "No theme found for numberinput")
 end
 
 

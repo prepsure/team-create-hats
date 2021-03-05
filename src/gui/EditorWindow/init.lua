@@ -121,15 +121,15 @@ function Editor:render()
             OnScreen = self.state.importPopUpShown,
 
             callback = function(oked)
-                if oked then
-                    HatController:ImportFromCharacter() --TODO add a confirmation popup window
-                    HatController:ChangePropertyOnAll("VisibleLocally", self.state.visibleLocally)
-                end
-
                 self:setState(function(state)
                     state.importPopUpShown = false
                     return state
                 end)
+
+                if oked then
+                    HatController:ImportFromCharacter() --TODO add a confirmation popup window
+                    HatController:ChangePropertyOnAll("VisibleLocally", self.state.visibleLocally)
+                end
             end,
         }),
 

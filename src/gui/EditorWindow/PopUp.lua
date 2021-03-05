@@ -4,31 +4,31 @@ local Roact = require(root.roact)
 local Button = require(script.Parent.ButtonInput)
 local getColor = require(root.gui.getColors)
 
-local PopUp = Roact.Component:extend("LabeledNumberInput")
+local PopUp = Roact.Component:extend("PopUp")
 
+PopUp.defaultProps = {
+    Text = "",
 
-function PopUp:init()
-    self.props.Text = self.props.Text or ""
+    Position =  UDim.new(0, 0),
+    Size =  UDim.new(0, 30),
 
-    self.props.Position = self.props.Position or UDim.new(0, 0)
-    self.props.Size = self.props.Size or UDim.new(0, 30)
+    OnScreen = false,
 
-    self.props.OnScreen = self.props.OnScreen or false
+    OkText = "Ok",
+    CancelText = "Cancel",
 
-    self.props.OkText = self.props.OkText or "Ok"
-    self.props.CancelText = self.props.CancelText or "Cancel"
-
-    assert(self.props.Theme ~= nil, "No theme found for popup")
-
-    self.props.callback = self.props.callback or function() end
-end
+    callback = function() end,
+}
 
 
 function PopUp:render()
     return Roact.createFragment({
         PopUpBackground = Roact.createElement("TextButton", {
 
-            BackgroundColor3 = Color3.fromRGB(31, 31, 32),
+            BackgroundColor3 = self.props.Theme:GetColor(
+                Enum.StudioStyleGuideColor.Dark,
+                Enum.StudioStyleGuideModifier.Default
+            ),
             BackgroundTransparency = 0.25,
             Size = UDim2.new(1, 0, 1, 0),
             Active = true,
@@ -83,7 +83,7 @@ function PopUp:render()
 
                 Size = UDim2.new(0.4, 0, 0.2, 0),
                 ZIndex = 999,
-                Text = self.props.OkText or "Ok",
+                Text = self.props.OkText,
                 AnchorPoint = Vector2.new(0, 1),
                 Position = UDim2.new(0.05, 0, 1-0.05, 0),
 
@@ -97,7 +97,7 @@ function PopUp:render()
 
                 Size = UDim2.new(0.4, 0, 0.2, 0),
                 ZIndex = 999,
-                Text = self.props.CancelText or "Cancel",
+                Text = self.props.CancelText,
                 AnchorPoint = Vector2.new(1, 1),
                 Position = UDim2.new(1-0.05, 0, 1-0.05, 0),
 

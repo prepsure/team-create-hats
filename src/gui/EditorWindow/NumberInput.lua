@@ -5,6 +5,17 @@ local Roact = require(root.roact)
 local NumberInput = Roact.Component:extend("NumberInput")
 local changeMouse = require(root.gui.changeMouse)
 
+NumberInput.defaultProps = {
+    Position = UDim.new(0, 0),
+    Size = UDim.new(0, 30),
+
+    NumType = "all",
+    DefaultValue = "0",
+    ChangeMouse = true,
+
+    callback = function() end,
+}
+
 
 -- rounds a number to a certain number of decimal places
 local function round(num, numDecimalPlaces)
@@ -60,21 +71,7 @@ end
 
 
 function NumberInput:init()
-    self.defaultProps = {
-        Position = UDim.new(0, 0),
-        Size = UDim.new(0, 30),
-
-        NumType = "all",
-        DefaultValue = "0",
-        ChangeMouse = true,
-
-        callback = function() end,
-    }
-
-    assert(self.props.Theme ~= nil, "No theme found for numberinput")
-
     self.input, self.updateInput = Roact.createBinding("")
-    self.updateInput(self.props.DefaultValue)
 end
 
 

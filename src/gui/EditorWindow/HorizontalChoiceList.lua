@@ -8,17 +8,17 @@ local getColor = require(root.gui.getColors)
 local HorizontalChoiceList = Roact.Component:extend("HorizontalChoiceList")
 
 
-function HorizontalChoiceList:init()
-    self.props.options = self.props.options or 0 -- number of choices in the list
-    self.props.Selected = self.props.Selected or 1
-    self.props.MaxAllowed = self.props.MaxAllowed or self.props.options
+HorizontalChoiceList.defaultProps = {
+    options = 0, -- number of choices in the list
+    Selected = 1,
 
-    self.props.Position = self.props.Position or UDim2.new(0,0,0)
-    self.props.Size = self.props.Size or UDim2.new(0, 50, 0, 50)
-    assert(self.props.Theme ~= nil, "No theme found for choice list")
+    Position = UDim2.new(0,0,0),
+    Size = UDim2.new(0, 50, 0, 50),
 
-    self.props.callback = self.props.callback or function() end
-end
+    callback = function() end,
+}
+
+HorizontalChoiceList.defaultProps.MaxAllowed = HorizontalChoiceList.defaultProps.options
 
 
 function HorizontalChoiceList:render()

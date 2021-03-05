@@ -7,22 +7,18 @@ local NumberInput = require(script.Parent.NumberInput)
 local LabeledNumberInput = Roact.Component:extend("LabeledNumberInput")
 
 
-function LabeledNumberInput:init()
-    self.defaultProps = {
-        LabelText = "",
+LabeledNumberInput.defaultProps = {
+    LabelText = "",
 
-        Position = UDim.new(0, 0),
-        Size = UDim.new(0, 30),
+    Position = UDim.new(0, 0),
+    Size = UDim.new(0, 30),
 
-        NumType = "all",
-        DefaultValue = "0",
-        ChangeMouse = true,
+    NumType = "all",
+    DefaultValue = "0",
+    ChangeMouse = true,
 
-        callback = function() end,
-    }
-
-    assert(self.props.Theme ~= nil, "No theme found for numberinput")
-end
+    callback = function() end,
+}
 
 
 function LabeledNumberInput:render()
