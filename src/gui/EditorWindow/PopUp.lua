@@ -79,6 +79,8 @@ function PopUp:render()
             }),
             Ok = Roact.createElement(Button, {
                 Color = getColor(self.props.Theme, "Green"),
+                ChangeMouse = true,
+
                 Size = UDim2.new(0.4, 0, 0.2, 0),
                 ZIndex = 999,
                 Text = self.props.OkText or "Ok",
@@ -91,6 +93,8 @@ function PopUp:render()
             }),
             Cancel = Roact.createElement(Button, {
                 Color = getColor(self.props.Theme, "Red"),
+                ChangeMouse = true,
+
                 Size = UDim2.new(0.4, 0, 0.2, 0),
                 ZIndex = 999,
                 Text = self.props.CancelText or "Cancel",

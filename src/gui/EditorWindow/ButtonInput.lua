@@ -3,19 +3,24 @@ local Roact = require(root.roact)
 
 
 local ButtonInput = Roact.Component:extend("ButtonInput")
+local changeMouse = require(root.gui.changeMouse)
 
 
 function ButtonInput:init()
-    self.props.Position = self.props.Position or UDim2.new(0, 0, 0, 0)
-    self.props.Size = self.props.Size or UDim2.new(0, 30, 0, 30)
-    self.props.Text = self.props.Text or ""
-    self.props.Color = self.props.Color or Color3.new()
-    self.props.CornerRadius = self.props.CornerRadius or UDim.new(0, 3)
-    self.props.SizeConstraint = self.props.SizeConstraint or Enum.SizeConstraint.RelativeXY
-    self.props.ZIndex = self.props.ZIndex or 1
-    self.props.AnchorPoint = self.props.AnchorPoint or Vector2.new(0,0)
+    self.defaultProps = {
+        AnchorPoint = Vector2.new(0,0),
+        CornerRadius = UDim.new(0, 3),
+        Position = UDim2.new(0, 0, 0, 0),
+        Size = UDim2.new(0, 30, 0, 30),
+        SizeConstraint = Enum.SizeConstraint.RelativeXY,
+        Text = "",
+        ZIndex = 1,
 
-    self.props.callback = self.props.callback or function() end
+        Color = Color3.new(),
+        ChangeMouse = true,
+
+        callback = function() end,
+    }
 end
 
 
@@ -32,17 +37,17 @@ function ButtonInput:render()
             SizeConstraint = self.props.SizeConstraint,
             ZIndex = self.props.ZIndex,
 
+            AutoButtonColor = self.props.ChangeMouse,
+
             [Roact.Event.Activated] = function()
                 self.props.callback()
             end,
 
             [Roact.Event.MouseEnter] = function()
-                local pluginMouse = script:FindFirstAncestorWhichIsA("Plugin"):GetMouse()
-                pluginMouse.Icon = "rbxasset://SystemCursors/PointingHand"
+                changeMouse("PointingHand", self.props.ChangeMouse)
             end,
             [Roact.Event.MouseLeave] = function()
-                local pluginMouse = script:FindFirstAncestorWhichIsA("Plugin"):GetMouse()
-                pluginMouse.Icon = "rbxasset://SystemCursors/Arrow"
+                changeMouse("Arrow", self.props.ChangeMouse)
             end,
 
         }, {

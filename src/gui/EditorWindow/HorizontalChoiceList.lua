@@ -39,6 +39,8 @@ function HorizontalChoiceList:render()
                     Size = UDim2.new(1/options, -10, 1, 0),
                     Color = color,
 
+                    ChangeMouse = self.props.ChangeMouse,
+
                     callback = function()
                         self.props.callback(i)
                     end
@@ -55,6 +57,8 @@ function HorizontalChoiceList:render()
                     SizeConstraint = Enum.SizeConstraint.RelativeYY,
                     Color = allowedToAdd and getColor(self.props.Theme, "Green") or getColor(self.props.Theme, "Gray"),
                     CornerRadius = UDim.new(1, 0),
+
+                    ChangeMouse = self.props.ChangeMouse,
 
                     callback = function()
                         if not allowedToAdd then

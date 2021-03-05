@@ -32,6 +32,9 @@ function RadioButtonInput:makeButton(pos)
             Size = UDim2.new(0.5, 0, 0.5, 0),
             Text = "",
             SizeConstraint = Enum.SizeConstraint.RelativeYY,
+
+            ChangeMouse = self.props.ChangeMouse,
+
             BackgroundColor3 = (pos == self.props.selected) and
                 getColor(self.props.Theme, "Blue") or
                 getColor(self.props.Theme, "Gray"),

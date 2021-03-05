@@ -94,6 +94,7 @@ function Editor:render()
             Color = getColors(self.state.theme, "Blue"),
             Position = UDim2.new(0, 20, 0, 90),
             Size = UDim2.new(1, -40, 0, 30),
+            ChangeMouse = not self.state.importPopUpShown,
 
             callback = function()
                 self:setState(function(state)
@@ -138,10 +139,13 @@ function Editor:render()
         Choices = Roact.createElement(HorizontalChoiceList, {
             Position = UDim2.new(0, 20, 0, 150),
             Size = UDim2.new(1, -40, 0, 30),
+
+            ChangeMouse = not self.state.importPopUpShown,
             options = #HatController.List,
             MaxAllowed = HatController.MaxHats,
             Selected = self.state.currentIndex,
             Theme = self.state.theme,
+
             callback = function(numOrPlus)
                 local index = 1
 
@@ -227,6 +231,8 @@ function Editor:render()
             Color = getColors(self.state.theme, "Red"),
             Position = UDim2.new(0, 20, 0, 380),
             Size = UDim2.new(1, -40, 0, 30),
+
+            ChangeMouse = not self.state.importPopUpShown,
 
             callback = function()
                 if #HatController.List == 0 then
