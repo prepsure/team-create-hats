@@ -172,6 +172,7 @@ function Editor:render()
             LabelText = "Accessory Id",
             Theme = self.state.theme,
             NumType = "whole",
+            ChangeMouse = not self.state.importPopUpShown,
 
             callback = function(id)
                 HatController:ChangeProperty(self.state.currentIndex, "id", id)
@@ -187,6 +188,7 @@ function Editor:render()
 
             LabelText = "Offset",
             Theme = self.state.theme,
+            ChangeMouse = not self.state.importPopUpShown,
 
             callback = function(offset)
                 HatController:ChangeProperty(self.state.currentIndex, "Offset", offset)
@@ -202,6 +204,7 @@ function Editor:render()
 
             LabelText = "Scale",
             Theme = self.state.theme,
+            ChangeMouse = not self.state.importPopUpShown,
 
             callback = function(scale)
                 HatController:ChangeProperty(self.state.currentIndex, "Scale", scale)

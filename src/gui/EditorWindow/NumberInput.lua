@@ -3,6 +3,7 @@ local Roact = require(root.roact)
 
 
 local NumberInput = Roact.Component:extend("NumberInput")
+local changeMouse = require(root.gui.changeMouse)
 
 
 -- rounds a number to a certain number of decimal places
@@ -59,14 +60,19 @@ end
 
 
 function NumberInput:init()
-    self.props.Position = self.props.Position or UDim.new(0, 0)
-    self.props.Size = self.props.Size or UDim.new(0, 30)
+    self.defaultProps = {
+        Position = UDim.new(0, 0),
+        Size = UDim.new(0, 30),
 
-    self.props.NumType = self.props.NumType or "all"
-    self.props.DefaultValue = self.props.DefaultValue or "0"
+        NumType = "all",
+        DefaultValue = "0",
+        ChangeMouse = true,
+
+        callback = function() end,
+    }
+
     assert(self.props.Theme ~= nil, "No theme found for numberinput")
 
-    self.props.callback = self.props.callback or function() end
     self.input, self.updateInput = Roact.createBinding("")
     self.updateInput(self.props.DefaultValue)
 end
@@ -110,12 +116,10 @@ function NumberInput:render()
             end,
 
             [Roact.Event.MouseEnter] = function()
-                local pluginMouse = script:FindFirstAncestorWhichIsA("Plugin"):GetMouse()
-                pluginMouse.Icon = "rbxasset://SystemCursors/IBeam"
+                changeMouse("IBeam", self.props.ChangeMouse)
             end,
             [Roact.Event.MouseLeave] = function()
-                local pluginMouse = script:FindFirstAncestorWhichIsA("Plugin"):GetMouse()
-                pluginMouse.Icon = "rbxasset://SystemCursors/Arrow"
+                changeMouse("Arrow", self.props.ChangeMouse)
             end,
 
             [Roact.Event.FocusLost] = function(rbx)

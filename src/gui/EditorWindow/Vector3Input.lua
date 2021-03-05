@@ -31,6 +31,7 @@ function Vector3Input:makeField(dir, pos)
         NumType = "all",
         Theme = self.props.Theme,
         DefaultValue = self.props.DefaultValue[dir],
+        ChangeMouse = self.props.ChangeMouse,
 
         callback = function(num)
             self.props.DefaultValue = num * vectorBase + (self.props.DefaultValue * (Vector3.new(1, 1, 1) - vectorBase))
@@ -63,15 +64,19 @@ end
 
 
 function Vector3Input:init()
-    self.props.LabelText = self.props.LabelText or ""
+    self.defaultProps = {
+        LabelText = "",
+        ChangeMouse = true,
 
-    self.props.Position = self.props.Position or UDim.new(0, 0)
-    self.props.Size = self.props.Size or UDim.new(0, 30)
+        Position = UDim.new(0, 0),
+        Size = UDim.new(0, 30),
 
-    self.props.DefaultValue = self.props.DefaultValue or Vector3.new(0, 0, 0)
-    assert(self.props.Theme ~= nil, "No theme found for numberinput")
+        DefaultValue = Vector3.new(0, 0, 0),
 
-    self.props.callback = self.props.callback or function() end
+        callback = function() end,
+    }
+
+    assert(self.props.Theme ~= nil, "No theme found for vector3 input")
 end
 
 

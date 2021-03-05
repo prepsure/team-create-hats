@@ -8,16 +8,20 @@ local LabeledNumberInput = Roact.Component:extend("LabeledNumberInput")
 
 
 function LabeledNumberInput:init()
-    self.props.LabelText = self.props.LabelText or ""
+    self.defaultProps = {
+        LabelText = "",
 
-    self.props.Position = self.props.Position or UDim.new(0, 0)
-    self.props.Size = self.props.Size or UDim.new(0, 30)
+        Position = UDim.new(0, 0),
+        Size = UDim.new(0, 30),
 
-    self.props.NumType = self.props.NumType or "all"
-    self.props.DefaultValue = self.props.DefaultValue or "0"
+        NumType = "all",
+        DefaultValue = "0",
+        ChangeMouse = true,
+
+        callback = function() end,
+    }
+
     assert(self.props.Theme ~= nil, "No theme found for numberinput")
-
-    self.props.callback = self.props.callback or function() end
 end
 
 
@@ -56,6 +60,7 @@ function LabeledNumberInput:render()
                 NumType = self.props.NumType,
                 Theme = self.props.Theme,
                 DefaultValue = self.props.DefaultValue,
+                ChangeMouse = self.props.CanChangeValue,
 
                 callback = self.props.callback,
             }),
