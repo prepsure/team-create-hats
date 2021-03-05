@@ -40,16 +40,16 @@ function CheckboxInput:render()
     return Roact.createFragment({
         Roact.createElement("Frame", {
 
-            Size = self.props.Size + UDim2.new(0, -self.props.leftPadding, 0, 0),
+            Size = self.props.Size + UDim2.new(0, -self.props.LeftPadding, 0, 0),
             BackgroundTransparency = 1,
             ZIndex = self.props.ZIndex,
 
-            Position = self.props.Position + UDim2.new(0, self.props.leftPadding, 0, 0),
+            Position = self.props.Position + UDim2.new(0, self.props.LeftPadding, 0, 0),
 
         }, {
             Label = Roact.createElement("TextLabel", {
 
-                Size = UDim2.new(0, self.props.textWidth, 1, 0),
+                Size = UDim2.new(0, self.props.TextWidth, 1, 0),
                 BackgroundTransparency = 1,
                 TextColor3 = self.props.Theme:GetColor(
                     Enum.StudioStyleGuideColor.MainText,
@@ -70,7 +70,7 @@ function CheckboxInput:render()
 
                 AnchorPoint = Vector2.new(0, 0.5),
                 Size = UDim2.new(0, self.props.Size.Y.Offset * 3/5, 0, self.props.Size.Y.Offset * 3/5),
-                Position = UDim2.new(0, self.props.textWidth + self.props.leftPadding, 0.5, 0),
+                Position = UDim2.new(0, self.props.TextWidth + self.props.LeftPadding, 0.5, 0),
                 Text = "",
                 AutoButtonColor = self.props.ChangeMouse,
                 ZIndex = self.props.ZIndex,
@@ -89,7 +89,7 @@ function CheckboxInput:render()
 
             }, {
                 Corner = Roact.createElement("UICorner", {
-                    CornerRadius = UDim.new(0, self.props.checkboxCornerRadius),
+                    CornerRadius = UDim.new(0, self.props.CheckboxCornerRadius),
                 })
             }),
         })
