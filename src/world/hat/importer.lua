@@ -5,6 +5,22 @@ local Players = game:GetService("Players")
 local Importer = {}
 
 
+function removeAttachments(model)
+    local children = model:GetChildren()
+
+    if #children == 0 then
+        return
+    end
+
+    for _, child in pairs(children) do
+        removeAttachments(child)
+        if child:IsA("Attachment") then
+            child:Destroy()
+        end
+    end
+end
+
+
 function Importer:LoadHat(id)
     local success, model = pcall(function()
         return InsertService:LoadAsset(id)      
@@ -33,6 +49,8 @@ function Importer:LoadHat(id)
 
     hat.Handle.Anchored = true
     hat.Handle.CastShadow = false
+
+    removeAttachments(hat)
 
     return 200, hat
 end
