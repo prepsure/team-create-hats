@@ -51,10 +51,17 @@ function Editor:render()
     local enableProps = not not currentHat
     PreviewWindow.Settings.CurrentIndex = self.state.currentIndex
 
-    return Roact.createElement("Frame", {
+    return Roact.createElement("ScrollingFrame", {
         Size = UDim2.new(1,0,1,0),
+        BorderSizePixel = 0,
         BackgroundColor3 = self.state.theme:GetColor(
             Enum.StudioStyleGuideColor.MainBackground,
+            Enum.StudioStyleGuideModifier.Default
+        ),
+        AutomaticCanvasSize = Enum.AutomaticSize.Y,
+        CanvasSize = UDim2.new(0,0,1,0),
+        ScrollBarImageColor3 = self.state.theme:GetColor(
+            Enum.StudioStyleGuideColor.Dark,
             Enum.StudioStyleGuideModifier.Default
         ),
     },
