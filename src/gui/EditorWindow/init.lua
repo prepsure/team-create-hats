@@ -213,6 +213,7 @@ function Editor:render()
             LabelText = "Rotation",
             Theme = self.state.theme,
 
+            ChangeMouse = not self.state.importPopUpShown,
             Position = UDim2.new(0, 20, 0, 310),
             Size = UDim2.new(1, -40, 0, 60),
 

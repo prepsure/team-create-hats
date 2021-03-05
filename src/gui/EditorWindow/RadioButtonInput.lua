@@ -2,6 +2,7 @@ local root = script.Parent.Parent.Parent
 local Roact = require(root.roact)
 
 local getColor = require(root.gui.getColors)
+local changeMouse = require(root.gui.changeMouse)
 
 local RadioButtonInput = Roact.Component:extend("LabeledNumberInput")
 
@@ -32,8 +33,7 @@ function RadioButtonInput:makeButton(pos)
             Size = UDim2.new(0.5, 0, 0.5, 0),
             Text = "",
             SizeConstraint = Enum.SizeConstraint.RelativeYY,
-
-            ChangeMouse = self.props.ChangeMouse,
+            AutoButtonColor = self.props.ChangeMouse,
 
             BackgroundColor3 = (pos == self.props.selected) and
                 getColor(self.props.Theme, "Blue") or
@@ -44,12 +44,10 @@ function RadioButtonInput:makeButton(pos)
             end,
 
             [Roact.Event.MouseEnter] = function()
-                local pluginMouse = script:FindFirstAncestorWhichIsA("Plugin"):GetMouse()
-                pluginMouse.Icon = "rbxasset://SystemCursors/PointingHand"
+                changeMouse("PointingHand", self.props.ChangeMouse)
             end,
             [Roact.Event.MouseLeave] = function()
-                local pluginMouse = script:FindFirstAncestorWhichIsA("Plugin"):GetMouse()
-                pluginMouse.Icon = "rbxasset://SystemCursors/Arrow"
+                changeMouse("Arrow", self.props.ChangeMouse)
             end,
         }, {
             Corner = Roact.createElement("UICorner", {
@@ -61,16 +59,20 @@ end
 
 
 function RadioButtonInput:init()
-    self.props.LabelText = self.props.LabelText or ""
+    self.defaultProps = {
+        LabelText = "",
+        ChangeMouse = true,
 
-    self.props.Position = self.props.Position or UDim.new(0, 0)
-    self.props.Size = self.props.Size or UDim.new(0, 30)
+        Position = UDim.new(0, 0),
+        Size = UDim.new(0, 30),
 
-    self.props.options = self.props.options or {}
-    self.props.selected = self.props.selected or 1
+        options = {},
+        selected = 1,
+
+        callback = function() end,
+    }
+
     assert(self.props.Theme ~= nil, "No theme found for numberinput")
-
-    self.props.callback = self.props.callback or function() end
 end
 
 
