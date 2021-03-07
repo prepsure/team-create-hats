@@ -35,6 +35,7 @@ function Hat.new(id, model, propTable)
 
     self:SetOffset(propTable.offset or Vector3.new(0, 0, 0))
     self:SetScale(propTable.scale or Vector3.new(1, 1, 1))
+    self:SetRotation(propTable.rotation or Vector3.new(0, 0, 0))
     self:SetTransformPriority(propTable.transformPriority or 1)
     self:SetVisibleLocally(propTable.visibleLocally or false)
 
@@ -48,6 +49,7 @@ function Hat:GetPropertyTable()
     return {
         offset = self.offset,
         scale = self.scale,
+        rotation = self.rotation,
         transformPriority = self.transformPriority,
         visibleLocally = self.visibleLocally,
     }
@@ -65,6 +67,11 @@ end
 function Hat:SetScale(scale)
     self.scale = scale
     self.model.Handle:FindFirstChildOfClass("SpecialMesh").Scale = self._implicitScale * scale
+end
+
+
+function Hat:SetRotation(rotation)
+    self.rotation = rotation
 end
 
 
@@ -96,13 +103,18 @@ function Hat:SetCFrame(aroundCf)
         return
     end
 
+    local hatRot = CFrame.Angles(math.rad(self.rotation.X), math.rad(self.rotation.Y), math.rad(self.rotation.Z))
+    local headRot = (aroundCf - aroundCf.p)
+
     if self.transformPriority == 1 then
         self.model.Handle.CFrame = aroundCf * CFrame.new(self.offset)
     elseif self.transformPriority == 2 then
-        self.model.Handle.CFrame = (CFrame.new(aroundCf.p) + self.offset) * (aroundCf - aroundCf.p)
+        self.model.Handle.CFrame = (CFrame.new(aroundCf.p) + self.offset) * headRot
     else -- transformPriority = "none"
         self.model.Handle.CFrame = CFrame.new(aroundCf.p) + self.offset
     end
+
+    self.model.Handle.CFrame *= hatRot
 end
 
 

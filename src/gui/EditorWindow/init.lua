@@ -213,8 +213,24 @@ function Editor:render()
             end
         }),
 
-        Scale = Roact.createElement(Vector3Input, {
+        Rotation = Roact.createElement(Vector3Input, {
             Position = UDim2.new(0, 20, 0, 270),
+            Size = UDim2.new(1, -40, 0, 30),
+
+            DefaultValue = enableProps and currentHat.rotation or Vector3.new(0,0,0),
+
+            LabelText = "Rotation",
+            Theme = self.state.theme,
+            ChangeMouse = not self.state.importPopUpShown,
+
+            callback = function(rotation)
+                HatController:ChangeProperty(self.state.currentIndex, "Rotation", rotation)
+                self:setState(self.state)
+            end
+        }),
+
+        Scale = Roact.createElement(Vector3Input, {
+            Position = UDim2.new(0, 20, 0, 310),
             Size = UDim2.new(1, -40, 0, 30),
 
             DefaultValue = enableProps and currentHat.scale or Vector3.new(1,1,1),
@@ -230,11 +246,11 @@ function Editor:render()
         }),
 
         TransformPriority = Roact.createElement(RadioButtonInput, {
-            LabelText = "Rotation",
+            LabelText = "Rotation Method",
             Theme = self.state.theme,
 
             ChangeMouse = not self.state.importPopUpShown,
-            Position = UDim2.new(0, 20, 0, 310),
+            Position = UDim2.new(0, 20, 0, 350),
             Size = UDim2.new(1, -40, 0, 60),
 
             options = {"relative to camera", "copy camera"},
@@ -250,7 +266,7 @@ function Editor:render()
         RemoveHat = Roact.createElement(ButtonInput, {
             Text = "Remove Hat",
             Color = getColors(self.state.theme, "Red"),
-            Position = UDim2.new(0, 20, 0, 380),
+            Position = UDim2.new(0, 20, 0, 420),
             Size = UDim2.new(1, -40, 0, 30),
 
             ChangeMouse = not self.state.importPopUpShown,

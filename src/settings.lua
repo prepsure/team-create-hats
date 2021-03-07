@@ -53,11 +53,19 @@ end
 
 
 local function vector3ToTable(v3)
+    if v3 == nil then
+        return nil
+    end
+
     return {X = v3.X, Y = v3.Y, Z = v3.Z}
 end
 
 
 local function vector3FromTable(t)
+    if t == nil then
+        return nil
+    end
+
     return Vector3.new(t.X, t.Y, t.Z)
 end
 
@@ -70,6 +78,7 @@ local function convertHatTableForSettings()
         local props = hat:GetPropertyTable()
 
         props.offset = vector3ToTable(props.offset)
+        props.rotation = vector3ToTable(props.rotation)
         props.scale = vector3ToTable(props.scale)
 
         table.insert(new, {
@@ -105,6 +114,7 @@ function Settings:Load()
     -- load Hats
     for _, hat in ipairs(current.Hats) do
         hat.props.offset = vector3FromTable(hat.props.offset)
+        hat.props.rotation = vector3FromTable(hat.props.rotation)
         hat.props.scale = vector3FromTable(hat.props.scale)
 
         HatController:Add(hat.id, nil, hat.props)
