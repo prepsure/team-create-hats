@@ -9,7 +9,7 @@
 
 You can find a published version of the plugin on the Roblox plugin marketplace [here](https://www.roblox.com/library/990908723/Team-Create-With-Hats).
 
-To install it locally go to the Releases section of this repository and download the .rbxmx file. Then open Roblox Studio and click the `Plugins` tab and click `Plugins Folder` on the left. The drag the file in there and you're done!
+To install it locally, go to the `Releases` section of this repository and download the .rbxmx file. Then open Roblox Studio and click the `Plugins` tab and click `Plugins Folder` on the left. Then drag the file in there and you're done!
 
 
 ## Features
