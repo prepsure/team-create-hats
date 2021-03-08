@@ -37,6 +37,7 @@ function Hat.new(id, model, propTable)
     self:SetScale(propTable.scale or Vector3.new(1, 1, 1))
     self:SetRotation(propTable.rotation or Vector3.new(0, 0, 0))
     self:SetTransformPriority(propTable.transformPriority or 1)
+    self:SetRotTransformPriority(propTable.rotTransformPriority or 1)
     self:SetVisibleLocally(propTable.visibleLocally or false)
 
     self._floatConnection = self:_bindFloating()
@@ -51,6 +52,7 @@ function Hat:GetPropertyTable()
         scale = self.scale,
         rotation = self.rotation,
         transformPriority = self.transformPriority,
+        rotTransformPriority = self.rotTransformPriority,
         visibleLocally = self.visibleLocally,
     }
 end
@@ -76,8 +78,14 @@ end
 
 
 function Hat:SetTransformPriority(state)
-    assert(state == 1 or state == 2 or state == 3, "transform priority set incorrectly")
+    assert(1 <= state and state <= 2, "transform priority set incorrectly")
     self.transformPriority = state
+end
+
+
+function Hat:SetRotTransformPriority(state)
+    assert(1 <= state and state <= 2, "rot transform priority set incorrectly")
+    self.rotTransformPriority = state
 end
 
 
@@ -98,23 +106,30 @@ end
 
 
 -- takes all the properties the hat currently has and positions it correctly
-function Hat:SetCFrame(aroundCf)
+function Hat:SetCFrame(headCf)
     if not self.model._instance:FindFirstChild("Handle") then
         return
     end
 
+    local offsetCf = CFrame.new(self.offset)
     local hatRot = CFrame.Angles(math.rad(self.rotation.X), math.rad(self.rotation.Y), math.rad(self.rotation.Z))
-    local headRot = (aroundCf - aroundCf.p)
+    local headRot = (headCf - headCf.p)
+
+    local cf = CFrame.new(0, 0, 0)
 
     if self.transformPriority == 1 then
-        self.model.Handle.CFrame = aroundCf * CFrame.new(self.offset)
+        cf = CFrame.new((headCf * offsetCf).Position)
     elseif self.transformPriority == 2 then
-        self.model.Handle.CFrame = (CFrame.new(aroundCf.p) + self.offset) * headRot
-    else -- transformPriority = "none"
-        self.model.Handle.CFrame = CFrame.new(aroundCf.p) + self.offset
+        cf = CFrame.new(headCf.Position + offsetCf.Position)
     end
 
-    self.model.Handle.CFrame *= hatRot
+    if self.rotTransformPriority == 1 then
+        cf = cf * headRot * hatRot
+    elseif self.rotTransformPriority == 2 then
+        cf = CFrame.new(cf.Position) * hatRot
+    end
+
+    self.model._instance.Handle.CFrame = cf
 end
 
 

@@ -59,7 +59,7 @@ function Editor:render()
             Enum.StudioStyleGuideModifier.Default
         ),
         AutomaticCanvasSize = Enum.AutomaticSize.Y,
-        CanvasSize = UDim2.new(0,0,1,0),
+        CanvasSize = UDim2.new(0,0,1,10),
         ScrollBarImageColor3 = self.state.theme:GetColor(
             Enum.StudioStyleGuideColor.Dark,
             Enum.StudioStyleGuideModifier.Default
@@ -246,14 +246,14 @@ function Editor:render()
         }),
 
         TransformPriority = Roact.createElement(RadioButtonInput, {
-            LabelText = "Rotation Method",
+            LabelText = "Offset\nMethod",
             Theme = self.state.theme,
 
             ChangeMouse = not self.state.importPopUpShown,
             Position = UDim2.new(0, 20, 0, 350),
             Size = UDim2.new(1, -40, 0, 60),
 
-            options = {"relative to camera", "copy camera"},
+            options = {"relative to camera", "relative to world"},
             selected = enableProps and currentHat.transformPriority,
 
             callback = function(pos)
@@ -263,10 +263,28 @@ function Editor:render()
 
         }),
 
+        RotTransformPriority = Roact.createElement(RadioButtonInput, {
+            LabelText = "Rotation\nMethod",
+            Theme = self.state.theme,
+
+            ChangeMouse = not self.state.importPopUpShown,
+            Position = UDim2.new(0, 20, 0, 420),
+            Size = UDim2.new(1, -40, 0, 60),
+
+            options = {"with camera", "ignore camera"},
+            selected = enableProps and currentHat.rotTransformPriority,
+
+            callback = function(pos)
+                HatController:ChangeProperty(self.state.currentIndex, "RotTransformPriority", pos)
+                self:setState(self.state)
+            end,
+
+        }),
+
         RemoveHat = Roact.createElement(ButtonInput, {
             Text = "Remove Hat",
             Color = getColors(self.state.theme, "Red"),
-            Position = UDim2.new(0, 20, 0, 420),
+            Position = UDim2.new(0, 20, 0, 490),
             Size = UDim2.new(1, -40, 0, 30),
 
             ChangeMouse = not self.state.importPopUpShown,
