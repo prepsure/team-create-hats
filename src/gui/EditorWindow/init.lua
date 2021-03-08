@@ -304,6 +304,12 @@ function Editor:render()
             end
         }),
 
+        BottomPadding = Roact.createElement("Frame", {
+            BackgroundTransparency = 1,
+            Position = UDim2.new(0, 0, 0, 520),
+            Size = UDim2.new(1, 0, 0, 10),
+        }),
+
     })
 end
 
