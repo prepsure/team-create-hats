@@ -78,7 +78,7 @@ function CheckboxInput:render()
                 BackgroundColor3 = self:boolToCheckColor(self.props.Checked),
 
                 [Roact.Event.Activated] = function()
-                    self.props.callback()
+                    self.props.callback(not self.props.Checked)
                 end,
 
                 [Roact.Event.MouseEnter] = function()
