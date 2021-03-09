@@ -134,15 +134,22 @@ function Editor:render()
             }),
 
             Divider = Roact.createElement("Frame", {
-                LayoutOrder = 4,
-                Size = UDim2.new(1, -10, 0, 3),
 
-                AnchorPoint = Vector2.new(0, 0.5),
-                BorderSizePixel = 0,
-                BackgroundColor3 = self.state.theme:GetColor(
-                    Enum.StudioStyleGuideColor.Light,
-                    Enum.StudioStyleGuideModifier.Default
-                ),
+                LayoutOrder = 4,
+                Size = UDim2.new(1, 0, 0, 15),
+                BackgroundTransparency = 1,
+
+            }, {
+                Line = Roact.createElement("Frame", {
+                    Size = UDim2.new(1, -10, 0, 3),
+                    Position = UDim2.new(0.5, 0, 0.5, 0),
+                    AnchorPoint = Vector2.new(0.5, 0.5),
+                    BorderSizePixel = 0,
+                    BackgroundColor3 = self.state.theme:GetColor(
+                        Enum.StudioStyleGuideColor.Light,
+                        Enum.StudioStyleGuideModifier.Default
+                    ),
+                }),
             }),
 
             Choices = Roact.createElement(HorizontalChoiceList, {
