@@ -9,7 +9,7 @@
 
 You can find a published version of the plugin on the Roblox plugin marketplace [here](https://www.roblox.com/library/990908723/Team-Create-With-Hats).
 
-To install it locally, go to the `Releases` section of this repository and download the .rbxmx file. Then open Roblox Studio and click the `Plugins` tab and click `Plugins Folder` on the left. Then drag the file in there and you're done!
+To install it locally, go to the `Releases` section of this repository and download the .rbxmx file. Then open Roblox Studio and click the `Plugins` tab and click `Plugins Folder` on the left. Drag the file in there, restart studio, and you're done!
 
 
 ## Features
@@ -17,7 +17,8 @@ To install it locally, go to the `Releases` section of this repository and downl
 * Wear up to 10 accessories
 * Import accessories from your Roblox character
 * Toggle local visibilty of accessories
-* Change individual accessory properties like offset, scale, and rotation method
+* Change individual accessory properties like offset, scale, rotation, and particles being enabled
+* Choose if offset and rotation are relative to the camera's orientation or the world's
 * Preview your character from a 3rd person perspective
 
 
@@ -25,7 +26,7 @@ To install it locally, go to the `Releases` section of this repository and downl
 
 The plugin has two different studio PluginGuiDockWidgets, one for configuration, one for previewing.
 
-![UIPreview](https://user-images.githubusercontent.com/33643911/110060658-412a6180-7d34-11eb-8284-3b6d84b907bb.png)
+![UIPreview](https://user-images.githubusercontent.com/33643911/110499057-e2fbd680-80c5-11eb-80f2-06a8cad8984a.png)
 
 
 ## Editing
