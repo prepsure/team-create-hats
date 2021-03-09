@@ -24,7 +24,7 @@ To install it locally, go to the `Releases` section of this repository and downl
 
 ## UI
 
-The plugin has two different studio PluginGuiDockWidgets, one for configuration, one for previewing.
+The plugin has two different DockWidgetPluginGuis, one for configuration, one for previewing.
 
 ![UIPreview](https://user-images.githubusercontent.com/33643911/110499057-e2fbd680-80c5-11eb-80f2-06a8cad8984a.png)
 
