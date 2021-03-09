@@ -276,7 +276,7 @@ function Editor:render()
                 Theme = self.state.theme,
                 ChangeMouse = not self.state.importPopUpShown,
 
-                options = {"with camera", "ignore camera"},
+                options = {"relative to camera", "relative to world"},
                 selected = enableProps and currentHat.rotTransformPriority,
 
                 callback = function(pos)
