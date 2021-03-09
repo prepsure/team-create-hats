@@ -20,8 +20,6 @@ CheckboxInput.defaultProps = {
 
     TextWidth = 120,
     CheckboxCornerRadius = 2,
-    LeftPadding = 20,
-    TopPadding = 10,
 
     callback = function() end,
 }
@@ -41,12 +39,12 @@ function CheckboxInput:render()
     return Roact.createFragment({
         Roact.createElement("Frame", {
 
-            Size = self.props.Size + UDim2.new(0, -self.props.LeftPadding, 0, 0),
+            Size = self.props.Size,
             BackgroundTransparency = 1,
             ZIndex = self.props.ZIndex,
 
             LayoutOrder = self.props.LayoutOrder,
-            Position = self.props.Position + UDim2.new(0, self.props.LeftPadding, 0, 0),
+            Position = self.props.Position,
 
         }, {
             Label = Roact.createElement("TextLabel", {

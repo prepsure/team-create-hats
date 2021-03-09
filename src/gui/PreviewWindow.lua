@@ -20,7 +20,7 @@ local PreviewSettings = {
     BallColor = Color3.new(0.627450, 0.321568, 0.721568),
     BallTransparency = 0.5,
     CurrentIndex = 0,
-    DoHighlight = true,
+    DoHighlight = false,
 }
 
 
@@ -71,7 +71,7 @@ function Previewer:render()
     },
     {
         DoHighlight = Roact.createElement(CheckboxInput, {
-            Position = UDim2.new(0, -15, 0, 0),
+            Position = UDim2.new(0, 5, 0, 0),
             Size = UDim2.new(1, 0, 0, 30),
             Theme = self.state.theme,
             Checked = PreviewSettings.DoHighlight,

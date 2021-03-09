@@ -86,7 +86,7 @@ function Editor:render()
             Enabled = Roact.createElement(CheckboxInput, {
                 LayoutOrder = 1,
 
-                Size = UDim2.new(1, 0, 0, 30),
+                Size = UDim2.new(1, -40, 0, 30),
                 LabelText = "Enabled",
                 Theme = self.state.theme,
                 ChangeMouse = not self.state.importPopUpShown,
@@ -105,7 +105,7 @@ function Editor:render()
             VisibleLocally = Roact.createElement(CheckboxInput, {
                 LayoutOrder = 2,
 
-                Size = UDim2.new(1, 0, 0, 30),
+                Size = UDim2.new(1, -40, 0, 30),
                 LabelText = "Visible to Self",
                 Theme = self.state.theme,
                 ChangeMouse = not self.state.importPopUpShown,
