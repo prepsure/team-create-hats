@@ -70,7 +70,7 @@ function CheckboxInput:render()
 
                 AnchorPoint = Vector2.new(0, 0.5),
                 Size = UDim2.new(0, self.props.Size.Y.Offset * 3/5, 0, self.props.Size.Y.Offset * 3/5),
-                Position = UDim2.new(0, self.props.TextWidth + self.props.LeftPadding, 0.5, 0),
+                Position = UDim2.new(0, self.props.TextWidth, 0.5, 0),
                 Text = "",
                 AutoButtonColor = self.props.ChangeMouse,
                 ZIndex = self.props.ZIndex,
