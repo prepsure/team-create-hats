@@ -1,5 +1,14 @@
 local RunService = game:GetService("RunService")
 
+-- roblox please add a superclass for all of these
+local particleClasses = {
+    "Fire",
+    "Smoke",
+    "Sparkles",
+    "Explosion",
+    "ParticleEmitter"
+}
+
 
 local Hat = {}
 Hat.__index = Hat
@@ -39,6 +48,7 @@ function Hat.new(id, model, propTable)
     self:SetTransformPriority(propTable.transformPriority or 1)
     self:SetRotTransformPriority(propTable.rotTransformPriority or 1)
     self:SetVisibleLocally(propTable.visibleLocally or false)
+    self:SetParticlesEnabled((propTable.particlesEnabled == nil) and true or propTable.particlesEnabled)
 
     self._floatConnection = self:_bindFloating()
 
@@ -54,6 +64,7 @@ function Hat:GetPropertyTable()
         transformPriority = self.transformPriority,
         rotTransformPriority = self.rotTransformPriority,
         visibleLocally = self.visibleLocally,
+        particlesEnabled = self.particlesEnabled,
     }
 end
 
@@ -95,6 +106,17 @@ function Hat:SetVisibleLocally(state)
 end
 
 
+function Hat:SetParticlesEnabled(state)
+    self.particlesEnabled = state
+
+    for _, inst in pairs(self.model._instance:GetDescendants()) do
+        if table.find(particleClasses, inst.ClassName) then
+            inst.Enabled = state
+        end
+    end
+end
+
+
 ---------- other functions ----------
 
 
@@ -133,6 +155,17 @@ function Hat:SetCFrame(headCf)
 
     self.model._instance.Handle.LocalTransparencyModifier = self.visibleLocally and 0 or 1
     -- if hat is selected, it resets the LTM
+end
+
+
+function Hat:HasParticles()
+    for _, class in pairs(particleClasses) do
+        if self.model._instance:FindFirstChildWhichIsA(class, true) then
+            return true
+        end
+    end
+
+    return false
 end
 
 

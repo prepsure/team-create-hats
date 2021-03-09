@@ -109,8 +109,8 @@ function Editor:render()
                 LabelText = "Visible to Self",
                 Theme = self.state.theme,
                 ChangeMouse = not self.state.importPopUpShown,
-
                 Checked = self.state.visibleLocally,
+
                 callback = function()
                     self:setState(function(state)
                         state.visibleLocally = not state.visibleLocally
@@ -248,6 +248,23 @@ function Editor:render()
                     HatController:ChangeProperty(self.state.currentIndex, "Scale", scale)
                     self:setState(self.state)
                 end
+            }),
+
+            ParticleToggle = Roact.createElement(CheckboxInput, {
+                LayoutOrder = 9.5,
+                Size = UDim2.new(1, -40, 0, 30),
+                Visible = enableProps and currentHat:HasParticles() or false,
+
+                LabelText = "Particles",
+                TextWidthScale = 0.3,
+                TextWidth = 0,
+                Checked = enableProps and currentHat.particlesEnabled or false,
+                Theme = self.state.theme,
+
+                callback = function(b)
+                    HatController:ChangeProperty(self.state.currentIndex, "ParticlesEnabled", b)
+                    self:setState(self.state)
+                end,
             }),
 
             TransformPriority = Roact.createElement(RadioButtonInput, {

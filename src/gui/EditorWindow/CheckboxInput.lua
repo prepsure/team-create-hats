@@ -12,6 +12,7 @@ CheckboxInput.defaultProps = {
     LayoutOrder = 0,
     Position = UDim2.new(0, 0, 0, 0),
     Size = UDim2.new(0, 50, 0, 50),
+    Visible = true,
     ZIndex = 1,
 
     LabelText = "",
@@ -42,6 +43,7 @@ function CheckboxInput:render()
 
             Size = self.props.Size,
             BackgroundTransparency = 1,
+            Visible = self.props.Visible,
             ZIndex = self.props.ZIndex,
 
             LayoutOrder = self.props.LayoutOrder,
