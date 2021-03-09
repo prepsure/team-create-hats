@@ -77,6 +77,12 @@ function Editor:render()
                 SortOrder = Enum.SortOrder.LayoutOrder,
             }),
 
+            TopPadding = Roact.createElement("Frame", {
+                LayoutOrder = 0,
+                Size = UDim2.new(1, 0, 0, 0),
+                BackgroundTransparency = 1,
+            }),
+
             Enabled = Roact.createElement(CheckboxInput, {
                 LayoutOrder = 1,
 
