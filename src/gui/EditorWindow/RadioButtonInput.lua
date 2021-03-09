@@ -10,8 +10,8 @@ RadioButtonInput.defaultProps = {
     LabelText = "",
     ChangeMouse = true,
 
-    Position = UDim.new(0, 0),
-    Size = UDim.new(0, 30),
+    Position = UDim2.new(0, 0, 0, 0),
+    Size = UDim2.new(0, 30, 0, 30),
 
     options = {},
     selected = 1,
