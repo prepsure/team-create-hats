@@ -9,6 +9,7 @@ local PopUp = Roact.Component:extend("PopUp")
 PopUp.defaultProps = {
     Text = "",
 
+    LayoutOrder = 0,
     Position =  UDim.new(0, 0),
     Size =  UDim.new(0, 30),
 
@@ -42,6 +43,7 @@ function PopUp:render()
         PopUpFrame = Roact.createElement("Frame", {
 
             AnchorPoint = Vector2.new(0.5, 0.5),
+            LayoutOrder = self.props.LayoutOrder,
             Position = self.props.Position,
             Size = self.props.Size,
             BackgroundColor3 = self.props.Theme:GetColor(

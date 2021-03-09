@@ -71,8 +71,15 @@ function Editor:render()
             ),
         },
         {
-            Enabled = Roact.createElement(CheckboxInput, { -- TODO: updates reset these checkboxes?
-                Position = UDim2.new(0, 0, 0, 10),
+            UIListLayout = Roact.createElement("UIListLayout", {
+                Padding = UDim.new(0, 10),
+                HorizontalAlignment = Enum.HorizontalAlignment.Center,
+                SortOrder = Enum.SortOrder.LayoutOrder,
+            }),
+
+            Enabled = Roact.createElement(CheckboxInput, {
+                LayoutOrder = 1,
+
                 Size = UDim2.new(1, 0, 0, 30),
                 LabelText = "Enabled",
                 Theme = self.state.theme,
@@ -90,7 +97,8 @@ function Editor:render()
             }),
 
             VisibleLocally = Roact.createElement(CheckboxInput, {
-                Position = UDim2.new(0, 0, 0, 50),
+                LayoutOrder = 2,
+
                 Size = UDim2.new(1, 0, 0, 30),
                 LabelText = "Visible to Self",
                 Theme = self.state.theme,
@@ -108,10 +116,11 @@ function Editor:render()
             }),
 
             ImportHats = Roact.createElement(ButtonInput, {
+                LayoutOrder = 3,
+                Size = UDim2.new(1, -40, 0, 30),
+
                 Text = "Import Hats from Character",
                 Color = getColors(self.state.theme, "Blue"),
-                Position = UDim2.new(0, 20, 0, 90),
-                Size = UDim2.new(1, -40, 0, 30),
                 ChangeMouse = not self.state.importPopUpShown,
 
                 callback = function()
@@ -125,18 +134,19 @@ function Editor:render()
             }),
 
             Divider = Roact.createElement("Frame", {
+                LayoutOrder = 4,
+                Size = UDim2.new(1, -10, 0, 3),
+
                 AnchorPoint = Vector2.new(0, 0.5),
                 BorderSizePixel = 0,
                 BackgroundColor3 = self.state.theme:GetColor(
                     Enum.StudioStyleGuideColor.Light,
                     Enum.StudioStyleGuideModifier.Default
                 ),
-                Size = UDim2.new(1, -10, 0, 3),
-                Position = UDim2.new(0, 5, 0, 135),
             }),
 
             Choices = Roact.createElement(HorizontalChoiceList, {
-                Position = UDim2.new(0, 20, 0, 150),
+                LayoutOrder = 5,
                 Size = UDim2.new(1, -40, 0, 30),
 
                 ChangeMouse = not self.state.importPopUpShown,
@@ -163,7 +173,7 @@ function Editor:render()
             }),
 
             AccessoryId = Roact.createElement(LabeledNumberInput, {
-                Position = UDim2.new(0, 20, 0, 190),
+                LayoutOrder = 6,
                 Size = UDim2.new(1, -40, 0, 30),
 
                 DefaultValue = enableProps and currentHat.id or 0,
@@ -180,7 +190,7 @@ function Editor:render()
             }),
 
             Offset = Roact.createElement(Vector3Input, {
-                Position = UDim2.new(0, 20, 0, 230),
+                LayoutOrder = 7,
                 Size = UDim2.new(1, -40, 0, 30),
 
                 DefaultValue = enableProps and currentHat.offset or Vector3.new(0,0,0),
@@ -196,7 +206,7 @@ function Editor:render()
             }),
 
             Rotation = Roact.createElement(Vector3Input, {
-                Position = UDim2.new(0, 20, 0, 270),
+                LayoutOrder = 8,
                 Size = UDim2.new(1, -40, 0, 30),
 
                 DefaultValue = enableProps and currentHat.rotation or Vector3.new(0,0,0),
@@ -212,7 +222,7 @@ function Editor:render()
             }),
 
             Scale = Roact.createElement(Vector3Input, {
-                Position = UDim2.new(0, 20, 0, 310),
+                LayoutOrder = 9,
                 Size = UDim2.new(1, -40, 0, 30),
 
                 DefaultValue = enableProps and currentHat.scale or Vector3.new(1,1,1),
@@ -228,12 +238,12 @@ function Editor:render()
             }),
 
             TransformPriority = Roact.createElement(RadioButtonInput, {
+                LayoutOrder = 10,
+                Size = UDim2.new(1, -40, 0, 60),
+
                 LabelText = "Offset\nMethod",
                 Theme = self.state.theme,
-
                 ChangeMouse = not self.state.importPopUpShown,
-                Position = UDim2.new(0, 20, 0, 350),
-                Size = UDim2.new(1, -40, 0, 60),
 
                 options = {"relative to camera", "relative to world"},
                 selected = enableProps and currentHat.transformPriority,
@@ -246,12 +256,12 @@ function Editor:render()
             }),
 
             RotTransformPriority = Roact.createElement(RadioButtonInput, {
+                LayoutOrder = 11,
+                Size = UDim2.new(1, -40, 0, 60),
+
                 LabelText = "Rotation\nMethod",
                 Theme = self.state.theme,
-
                 ChangeMouse = not self.state.importPopUpShown,
-                Position = UDim2.new(0, 20, 0, 420),
-                Size = UDim2.new(1, -40, 0, 60),
 
                 options = {"with camera", "ignore camera"},
                 selected = enableProps and currentHat.rotTransformPriority,
@@ -264,11 +274,11 @@ function Editor:render()
             }),
 
             RemoveHat = Roact.createElement(ButtonInput, {
-                Text = "Remove Hat",
-                Color = getColors(self.state.theme, "Red"),
-                Position = UDim2.new(0, 20, 0, 490),
+                LayoutOrder = 12,
                 Size = UDim2.new(1, -40, 0, 30),
 
+                Text = "Remove Hat",
+                Color = getColors(self.state.theme, "Red"),
                 ChangeMouse = not self.state.importPopUpShown,
 
                 callback = function()
@@ -287,9 +297,9 @@ function Editor:render()
             }),
 
             BottomPadding = Roact.createElement("Frame", {
+                LayoutOrder = 13,
+                Size = UDim2.new(1, 0, 0, 0),
                 BackgroundTransparency = 1,
-                Position = UDim2.new(0, 0, 0, 520),
-                Size = UDim2.new(1, 0, 0, 10),
             }),
 
         }),

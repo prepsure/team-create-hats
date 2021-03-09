@@ -9,6 +9,7 @@ local ButtonInput = Roact.Component:extend("ButtonInput")
 ButtonInput.defaultProps = {
     AnchorPoint = Vector2.new(0,0),
     CornerRadius = UDim.new(0, 3),
+    LayoutOrder = 0,
     Position = UDim2.new(0, 0, 0, 0),
     Size = UDim2.new(0, 30, 0, 30),
     SizeConstraint = Enum.SizeConstraint.RelativeXY,
@@ -27,6 +28,7 @@ function ButtonInput:render()
         Box = Roact.createElement("TextButton", {
 
             Size = self.props.Size,
+            LayoutOrder = self.props.LayoutOrder,
             Position = self.props.Position,
             Text = self.props.Text,
             TextScaled = true,

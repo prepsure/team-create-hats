@@ -6,6 +6,7 @@ local NumberInput = Roact.Component:extend("NumberInput")
 local changeMouse = require(root.gui.changeMouse)
 
 NumberInput.defaultProps = {
+    LayoutOrder = 0,
     Position = UDim.new(0, 0),
     Size = UDim.new(0, 30),
 
@@ -82,6 +83,7 @@ function NumberInput:render()
         Input = Roact.createElement("TextBox", {
 
             AnchorPoint = Vector2.new(0, 0),
+            LayoutOrder = self.props.LayoutOrder,
             Size = self.props.Size,
             Position = self.props.Position,
 

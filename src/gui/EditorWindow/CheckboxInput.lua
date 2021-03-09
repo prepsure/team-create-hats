@@ -9,6 +9,7 @@ local CheckboxInput = Roact.Component:extend("CheckboxInput")
 
 
 CheckboxInput.defaultProps = {
+    LayoutOrder = 0,
     Position = UDim2.new(0, 0, 0, 0),
     Size = UDim2.new(0, 50, 0, 50),
     ZIndex = 1,
@@ -44,6 +45,7 @@ function CheckboxInput:render()
             BackgroundTransparency = 1,
             ZIndex = self.props.ZIndex,
 
+            LayoutOrder = self.props.LayoutOrder,
             Position = self.props.Position + UDim2.new(0, self.props.LeftPadding, 0, 0),
 
         }, {

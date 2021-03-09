@@ -10,6 +10,7 @@ RadioButtonInput.defaultProps = {
     LabelText = "",
     ChangeMouse = true,
 
+    LayoutOrder = 0,
     Position = UDim2.new(0, 0, 0, 0),
     Size = UDim2.new(0, 30, 0, 30),
 
@@ -83,6 +84,7 @@ function RadioButtonInput:render()
     return Roact.createFragment({
         Frame = Roact.createElement("Frame", {
 
+            LayoutOrder = self.props.LayoutOrder,
             Position = self.props.Position,
             Size = self.props.Size,
             BackgroundTransparency = 1,
