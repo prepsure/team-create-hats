@@ -1,11 +1,13 @@
 local InsertService = game:GetService("InsertService")
+local PhysicsService = game:GetService("PhysicsService")
 local Players = game:GetService("Players")
 
+local inactiveCollisionGroup = require(script.Parent.CommonCollisionGroup)
 
 local Importer = {}
 
 
-function removeAttachments(model)
+function removeAttachmentsAndSetCollisions(model)
     local children = model:GetChildren()
 
     if #children == 0 then
@@ -13,17 +15,22 @@ function removeAttachments(model)
     end
 
     for _, child in pairs(children) do
-        removeAttachments(child)
+
+        removeAttachmentsAndSetCollisions(child)
+
         if child:IsA("Attachment") then
             child:Destroy()
+        elseif child:IsA("BasePart") then
+            PhysicsService:SetPartCollisionGroup(child, inactiveCollisionGroup)
         end
+
     end
 end
 
 
 function Importer:LoadHat(id)
     local success, model = pcall(function()
-        return InsertService:LoadAsset(id)      
+        return InsertService:LoadAsset(id)
     end)
 
     if not success then
@@ -50,7 +57,7 @@ function Importer:LoadHat(id)
     hat.Handle.Anchored = true
     hat.Handle.CastShadow = false
 
-    removeAttachments(hat)
+    removeAttachmentsAndSetCollisions(hat)
 
     return 200, hat
 end

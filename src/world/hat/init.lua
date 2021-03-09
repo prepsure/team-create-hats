@@ -130,6 +130,9 @@ function Hat:SetCFrame(headCf)
     end
 
     self.model._instance.Handle.CFrame = cf
+
+    self.model._instance.Handle.LocalTransparencyModifier = self.visibleLocally and 0 or 1
+    -- if hat is selected, it resets the LTM
 end
 
 
