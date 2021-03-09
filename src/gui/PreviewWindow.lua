@@ -73,10 +73,13 @@ function Previewer:render()
         DoHighlight = Roact.createElement(CheckboxInput, {
             Position = UDim2.new(0, 5, 0, 0),
             Size = UDim2.new(1, 0, 0, 30),
+            ZIndex = 5,
+
             Theme = self.state.theme,
             Checked = PreviewSettings.DoHighlight,
             LabelText = "Highlight Selection",
-            ZIndex = 5,
+            TextWidth = 150,
+
             callback = function()
                 PreviewSettings.DoHighlight = not PreviewSettings.DoHighlight
             end

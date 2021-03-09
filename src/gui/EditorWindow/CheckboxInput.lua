@@ -19,6 +19,7 @@ CheckboxInput.defaultProps = {
     ChangeMouse = true,
 
     TextWidth = 120,
+    TextWidthScale = 0,
     CheckboxCornerRadius = 2,
 
     callback = function() end,
@@ -49,7 +50,7 @@ function CheckboxInput:render()
         }, {
             Label = Roact.createElement("TextLabel", {
 
-                Size = UDim2.new(0, self.props.TextWidth, 1, 0),
+                Size = UDim2.new(self.props.TextWidthScale, self.props.TextWidth, 1, 0),
                 BackgroundTransparency = 1,
                 TextColor3 = self.props.Theme:GetColor(
                     Enum.StudioStyleGuideColor.MainText,
@@ -70,7 +71,7 @@ function CheckboxInput:render()
 
                 AnchorPoint = Vector2.new(0, 0.5),
                 Size = UDim2.new(0, self.props.Size.Y.Offset * 3/5, 0, self.props.Size.Y.Offset * 3/5),
-                Position = UDim2.new(0, self.props.TextWidth, 0.5, 0),
+                Position = UDim2.new(self.props.TextWidthScale, self.props.TextWidth, 0.5, 0),
                 Text = "",
                 AutoButtonColor = self.props.ChangeMouse,
                 ZIndex = self.props.ZIndex,
