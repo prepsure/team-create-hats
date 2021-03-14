@@ -37,11 +37,3 @@ PreviewWindow.mount(StudioDocket.Windows["Preview Hats"].Docket)
 
 
 Settings:Load()
-
-local saveCxn = HatController:BindToUpdate(function()
-    Settings:Save()
-end)
-
-plugin.Unloading:Connect(function()
-    saveCxn:Disconnect()
-end)

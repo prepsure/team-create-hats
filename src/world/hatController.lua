@@ -8,8 +8,6 @@ local Importer = require(root.world.hat.importer)
 local PersistentInstance = require(root.world.persistentInstance)
 local PersistentFolder = require(root.world.persistentFolder)
 
-local update = Instance.new("BindableEvent")
-
 
 local HatController = {}
 HatController.List = {}
@@ -110,16 +108,6 @@ function HatController:ImportFromCharacter()
     for _, id in pairs(idTable) do
         self:Add(id)
     end
-end
-
-
-function HatController:_update()
-    update:Fire()
-end
-
-
-function HatController:BindToUpdate(func)
-    return update.Event:Connect(func)
 end
 
 
