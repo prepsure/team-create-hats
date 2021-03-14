@@ -23,8 +23,6 @@ end
 
 ----------
 
-local HatController = require(root.world.hatController)
-
 local StudioDocket = require(root.gui.studioDocket)
 local PreviewWindow = require(root.gui.PreviewWindow)
 local EditorWindow = require(root.gui.EditorWindow)
