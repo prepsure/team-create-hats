@@ -79,6 +79,8 @@ end
 
 
 function HatController:Remove(index)
+    assert(type(index) == "number") -- could cause program to hang if not defined
+
     if #HatController.List == 0 then
         return
     end
@@ -94,8 +96,8 @@ end
 
 
 function HatController:RemoveAll()
-    for _ = 1, #HatController.List do
-        HatController:Remove()
+    for i = #HatController.List, 1, -1 do
+        HatController:Remove(i)
     end
 end
 
