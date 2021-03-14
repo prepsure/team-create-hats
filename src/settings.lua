@@ -121,7 +121,7 @@ function Settings:Load()
     end
 
     -- load Enabled and VisibleLocally (do last in order to update editor state)
-    PersistentFolder:Reparent(current.Enabled and workspace.Terrain or false)
+    PersistentFolder:Reparent(current.Enabled and workspace:FindFirstChildOfClass("Terrain") or false)
     HatController:ChangePropertyOnAll("VisibleLocally", current.VisibleLocally)
     Editor:Load(current.Enabled, current.VisibleLocally)
 end
