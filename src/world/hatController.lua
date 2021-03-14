@@ -1,3 +1,6 @@
+local RunService = game:GetService("RunService")
+
+
 local root = script.Parent.Parent
 
 local Hat = require(root.world.hat)
@@ -82,6 +85,10 @@ function HatController:Remove(index)
         return
     end
 
+    -- if a new hat is being imported, we have to wait for it to finish
+    while HatController.List[index] == nil do
+        RunService.Heartbeat:Wait()
+    end
 
     local hat = table.remove(HatController.List, index)
     hat:Destroy()
