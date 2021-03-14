@@ -14,6 +14,7 @@ HatController.List = {}
 
 
 HatController.MaxHats = 10
+HatController.IsImporting = false
 local defaultHat = 1028826
 
 
@@ -103,13 +104,20 @@ end
 
 
 function HatController:ImportFromCharacter()
+    if HatController.IsImporting then
+        return
+    end
+
+    HatController.IsImporting = true
+
     local idTable = Importer:LoadHatsFromCharacter()
 
     self:RemoveAll()
-
     for _, id in pairs(idTable) do
         self:Add(id)
     end
+
+    HatController.IsImporting = false
 end
 
 
