@@ -98,7 +98,7 @@ function Editor:render()
                         return state
                     end)
 
-                    PersistentFolder:Reparent(self.state.enabled and workspace or false)
+                    PersistentFolder:Reparent(self.state.enabled and workspace.Terrain or false)
                 end
             }),
 
