@@ -88,9 +88,4 @@ function HorizontalChoiceList:render()
 end
 
 
-function HorizontalChoiceList:didMount()
-    
-end
-
-
 return HorizontalChoiceList

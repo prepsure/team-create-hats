@@ -7,7 +7,7 @@ local inactiveCollisionGroup = require(script.Parent.CommonCollisionGroup)
 local Importer = {}
 
 
-function removeAttachmentsAndSetCollisions(model)
+function cleanModel(model)
     local children = model:GetChildren()
 
     if #children == 0 then
@@ -16,12 +16,13 @@ function removeAttachmentsAndSetCollisions(model)
 
     for _, child in pairs(children) do
 
-        removeAttachmentsAndSetCollisions(child)
+        cleanModel(child)
 
         if child:IsA("Attachment") then
             child:Destroy()
         elseif child:IsA("BasePart") then
             PhysicsService:SetPartCollisionGroup(child, inactiveCollisionGroup)
+            child.Locked = true
         end
 
     end
@@ -57,7 +58,7 @@ function Importer:LoadHat(id)
     hat.Handle.Anchored = true
     hat.Handle.CastShadow = false
 
-    removeAttachmentsAndSetCollisions(hat)
+    cleanModel(hat)
 
     return 200, hat
 end
