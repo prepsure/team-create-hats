@@ -18,7 +18,7 @@ function cleanModel(model)
 
         cleanModel(child)
 
-        if child:IsA("Attachment") then
+        if child:IsA("Attachment") or child:IsA("LuaSourceContainer") then
             child:Destroy()
         elseif child:IsA("BasePart") then
             PhysicsService:SetPartCollisionGroup(child, inactiveCollisionGroup)
