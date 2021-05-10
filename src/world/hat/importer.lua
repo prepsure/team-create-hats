@@ -7,7 +7,7 @@ local inactiveCollisionGroup = require(script.Parent.CommonCollisionGroup)
 local Importer = {}
 
 
-function cleanModel(model)
+local function cleanModel(model)
     local children = model:GetChildren()
 
     if #children == 0 then
@@ -26,6 +26,28 @@ function cleanModel(model)
         end
 
     end
+end
+
+
+local function makeIntoSpecialMesh(meshpart)
+    local part = Instance.new("Part")
+    local mesh = Instance.new("SpecialMesh")
+
+    part.Name = meshpart.Name
+    part.Size = Vector3.new(2,2,2)
+
+    mesh.MeshId = meshpart.MeshId
+    mesh.TextureId = meshpart.TextureID
+    mesh.Parent = part
+
+    for _, inst in pairs(meshpart:GetChildren()) do
+        inst.Parent = part
+    end
+
+    part.Parent = meshpart.Parent
+    meshpart:Destroy()
+
+    return part
 end
 
 
@@ -48,6 +70,10 @@ function Importer:LoadHat(id)
     if not hat:FindFirstChild("Handle") then
         model:Destroy()
         return 406, "no handle found"
+    end
+
+    if hat.Handle:IsA("MeshPart") then
+        makeIntoSpecialMesh(hat.Handle)
     end
 
     if not hat.Handle:FindFirstChildOfClass("SpecialMesh") then

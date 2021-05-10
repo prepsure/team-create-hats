@@ -2,7 +2,7 @@ local PhysicsService = game:GetService("PhysicsService")
 
 local groupName = "Plugin_Unselectable_Group"
 
-function getOrCreateGroup(name)
+local function getOrCreateGroup(name)
 	local ok, _ = pcall(PhysicsService.GetCollisionGroupId, PhysicsService, name)
 	if not ok then
 		-- Create may fail if we have hit the maximum of 32 different groups
