@@ -17,4 +17,4 @@ if didGetGroup then
 	PhysicsService:CollisionGroupSetCollidable("Default", groupName, false)
 end
 
-return didGetGroup and groupName or "Default"
+return if didGetGroup then groupName else "Default"
