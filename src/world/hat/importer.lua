@@ -1,5 +1,4 @@
 local InsertService = game:GetService("InsertService")
-local PhysicsService = game:GetService("PhysicsService")
 local Players = game:GetService("Players")
 
 local inactiveCollisionGroup = require(script.Parent.CommonCollisionGroup)
@@ -21,11 +20,11 @@ local function cleanModel(model)
         if child:IsA("Attachment") or child:IsA("LuaSourceContainer") then
             child:Destroy()
         elseif child:IsA("BasePart") then
-            PhysicsService:SetPartCollisionGroup(child, inactiveCollisionGroup)
-            child.Locked = true
-        end
-
-    end
+			local p: Part = child
+			p.CollisionGroup = inactiveCollisionGroup
+			p.Locked = true
+		end
+	end
 end
 
 
