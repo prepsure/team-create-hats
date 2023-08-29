@@ -2,12 +2,11 @@
 -- presssssure
 -- 2021-02-24
 
-
 local root = script.Parent
 local shouldRun = require(root.prechecks)
 
 if not shouldRun then
-    return
+	return
 end
 
 ----------
@@ -18,7 +17,7 @@ local CollectionService = game:GetService("CollectionService")
 local yourHatTag = game:GetService("Players").LocalPlayer.Name .. "'s hats"
 
 for _, f in pairs(CollectionService:GetTagged(yourHatTag)) do
-    f:Destroy()
+	f:Destroy()
 end
 
 ----------
@@ -29,9 +28,7 @@ local EditorWindow = require(root.gui.EditorWindow)
 
 local Settings = require(root.settings)
 
-
 EditorWindow.mount(StudioDocket.Windows["Configure Hats"].Docket)
 PreviewWindow.mount(StudioDocket.Windows["Preview Hats"].Docket)
-
 
 Settings:Load()

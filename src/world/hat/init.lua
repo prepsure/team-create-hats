@@ -2,17 +2,15 @@ local RunService = game:GetService("RunService")
 
 -- roblox please add a superclass for all of these
 local particleClasses = {
-    "Fire",
-    "Smoke",
-    "Sparkles",
-    "Explosion",
-    "ParticleEmitter"
+	"Fire",
+	"Smoke",
+	"Sparkles",
+	"Explosion",
+	"ParticleEmitter",
 }
-
 
 local Hat = {}
 Hat.__index = Hat
-
 
 --[[
 
@@ -33,149 +31,134 @@ Hat.__index = Hat
 --]]
 
 function Hat.new(id, model, propTable)
-    local self = setmetatable({}, Hat)
+	local self = setmetatable({}, Hat)
 
-    propTable = propTable or {}
+	propTable = propTable or {}
 
-    self.model = model
-    self._implicitScale = model.Handle:FindFirstChildOfClass("SpecialMesh").Scale
+	self.model = model
+	self._implicitScale = model.Handle:FindFirstChildOfClass("SpecialMesh").Scale
 
-    self.id = id -- just to store, cannot change
+	self.id = id -- just to store, cannot change
 
-    self:SetOffset(propTable.offset or Vector3.new(0, 0, 0))
-    self:SetScale(propTable.scale or Vector3.new(1, 1, 1))
-    self:SetRotation(propTable.rotation or Vector3.new(0, 0, 0))
-    self:SetTransformPriority(propTable.transformPriority or 1)
-    self:SetRotTransformPriority(propTable.rotTransformPriority or 1)
-    self:SetVisibleLocally(propTable.visibleLocally or false)
-    self:SetParticlesEnabled((propTable.particlesEnabled == nil) and true or propTable.particlesEnabled)
+	self:SetOffset(propTable.offset or Vector3.new(0, 0, 0))
+	self:SetScale(propTable.scale or Vector3.new(1, 1, 1))
+	self:SetRotation(propTable.rotation or Vector3.new(0, 0, 0))
+	self:SetTransformPriority(propTable.transformPriority or 1)
+	self:SetRotTransformPriority(propTable.rotTransformPriority or 1)
+	self:SetVisibleLocally(propTable.visibleLocally or false)
+	self:SetParticlesEnabled((propTable.particlesEnabled == nil) and true or propTable.particlesEnabled)
 
-    self._floatConnection = self:_bindFloating()
+	self._floatConnection = self:_bindFloating()
 
-    return self
+	return self
 end
-
 
 function Hat:GetPropertyTable()
-    return {
-        offset = self.offset,
-        scale = self.scale,
-        rotation = self.rotation,
-        transformPriority = self.transformPriority,
-        rotTransformPriority = self.rotTransformPriority,
-        visibleLocally = self.visibleLocally,
-        particlesEnabled = self.particlesEnabled,
-    }
+	return {
+		offset = self.offset,
+		scale = self.scale,
+		rotation = self.rotation,
+		transformPriority = self.transformPriority,
+		rotTransformPriority = self.rotTransformPriority,
+		visibleLocally = self.visibleLocally,
+		particlesEnabled = self.particlesEnabled,
+	}
 end
-
 
 --------- setters ----------
 
-
 function Hat:SetOffset(offset)
-    self.offset = offset
+	self.offset = offset
 end
-
 
 function Hat:SetScale(scale)
-    self.scale = scale
-    self.model.Handle:FindFirstChildOfClass("SpecialMesh").Scale = self._implicitScale * scale
+	self.scale = scale
+	self.model.Handle:FindFirstChildOfClass("SpecialMesh").Scale = self._implicitScale * scale
 end
-
 
 function Hat:SetRotation(rotation)
-    self.rotation = rotation
+	self.rotation = rotation
 end
-
 
 function Hat:SetTransformPriority(state)
-    assert(1 <= state and state <= 2, "transform priority set incorrectly")
-    self.transformPriority = state
+	assert(1 <= state and state <= 2, "transform priority set incorrectly")
+	self.transformPriority = state
 end
-
 
 function Hat:SetRotTransformPriority(state)
-    assert(1 <= state and state <= 2, "rot transform priority set incorrectly")
-    self.rotTransformPriority = state
+	assert(1 <= state and state <= 2, "rot transform priority set incorrectly")
+	self.rotTransformPriority = state
 end
-
 
 function Hat:SetVisibleLocally(state)
-    self.visibleLocally = state
-    self.model.Handle.LocalTransparencyModifier = state and 0 or 1
+	self.visibleLocally = state
+	self.model.Handle.LocalTransparencyModifier = state and 0 or 1
 end
-
 
 function Hat:SetParticlesEnabled(state)
-    self.particlesEnabled = state
+	self.particlesEnabled = state
 
-    for _, inst in pairs(self.model._instance:GetDescendants()) do
-        if table.find(particleClasses, inst.ClassName) then
-            inst.Enabled = state
-        end
-    end
+	for _, inst in pairs(self.model._instance:GetDescendants()) do
+		if table.find(particleClasses, inst.ClassName) then
+			inst.Enabled = state
+		end
+	end
 end
-
 
 ---------- other functions ----------
 
-
 function Hat:_bindFloating()
-    return RunService.RenderStepped:Connect(function()
-        self:SetCFrame(workspace.CurrentCamera.CFrame)
-    end)
+	return RunService.RenderStepped:Connect(function()
+		self:SetCFrame(workspace.CurrentCamera.CFrame)
+	end)
 end
-
 
 -- takes all the properties the hat currently has and positions it correctly
 function Hat:SetCFrame(headCf)
-    if not self.model._instance:FindFirstChild("Handle") then
-        return
-    end
+	if not self.model._instance:FindFirstChild("Handle") then
+		return
+	end
 
-    local offsetCf = CFrame.new(self.offset)
-    local hatRot = CFrame.Angles(math.rad(self.rotation.X), math.rad(self.rotation.Y), math.rad(self.rotation.Z))
-    local headRot = (headCf - headCf.p)
+	local offsetCf = CFrame.new(self.offset)
+	local hatRot = CFrame.Angles(math.rad(self.rotation.X), math.rad(self.rotation.Y), math.rad(self.rotation.Z))
+	local headRot = (headCf - headCf.p)
 
-    local cf = CFrame.new(0, 0, 0)
+	local cf = CFrame.new(0, 0, 0)
 
-    if self.transformPriority == 1 then
-        cf = CFrame.new((headCf * offsetCf).Position)
-    elseif self.transformPriority == 2 then
-        cf = CFrame.new(headCf.Position + offsetCf.Position)
-    end
+	if self.transformPriority == 1 then
+		cf = CFrame.new((headCf * offsetCf).Position)
+	elseif self.transformPriority == 2 then
+		cf = CFrame.new(headCf.Position + offsetCf.Position)
+	end
 
-    if self.rotTransformPriority == 1 then
-        cf = cf * headRot * hatRot
-    elseif self.rotTransformPriority == 2 then
-        cf = CFrame.new(cf.Position) * hatRot
-    end
+	if self.rotTransformPriority == 1 then
+		cf = cf * headRot * hatRot
+	elseif self.rotTransformPriority == 2 then
+		cf = CFrame.new(cf.Position) * hatRot
+	end
 
-    self.model._instance.Handle.CFrame = cf
+	self.model._instance.Handle.CFrame = cf
 
-    self.model._instance.Handle.LocalTransparencyModifier = self.visibleLocally and 0 or 1
-    -- if hat is selected, it resets the LTM
+	self.model._instance.Handle.LocalTransparencyModifier = self.visibleLocally and 0 or 1
+	-- if hat is selected, it resets the LTM
 end
-
 
 function Hat:HasParticles()
-    for _, class in pairs(particleClasses) do
-        if self.model._instance:FindFirstChildWhichIsA(class, true) then
-            return true
-        end
-    end
+	for _, class in pairs(particleClasses) do
+		if self.model._instance:FindFirstChildWhichIsA(class, true) then
+			return true
+		end
+	end
 
-    return false
+	return false
 end
-
 
 function Hat:Destroy()
-    local model = self.model
-    local floatConnection = self._floatConnection
-    self = nil
-    model:Destroy()
-    floatConnection:Disconnect()
+	local model = self.model
+	local floatConnection = self._floatConnection
+	self = nil
+	model:Destroy()
+	floatConnection:Disconnect()
 end
-
 
 return Hat
