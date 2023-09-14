@@ -200,7 +200,7 @@ function Previewer:didMount()
 		end)
 	end)
 
-	Previewer._runCxn = RunService.Heartbeat:Connect(function()
+	Previewer._runCxn = RunService.RenderStepped:Connect(function()
 		self:setState(function(state)
 			local camCf = workspace.CurrentCamera.CFrame
 			state.partCf = (camCf - camCf.Position)
