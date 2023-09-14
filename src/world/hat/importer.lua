@@ -36,6 +36,18 @@ local function makeIntoSpecialMesh(meshpart)
 	mesh.TextureId = meshpart.TextureID
 	mesh.Parent = part
 
+	local wrapLayer = meshpart:FindFirstChildOfClass("WrapLayer")
+	if wrapLayer then
+		wrapLayer:Destroy()
+	end
+
+	-- TODO implement proper meshpart support so we can keep surface appearances
+	local surfaceAppearance: SurfaceAppearance = meshpart:FindFirstChildOfClass("SurfaceAppearance")
+	if surfaceAppearance then
+		mesh.TextureId = surfaceAppearance.ColorMap
+		surfaceAppearance:Destroy()
+	end
+
 	for _, inst in pairs(meshpart:GetChildren()) do
 		inst.Parent = part
 	end
