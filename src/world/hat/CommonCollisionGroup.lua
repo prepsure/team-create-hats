@@ -2,29 +2,38 @@ local PhysicsService = game:GetService("PhysicsService")
 
 local groupName = "Plugin_Unselectable_Group"
 
-local function hasCollisionGroup(name)
-	for _, group in PhysicsService:GetRegisteredCollisionGroups() do
-		if group.name == name then
-			return true
+local function createNonCursorCollidingGroup(groupName): boolean
+	-- Register cursor group if it does not exist.
+	local CURSOR_GROUP = "StudioSelectable"
+	if not PhysicsService:IsCollisionGroupRegistered(CURSOR_GROUP) then
+		if #PhysicsService:GetRegisteredCollisionGroups() >= PhysicsService:GetMaxCollisionGroups() then
+			return false
 		end
+		PhysicsService:RegisterCollisionGroup(CURSOR_GROUP)
 	end
 
-	return false
-end
-
-local function getOrCreateGroup(name)
-	if hasCollisionGroup(name) then
-		return true
+	-- Register our group if not it does not exist.
+	if not PhysicsService:IsCollisionGroupRegistered(groupName) then
+		if #PhysicsService:GetRegisteredCollisionGroups() >= PhysicsService:GetMaxCollisionGroups() then
+			return false
+		end
+		PhysicsService:RegisterCollisionGroup(groupName)
 	end
 
-	local ok, _ = pcall(PhysicsService.RegisterCollisionGroup, PhysicsService, name)
-	return ok
+	-- Change collision status if needed...
+
+	-- For new StudioSelectable cursor group once change is enabled.
+	if PhysicsService:CollisionGroupsAreCollidable(groupName, CURSOR_GROUP) then
+		PhysicsService:CollisionGroupSetCollidable(groupName, CURSOR_GROUP, false)
+	end
+
+	-- For old Default cursor group before change is enabled.
+	if PhysicsService:CollisionGroupsAreCollidable(groupName, "Default") then
+		PhysicsService:CollisionGroupSetCollidable(groupName, "Default", false)
+	end
+
+	-- Group is registered and configured.
+	return true
 end
 
-local didGetGroup = getOrCreateGroup(groupName)
-
-if didGetGroup then
-	PhysicsService:CollisionGroupSetCollidable("Default", groupName, false)
-end
-
-return if didGetGroup then groupName else "Default"
+return if createNonCursorCollidingGroup(groupName) then groupName else "Default"
