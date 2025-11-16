@@ -1,39 +1,31 @@
 local PhysicsService = game:GetService("PhysicsService")
 
-local groupName = "Plugin_Unselectable_Group"
+local selectableGroup = "StudioSelectable"
+local unselectableGroup = "StudioUnselectable"
 
-local function createNonCursorCollidingGroup(groupName): boolean
-	-- Register cursor group if it does not exist.
-	local CURSOR_GROUP = "StudioSelectable"
-	if not PhysicsService:IsCollisionGroupRegistered(CURSOR_GROUP) then
-		if #PhysicsService:GetRegisteredCollisionGroups() >= PhysicsService:GetMaxCollisionGroups() then
-			return false
-		end
-		PhysicsService:RegisterCollisionGroup(CURSOR_GROUP)
+local function createNonCursorCollidingGroup(): boolean
+	if
+		not PhysicsService:IsCollisionGroupRegistered(unselectableGroup)
+		and #PhysicsService:GetRegisteredCollisionGroups() >= PhysicsService:GetMaxCollisionGroups()
+	then
+		-- group could not be registered
+		return false
 	end
 
-	-- Register our group if not it does not exist.
-	if not PhysicsService:IsCollisionGroupRegistered(groupName) then
-		if #PhysicsService:GetRegisteredCollisionGroups() >= PhysicsService:GetMaxCollisionGroups() then
-			return false
-		end
-		PhysicsService:RegisterCollisionGroup(groupName)
-	end
+	PhysicsService:RegisterCollisionGroup(unselectableGroup)
+	PhysicsService:CollisionGroupSetCollidable(unselectableGroup, selectableGroup, false)
 
-	-- Change collision status if needed...
-
-	-- For new StudioSelectable cursor group once change is enabled.
-	if PhysicsService:CollisionGroupsAreCollidable(groupName, CURSOR_GROUP) then
-		PhysicsService:CollisionGroupSetCollidable(groupName, CURSOR_GROUP, false)
-	end
-
-	-- For old Default cursor group before change is enabled.
-	if PhysicsService:CollisionGroupsAreCollidable(groupName, "Default") then
-		PhysicsService:CollisionGroupSetCollidable(groupName, "Default", false)
-	end
-
-	-- Group is registered and configured.
 	return true
 end
 
-return if createNonCursorCollidingGroup(groupName) then groupName else "Default"
+local oldUnselectableGroup = "Plugin_Unselectable_Group"
+
+local function removeOldUnselectableGroup()
+	warn("make sure you check this works before publishing")
+	if PhysicsService:IsCollisionGroupRegistered() then
+		PhysicsService:UnregisterCollisionGroup(oldUnselectableGroup)
+	end
+end
+
+removeOldUnselectableGroup()
+return if createNonCursorCollidingGroup() then unselectableGroup else "Default"
