@@ -1,0 +1,8 @@
+[package]
+name = "paige/team-create-hats"
+version = "5.0.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+[dependencies]
+react = "jsdotlua/react@17.2.1"
