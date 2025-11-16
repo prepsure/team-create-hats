@@ -4,6 +4,9 @@ local selectableGroup = "StudioSelectable"
 local unselectableGroup = "StudioUnselectable"
 
 local function createNonCursorCollidingGroup(): boolean
+	warn(
+		"make sure you come back to this: studio selectable won't be created if the place already has 32 collision groups, so it might not exist :("
+	)
 	if
 		not PhysicsService:IsCollisionGroupRegistered(unselectableGroup)
 		and #PhysicsService:GetRegisteredCollisionGroups() >= PhysicsService:GetMaxCollisionGroups()
